@@ -1,0 +1,56 @@
+<soapenv:Envelope xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:air="http://ws.amadeus.fr/air" xmlns:com="http://ws.amadeus.fr/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:soap="soap">
+    <soapenv:Header>
+        <wsse:Security soap:mustUnderstand="1" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+            <wsse:UsernameToken wsu:Id="UsernameToken-5">
+                <wsse:Username>{{ user }}</wsse:Username>
+                <wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">{{ password }}</wsse:Password>
+            </wsse:UsernameToken>
+        </wsse:Security>
+    </soapenv:Header>
+    <soapenv:Body>
+        <air:lowFareSearchRequest>
+            <air:journey>
+                <air:originDestinations>
+                    <air:originDestination id="1">
+                        <air:origin>
+                            <air:location code="{{ searchParams.departureAid }}" xsi:type="air:IataLocation"/>
+                        </air:origin>
+                        <air:destination>
+                            <air:location code="{{ searchParams.arrivalAid }}" xsi:type="air:IataLocation"/>
+                        </air:destination>
+                        <air:departureDateTimeRange>
+                            <air:dateRange date="{{ searchParams.departureDate }}"/>
+                        </air:departureDateTimeRange>
+                    </air:originDestination>
+                    <air:originDestination id="2">
+                        <air:origin>
+                            <air:location code="{{ searchParams.arrivalAid }}" xsi:type="air:IataLocation"/>
+                        </air:origin>
+                        <air:destination>
+                            <air:location code="{{ searchParams.departureAid }}" xsi:type="air:IataLocation"/>
+                        </air:destination>
+                        <air:departureDateTimeRange>
+                            <air:dateRange date="{{ searchParams.arrivalDate }}"/>
+                        </air:departureDateTimeRange>
+                    </air:originDestination>
+                </air:originDestinations>
+            </air:journey>
+            <air:passengers>
+                <air:passenger id="1" passengerType="ADULT" xsi:type="air:NonInfantHoldingSeatedPassenger" />
+            </air:passengers>
+            <air:pricing currencyCode="EUR">
+                <air:fareType publishedFares="true" unifares="true" corporateUnifares="false"/>
+                <air:passengerFareOptionGroups>
+                    <air:passengerFareOptionGroup>
+                        <air:passengerFareOption fareOption="STANDARD" passengerId="1"/>
+                    </air:passengerFareOptionGroup>
+                </air:passengerFareOptionGroups>
+            </air:pricing>
+            <air:travelPreferences>
+                {%  if searchParams.stopsAllowed is defined  %}
+                    <air:directItineraryRestriction stopsAllowed="{{ searchParams.stopsAllowed }}"/>
+                {% endif %}
+            </air:travelPreferences>
+        </air:lowFareSearchRequest>
+    </soapenv:Body>
+</soapenv:Envelope>

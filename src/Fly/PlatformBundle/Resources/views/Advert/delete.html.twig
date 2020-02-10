@@ -1,0 +1,25 @@
+{# src/Fly/PlatformBundle/Resources/views/Advert/delete.html.twig #}
+
+{% extends "FlyPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Remove an advert - {{ parent() }}
+{% endblock %}
+
+{% block flyplatform_body %}
+  <h2>Remove an advert</h2>
+
+  <p>
+    Are you sure you want to delete advert "{{ advert.title }}" ?
+  </p>
+
+
+
+
+	<form method="post" action="{{ path('fly_platform_delete', {'id': advert.id}) }}"> 
+		
+		<button class="btn btn-danger" type="submit">Supprimer</button>
+		 <input type="hidden" name="_csrf_token" value="{{ csrf_token('adverts_delete' ~ advert.id)  }}">
+   </form>
+
+{% endblock %}

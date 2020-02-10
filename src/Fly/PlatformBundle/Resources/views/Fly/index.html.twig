@@ -1,0 +1,296 @@
+{% set lowFareSearchData = app.session.get('lowFareSearch') %}
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/select2/dist/css/select2.css') }}" />
+{% endblock %}
+{% block title %}Fly{% endblock %}
+{% block body_main %}
+    <div class="card notice-list">
+        <div class="card-header">
+            <h2>Fly
+                {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+            </h2>
+        </div>
+
+        <div class="card-body card-padding">
+            <h1>Search Form</h1>
+            {{ form_errors(form) }}
+            {{ form_start(form) }}
+
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        {#<input type="text" class="form-control" id="whereFrom" placeholder="Where from?">#}
+                        {{ form_errors(form.whereFromSelect) }}
+                        {{ form_widget(form.whereFromSelect) }}
+                        <select class="form-control" id="whereFromSelect" required="required" >
+                            <option value="" selected="selected" >Where from?</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form_errors(form.whereToSelect) }}
+                        {{ form_widget(form.whereToSelect) }}
+                        <select class="form-control" id="whereToSelect" required="required">
+                            <option value="" selected="selected" >Where to?</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        {{ form_errors(form.searchStart) }}
+                        {{ form_widget(form.searchStart) }}
+                        <span class="fa fa-calendar form-control-feedback" aria-hidden="true" style="left:0;font-size:15px;"></span>
+                        <input type="text" class="form-control" id="outboundDate"  style="padding-left: 20px;cursor:pointer;">
+                    </div>
+                    <div class="form-group col-md-6">
+                        {{ form_errors(form.searchEnd) }}
+                        {{ form_widget(form.searchEnd) }}
+                        <span class="fa fa-calendar form-control-feedback" aria-hidden="true" style="left:0;font-size:15px;"></span>
+                        <input type="text" class="form-control" id="inboundDate"  style="padding-left: 20px;cursor:pointer;">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="alert alert-info">
+                            Additional parameters. Demo mode:
+                            <ul>
+                                <li>Round Trip = TRUE</li>
+                                <li>Stops Allowed = TRUE</li>
+                                <li>1 Adult Passenger , STANDARD class</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <button type="submit" id="submitFlySearch" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+                    </div>
+                </div>
+            {{ form_end(form) }}
+
+<hr/>
+<div id="lowfare-search-res"></div>
+            {{ include('@FlyPlatform/Fly/searchres.html.twig') }}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plupload/js/plupload.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/select2/dist/js/select2.full.min.js') }}"></script>
+    <script>
+
+        $(function(){
+
+
+            // form submit
+            $('form[name="LowFareSearch"]').submit(function() {
+                    // inside event callbacks 'this' is the DOM element so we first
+                    // wrap it in a jQuery object and then invoke ajaxSubmit
+                    $(this).ajaxSubmit({
+                        beforeSubmit: function(){
+                            $('#lowfare-search-res').html('');
+                        },
+                        success: function(data, statusText, xhr, $form)
+                        {
+                            if(data.asc == 'success'){
+                                $('#lowfare-search-res').html(data.html);
+                            }
+
+                            if(data.asc == 'error'){
+                                $('#lowfare-search-res').html("<div class='alert alert-error'>Service Error. Please try again later.</div>");
+                            }
+                        }
+                    });
+
+                // !!! Important !!!
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+            });
+
+
+            $("#whereFromSelect").on('change',function(){
+                $("#LowFareSearch_whereFromSelect").val($(this).val());
+            });
+            $("#whereFromSelect").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            $("#whereToSelect").on('change',function(){
+                $("#LowFareSearch_whereToSelect").val($(this).val());
+            });
+            $("#whereToSelect").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            // Dates formats
+            var dateFormatSQL = 'YYYY-MM-DD';
+            var dateFormat = 'MMMM D, YYYY';
+            var currDate = moment().format(dateFormat);
+            var weekDate =  moment(currDate, dateFormat).add(7, 'days').format(dateFormat);
+            var currdateSQL = moment().format(dateFormatSQL);
+            var weekDateSQL = moment(currdateSQL, dateFormatSQL).add(7, 'days').format(dateFormatSQL);
+
+            //set default dates
+            $('#LowFareSearch_searchStart').val(currdateSQL);
+            $('#LowFareSearch_searchEnd').val(weekDateSQL);
+
+            // Outbound Date
+            $('#outboundDate').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": currDate,
+                "endDate": currDate
+            }, function(start, end, label) {
+                var diff = moment().diff(start,'days');
+                if(diff > 0){
+                    alert('Date Cannot be in the past');
+                    $('#outboundDate').data('daterangepicker').setStartDate(currDate);
+                    $('#outboundDate').data('daterangepicker').setEndDate(currDate);
+                    $('#LowFareSearch_searchStart').val(currdateSQL);
+                }else{
+                    var weekDiff = moment(start, dateFormat).add(7, 'days').format(dateFormat);
+                    var weekDiffSql = moment(start, dateFormat).add(7, 'days').format(dateFormatSQL);
+                    $('#inboundDate').data('daterangepicker').setStartDate(weekDiff);
+                    $('#inboundDate').data('daterangepicker').setEndDate(weekDiff);
+
+                    $('#LowFareSearch_searchStart').val(start.format(dateFormatSQL));
+                    $('#LowFareSearch_searchEnd').val(weekDiffSql);
+                }
+
+
+
+                console.log('date outbound change');
+            });
+
+            // Inbound Date
+            $('#inboundDate').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": weekDate,
+                "endDate": weekDate
+            }, function(start, end, label) {
+
+                var diffNow = moment().diff(start,'days');
+                var outboundDate = moment($('#LowFareSearch_searchStart').val());
+                var diffOutbound = start.diff(outboundDate,'days');
+
+                if(diffNow > 0){ /*check past*/
+                    alert('Date Cannot be in the past');
+                    var lastDate = moment($('#LowFareSearch_searchEnd').val()).format(dateFormat);
+                    $('#inboundDate').data('daterangepicker').setStartDate(lastDate);
+                    $('#inboundDate').data('daterangepicker').setEndDate(lastDate);
+                   // $('#LowFareSearch_searchEnd').val(weekDateSQL);
+                }else if(diffOutbound < 0){ /*check with outbound Date, must be same or bigger*/
+                    alert(' Inbound date must be same day or later than outbound ');
+                    var lastDate = moment($('#LowFareSearch_searchEnd').val()).format(dateFormat);
+                    $('#inboundDate').data('daterangepicker').setStartDate(lastDate);
+                    $('#inboundDate').data('daterangepicker').setEndDate(lastDate);
+                } else{
+                    $('#LowFareSearch_searchEnd').val(start.format(dateFormatSQL));
+                }
+
+
+            });
+
+        });
+
+
+
+        function formatRepo (repo) {
+            console.log(repo);
+            if (repo.loading) return repo.text;
+
+            var markup = "<div class='select2-result-repository clearfix'>" +
+
+            "<div class='select2-result-repository__title'>" + repo.city_name + " - "+ repo.country_name +"</div>";
+
+            markup += "<div class='select2-result-repository__description'>" + repo.airport_name + ", "+ repo.airport_code +"</div>";
+
+
+
+            return markup;
+        }
+
+        function formatRepoSelection (repo) {
+            if(repo.city_name){
+                return repo.city_name + ' - ' + repo.airport_name+', '+ repo.airport_code;
+            }
+            return  repo.text;
+//            return repo.city_name || repo.text;
+        }
+
+
+    </script>
+{% endblock %}

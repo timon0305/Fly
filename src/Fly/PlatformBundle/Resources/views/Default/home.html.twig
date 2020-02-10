@@ -1,0 +1,599 @@
+{% extends "frontend.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.css') }}" />
+    {#<link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.css') }}" />#}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/select2/dist/css/select2.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/css/jcarousel.css') }}" />
+{% endblock %}
+{% block body %}
+
+    <div class="container-fluid hero-block">
+
+        <div class="row hero-text">
+            <div class="col-md-12 text-center">
+                <h1>Travel with Bros</h1>
+                <h2>Reinvented</h2>
+            </div>
+        </div>
+
+        <div class="row hero-lfs-search">
+            <div class="col-md-5 hr-devider"><hr /></div>
+            <div class="col-md-2 text-center lfs-head">
+                FLIGHTS
+            </div>
+            <div class="col-md-5 hr-devider"><hr /></div>
+            <div class="col-md-12 text-center lfs-form">
+                <form class="form-inline">
+                    <div class="form-group col-md-3">
+                        <label for="departure" class="pull-left">Departure</label><br/>
+                        <select class="form-control" id="departure"  name="departure" required="required" >
+                            <option value="" selected="selected" >Where from?</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="destination" class="pull-left">Destination</label><br/>
+                        <select class="form-control" id="destination" name="destination" required="required">
+                            <option value="" selected="selected" >Where to?</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="outbound" class="pull-left">Outbound</label><br/>
+                        <input type="text" class="form-control" id="outbound" name="outbound">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="inbound" class="pull-left">Inbound</label><br/>
+                        <input type="text" class="form-control" id="inbound" name="inbound" >
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="passengers" class="pull-left">Passengers</label><br/>
+                        <input type="number" class="form-control" id="passengers" name="passengers" min="1" placeholder="Adult(>12)">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="stops" class="pull-left">Stops</label><br/>
+                        <input type="number" class="form-control" id="stops" name="stops" min="0" placeholder="Direct Only">
+                    </div>
+                    <div class="form-group col-md-1">
+                        <label for="stops">&nbsp;</label><br/>
+                        <button type="submit" class="btn btn-default "><i class="fa fa-plane"></i> GO</button>
+                    </div>
+
+                </form>
+            </div>
+            <div class="col-md-5 hr-devider"><hr class="foot" /></div>
+            <div class="col-md-2 text-center lfs-footer">
+                <i class="fa fa-plus"></i> Options
+            </div>
+            <div class="col-md-5 hr-devider"><hr class="foot" /></div>
+        </div>
+
+    </div>
+    <div class="container main-block">
+
+        <div class="row main-block-social">
+            <div class="col-md-4 col-md-offset-4 block-head text-center">
+                <h1>#1 SOCIAL TRAVEL ONLINE</h1>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-big.png') }}">
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-4 block-item text-center">
+                <img src="{{ asset('bundles/flyplatform/img/frontend/groups.png') }}"><br/>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-small.png') }}" class="small-decor">
+                <h2>Buddy Groups</h2>
+                <p>Share and react on travel<br/> deals with you friends</p>
+            </div>
+            <div class="col-md-4 block-item text-center">
+                <img src="{{ asset('bundles/flyplatform/img/frontend/shareplay.png') }}"><br/>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-small.png') }}" class="small-decor">
+                <h2>Share Pay</h2>
+                <p>
+                    Find the best deal for your crew<br/>
+                    Block the price for some time<br/>
+                    Everyone pays and you are good to go!
+                </p>
+            </div>
+            <div class="col-md-4 block-item text-center">
+                <img src="{{ asset('bundles/flyplatform/img/frontend/potcommun.png') }}"><br/>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-small.png') }}" class="small-decor">
+                <h2>Pot Commun</h2>
+                <p>
+                    With Friends and Experts<br/>
+                    Push Notifications<br/>
+                    for all travel events
+                </p>
+            </div>
+
+        </div>
+
+        <div class="row main-block-travel">
+            <div class="col-md-4 col-md-offset-4 block-head text-center">
+                <h1>TRAVEL MANAGEMENT</h1>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-big.png') }}">
+            </div>
+            <div class="container block-content">
+                <div class="row">
+                    <div class="col-md-6 block-item-left">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ asset('bundles/flyplatform/img/frontend/bigphone.png') }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/folder.png') }}"></div>
+                                    <div class="text">e-tickets in offline mode</div>
+                                </a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/bell_small.png') }}"></div>
+                                    <div class="text">Notification</div>
+                                </a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/chat_heads.png') }}"></div>
+                                    <div class="text">Chat</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 block-item-right" >
+                        <div class="col-md-4 text-center">
+                            <img src="{{ asset('bundles/flyplatform/img/frontend/bell_big.png') }}">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/boardinggate.png') }}"></div>
+                                    <div class="text">Boarding gate</div>
+                                </a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/clock.png') }}"></div>
+                                    <div class="text">flight updates</div>
+                                </a>
+                            </div>
+                            <div class="list-item">
+                                <a href="#">
+                                    <div class="img"><img src="{{ asset('bundles/flyplatform/img/frontend/fees_asterisk.png') }}"></div>
+                                    <div class="text">Airport discount</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="row main-block-platform">
+            <div class="col-md-4 col-md-offset-4 block-head text-center">
+                <h1>ALL YOU NEED IN ONE PLATFORM</h1>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-big.png') }}">
+            </div>
+            <div class="clearfix"></div>
+            <div class="container block-content">
+                    <div class="list-item text-center">
+                        <div class="wrap">
+                            <div class="nums"><h1>400</h1></div>
+                            <div class="title"><h2>Airlines</h2></div>
+                        </div>
+                    </div>
+                    <div class="list-item text-center">
+                        <div class="wrap">
+                            <div class="nums"><h1>350K</h1></div>
+                            <div class="title"><h2>Rooms</h2></div>
+                        </div>
+                    </div>
+                    <div class="list-item text-center">
+                        <div class="wrap">
+                            <div class="nums"><h1>10,000</h1></div>
+                            <div class="title"><h2>Activities</h2></div>
+                        </div>
+                    </div>
+                    <div class="list-item text-center">
+                        <div class="wrap">
+                            <div class="nums"><h1>14,000</h1></div>
+                            <div class="title"><h2>Experts</h2></div>
+                        </div>
+                    </div>
+                    <div class="list-item text-center">
+                        <div class="wrap">
+                            <div class="nums"><h1>80,120</h1></div>
+                            <div class="title"><h2>Active Travellers</h2></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row main-block-betta">
+            <div class="col-md-4 col-md-offset-4  block-head text-center">
+                <h1>SUBSCRIBE TO OUR BETTA</h1>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-big.png') }}">
+            </div>
+            <div class="clearfix"></div>
+            <div class="container block-content">
+                <form class="form-inline">
+                    <div class="form-group col-md-3 hidden-sm">
+                    </div>
+                    <div class="form-group col-md-4 col-sm-12">
+                        <input type="email" placeholder="Enter You Email Here..." class="form-control" id="subscribe-email">
+                    </div>
+                    <div class="form-group col-md-5 col-sm-12">
+                        <button type="submit" class="btn btn-default" id="subscribe-submit">Subscribe</button>
+                    </div>
+                    <div class="form-group col-md-12 label-text text-center"><p>We`ll let you know when sign up is opne</p></div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row main-block-partners">
+            <div class="col-md-4 col-md-offset-4 block-head text-center">
+                <h1>OUR PARTNERS</h1>
+                <img src="{{ asset('bundles/flyplatform/img/frontend/decor-big.png') }}">
+            </div>
+            <div class="clearfix"></div>
+            <div class="container block-content">
+                <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+                <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+                <div class="jcarousel">
+                    <ul>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-amadeus.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-atoutfr.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-apst.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-iata.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-iata.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-iata.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-iata.png') }}"></li>
+                        <li><img src="{{ asset('bundles/flyplatform/img/frontend/partn-iata.png') }}"></li>
+                    </ul>
+                    <!-- Prev/next controls -->
+                </div>
+            </div>
+        </div>
+
+
+    <div class="container-fluid footer-block">
+        <div class="container">
+            <div class="row row-relative">
+                <div class="col-md-3 col-sm-12 info">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed libero ipsum, lacinia sit amet interdum in, interdum id purus. Proin vulputate quis purus vel euismod.
+                </div>
+                <div class="col-md-6 col-sm-12 col-md-offset-3 menu">
+                    <div class="col-md-4 col-sm-12">
+                        <ul>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Our Clients</a></li>
+                            <li><a href="#">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <ul>
+                            <li><a href="#">Tour Packages</a></li>
+                            <li><a href="#">Delivery</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4 col-sm-12">
+                        <ul>
+                            <li><a href="#">Custom Care</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 social">
+                    <div class="follow">
+                        <div class="col-md-12">
+                            <h3>Follow us:</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">
+                                <div class="social-circle"><i class="fa fa-facebook-f"></i></div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">
+                                <div class="social-circle"><i class="fa fa-twitter"></i></div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">
+                                <div class="social-circle"><i class="fa fa-instagram"></i></div>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="app">
+                        <div class="col-md-12">
+                                <h3>Download App:</h3>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">
+                                <div class="social-circle"><i class="fa fa-apple"></i></div>
+                            </a>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#">
+                                <div class="social-circle"><i class="fa fa-android"></i></div>
+                            </a>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <hr class="separator" />
+            <div class="row">
+                <div class="col-md-6 col-sm-12 copyright">
+                    &copy;2016 ITMATIC All rights reserved
+                </div>
+                <div class="col-md-6 col-sm-12 payment">
+                    <ul class="pull-right">
+                        <li><a href="#"><img src="{{ asset('bundles/flyplatform/img/frontend/aexp.png') }}"></a></li>
+                        <li><a href="#"><img src="{{ asset('bundles/flyplatform/img/frontend/mastercard.png') }}"></a></li>
+                        <li><a href="#"><img src="{{ asset('bundles/flyplatform/img/frontend/bitcoin.png') }}"></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/select2/dist/js/select2.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/js/jquery.jcarousel.min.js') }}"></script>
+    <script>
+
+        $(function(){
+
+            /*
+             Carousel initialization
+             */
+            $('.jcarousel')
+                .jcarousel({
+                    // Options go here
+                });
+
+            /*
+             Prev control initialization
+             */
+            $('.jcarousel-control-prev')
+                .on('jcarouselcontrol:active', function() {
+                    $(this).removeClass('inactive');
+                })
+                .on('jcarouselcontrol:inactive', function() {
+                    $(this).addClass('inactive');
+                })
+                .jcarouselControl({
+                    // Options go here
+                    target: '-=1'
+                });
+
+            /*
+             Next control initialization
+             */
+            $('.jcarousel-control-next')
+                .on('jcarouselcontrol:active', function() {
+                    $(this).removeClass('inactive');
+                })
+                .on('jcarouselcontrol:inactive', function() {
+                    $(this).addClass('inactive');
+                })
+                .jcarouselControl({
+                    // Options go here
+                    target: '+=1'
+                });
+
+            // form submit
+//            $('form[name="LowFareSearch"]').submit(function() {
+//                // inside event callbacks 'this' is the DOM element so we first
+//                // wrap it in a jQuery object and then invoke ajaxSubmit
+//                $(this).ajaxSubmit({
+//                    beforeSubmit: function(){
+//                        $('#lowfare-search-res').html('');
+//                    },
+//                    success: function(data, statusText, xhr, $form)
+//                    {
+//                        if(data.asc == 'success'){
+//                            $('#lowfare-search-res').html(data.html);
+//                        }
+//
+//                        if(data.asc == 'error'){
+//                            $('#lowfare-search-res').html("<div class='alert alert-error'>Service Error. Please try again later.</div>");
+//                        }
+//                    }
+//                });
+//
+//                // !!! Important !!!
+//                // always return false to prevent standard browser submit and page navigation
+//                return false;
+//            });
+
+
+            $("#departure").on('change',function(){
+//                $("#LowFareSearch_whereFromSelect").val($(this).val());
+            });
+            $("#departure").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            $("#destination").on('change',function(){
+//                $("#LowFareSearch_whereToSelect").val($(this).val());
+            });
+            $("#destination").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            // Dates formats
+            let dateFormatSQL = 'YYYY-MM-DD';
+            let dateFormat = 'MMMM D, YYYY';
+            let currDate = moment().format(dateFormat);
+            let weekDate =  moment(currDate, dateFormat).add(7, 'days').format(dateFormat);
+            let currdateSQL = moment().format(dateFormatSQL);
+            let weekDateSQL = moment(currdateSQL, dateFormatSQL).add(7, 'days').format(dateFormatSQL);
+
+            //set default dates
+//            $('#LowFareSearch_searchStart').val(currdateSQL);
+//            $('#LowFareSearch_searchEnd').val(weekDateSQL);
+
+            // Outbound Date
+            $('#outbound').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": currDate,
+                "endDate": currDate
+            }, function(start, end, label) {
+                var diff = moment().diff(start,'days');
+                if(diff > 0){
+                    alert('Date Cannot be in the past');
+                    $('#outbound').data('daterangepicker').setStartDate(currDate);
+                    $('#outbound').data('daterangepicker').setEndDate(currDate);
+//                    $('#LowFareSearch_searchStart').val(currdateSQL);
+                }else{
+                    var weekDiff = moment(start, dateFormat).add(7, 'days').format(dateFormat);
+                    var weekDiffSql = moment(start, dateFormat).add(7, 'days').format(dateFormatSQL);
+                    $('#inbound').data('daterangepicker').setStartDate(weekDiff);
+                    $('#inbound').data('daterangepicker').setEndDate(weekDiff);
+
+//                    $('#LowFareSearch_searchStart').val(start.format(dateFormatSQL));
+//                    $('#LowFareSearch_searchEnd').val(weekDiffSql);
+                }
+
+
+
+                console.log('date outbound change');
+            });
+
+            // Inbound Date
+            $('#inbound').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": weekDate,
+                "endDate": weekDate
+            }, function(start, end, label) {
+
+                var diffNow = moment().diff(start,'days');
+                var outboundDate = moment($('#outbound').val());
+                var diffOutbound = start.diff(outboundDate,'days');
+
+                if(diffNow > 0){ /*check past*/
+                    alert('Date Cannot be in the past');
+                    var lastDate = moment($('#inbound').val()).format(dateFormat);
+                    $('#inbound').data('daterangepicker').setStartDate(lastDate);
+                    $('#inbound').data('daterangepicker').setEndDate(lastDate);
+                    // $('#LowFareSearch_searchEnd').val(weekDateSQL);
+                }else if(diffOutbound < 0){ /*check with outbound Date, must be same or bigger*/
+                    alert(' Inbound date must be same day or later than outbound ');
+                    var lastDate = moment($('#inbound').val()).format(dateFormat);
+                    $('#inbound').data('daterangepicker').setStartDate(lastDate);
+                    $('#inbound').data('daterangepicker').setEndDate(lastDate);
+                } else{
+//                    $('#LowFareSearch_searchEnd').val(start.format(dateFormatSQL));
+                }
+
+
+
+
+            });
+
+        });
+
+
+
+        function formatRepo (repo) {
+            console.log(repo);
+            if (repo.loading) return repo.text;
+
+            var markup = "<div class='select2-result-repository clearfix'>" +
+
+                "<div class='select2-result-repository__title'>" + repo.city_name + " - "+ repo.country_name +"</div>";
+
+            markup += "<div class='select2-result-repository__description'>" + repo.airport_name + ", "+ repo.airport_code +"</div>";
+
+
+
+            return markup;
+        }
+
+        function formatRepoSelection (repo) {
+            if(repo.city_name){
+                return repo.city_name + ' - ' + repo.airport_name+', '+ repo.airport_code;
+            }
+            return  repo.text;
+//            return repo.city_name || repo.text;
+        }
+
+
+    </script>
+{% endblock %}

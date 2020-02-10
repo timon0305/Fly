@@ -1,0 +1,265 @@
+#Fly\PlatformBundle\Entity\Category:
+#  category1:
+#    name: 'Développement zobile'
+#  category2:
+#    name: 'Développement mobile'
+#  category3:
+#    name: 'Graphisme'
+#  category4:
+#    name: 'Intégration'
+#  category5:
+#    name: 'Réseau'
+#
+#Fly\PlatformBundle\Entity\Skill:
+#  skill1:
+#    name: 'roro'
+#  skill2:
+#    name: 'Symfony2'
+#  skill3:
+#    name: 'C++'
+#  skill4:
+#    name: 'Java'
+#  skill5:
+#    name: 'Photoshop'
+#  skill6:
+#    name: 'Blender'
+#  skill7:
+#    name: 'Bloc-note'
+#
+#
+#Fly\PlatformBundle\Entity\Advert:
+#  advert{1..50}:
+#    title: Advert<current()>
+#    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eleifend enim interdum lorem accumsan, et vestibulum est porttitor. Etiam a tincidunt odio, nec malesuada ligula. Integer mollis felis consectetur, dapibus tellus ac, finibus odio. Quisque laoreet euismod turpis, nec dictum dui blandit sit amet. Vivamus eu dapibus dui.'
+#    author: <firstName()> <lastName()>
+
+Fly\PlatformBundle\Entity\TravelingWith:
+  tr1:
+    title: Family trip
+    icon: family
+  tr2:
+    title: Colleague trip
+    icon: colleague
+  tr3:
+    title: Love trip
+    icon: love
+  tr4:
+    title: A tribe
+    icon: tribe
+
+Fly\PlatformBundle\Entity\Spirit:
+  spirit1:
+    title: Drink Cocktails
+    icon: coctails
+  spirit2:
+    title: Sunshine
+    icon: sunshine
+  spirit3:
+    title: Beach
+    icon: beach
+  spirit4:
+    title: Party
+    icon: party
+  spirit5:
+    title: City Break
+    icon: citybreak
+  spirit6:
+    title: Countryside break
+    icon: countrybreak
+  spirit7:
+    title: Outdoor activities
+    icon: outdoor
+  spirit8:
+    title: Cultural activities
+    icon: cultural
+  spirit9:
+    title: Bars
+    icon: 'bar'
+  spirit10:
+    title: Restaurant
+    icon: 'restaurant'
+  spirit11:
+    title: Art activity
+    icon: 'art'
+  spirit12:
+    title: Sports activity
+    icon: 'sport'
+  spirit13:
+    title: Social local meetings
+    icon: 'sociallocalmeeting'
+  spirit14:
+    title: Food activities
+    icon: 'food'
+  spirit15:
+    title: Photography
+    icon: 'photography'
+
+Fly\PlatformBundle\Entity\Accomodation:
+  accom1:
+    title: Hosted
+    icon: hosted
+  accom2:
+    title: 1 star hotel
+    icon: hotel1
+  accom3:
+    title: 2 star hotel
+    icon: hotel2
+  accom4:
+    title: 3 star hotel
+    icon: hotel3
+
+
+Fly\PlatformBundle\Entity\Transportation:
+  transp1:
+    title: Flight
+    icon: flight
+  transp2:
+      title: Train
+      icon: train
+  transp3:
+      title: Bus
+      icon: bus
+  transp4:
+      title: Car
+      icon: car
+  transp5:
+    title: Boat
+    icon: boat
+
+
+Fly\PlatformBundle\Entity\Activities:
+  active1:
+    title: Nightlife
+    icon: no
+  active2:
+    title: Restaurants
+    icon: no
+  active3:
+    title: Culture
+    icon: no
+  active4:
+    title: Tours
+    icon: no
+  active5:
+    title: Sports
+    icon: no
+  active6:
+    title: Adventure
+    icon: no
+  active7:
+    title: Local
+    icon: no
+  active8:
+    title: Social
+    icon: no
+
+Fly\PlatformBundle\Entity\WorldZone:
+  wz1:
+    title: Asia
+  wz2:
+    title: America
+  wz3:
+    title: Africa
+  wz4:
+    title: Europe
+
+
+Fly\UserBundle\Entity\User:
+  super:
+    username: super
+    plainPassword: super
+    enabled: 1
+    email: super@admin.com
+    firstName: Super
+    lastName: Admin
+    roles: [ROLE_SUPER_ADMIN]
+
+  admin:
+    username: admin
+    plainPassword: admin
+    enabled: 1
+    email: admin@admin.com
+    firstName: <firstName()>
+    lastName: Admin
+    roles: [ROLE_ADMIN]
+
+  user1:
+      username: user1
+      plainPassword: qwerty
+      enabled: 1
+      email: <email()>
+      firstName: <firstName()>
+      lastName: <lastName()>
+      roles: [ROLE_USER]
+      groups: [@group1]
+
+  user{2..50}:
+      username: user<current()>
+      plainPassword: qwerty
+      enabled: 1
+      email: <email()>
+      firstName: <firstName()>
+      lastName: <lastName()>
+      roles: [ROLE_USER]
+  userSw:
+      username: swaroge
+      plainPassword: qwerty
+      enabled: 1
+      email: 'swaroge@gmail.com'
+      firstName: 'Roman'
+      lastName: 'Swaroge'
+      roles: [ROLE_USER]
+
+Fly\UserBundle\Entity\Group:
+  group1:
+    users: [@user1]
+    owner: @user1
+    name: Test1
+
+#  user51:
+#      username: invited@user.com
+#      plainPassword: qwerty
+#      enabled: 0
+#      email: invited@user.com
+##      firstName: <firstName()>
+##      lastName: <lastName()>
+#      roles: [ROLE_USER]
+
+Fly\UserBundle\Entity\Friends:
+   f1:
+    friend_one: @user1
+    friend_two: @user1
+    status: 2
+   f2: # user2 send friend request to user1
+    friend_one: @user2
+    friend_two: @user1
+    status: 0
+   f3: #user1 send friend request to user3
+    friend_one: @user1
+    friend_two: @user3
+    status: 0
+#   f4: #user1 and user4 have a friends reletions
+#    friend_one: @user1
+#    friend_two: @userSw
+#    status: 1
+   f5: # user5 decline friends request from user1
+    friend_one: @user1
+    friend_two: @user5
+    status: 3
+   f6: #user1 decline friend request from user6
+    friend_one: @user6
+    friend_two: @user1
+    status: 3
+#   f7: #user1 invite user51 to platform
+#    friend_one: @user1
+#    friend_two: @user51
+#    status: 0
+Fly\UserBundle\Entity\FeedCategory:
+  c1:
+    title: Flight
+  c2:
+    title: Transportation
+  c3:
+    title: Activity
+  c4:
+    title: Idea

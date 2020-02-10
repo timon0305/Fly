@@ -1,0 +1,18 @@
+{{ form_start(actForm,{'action':'#','attr':{'id':'form-new-accItem'}} ) }}
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">
+            {{ form_widget(actItemForm.checkin,{'attr':{'placeholder':'Checkin'}}) }}
+            {{ form_widget(actItemForm.checkout) }}
+        </div>
+        <div class="col-md-4">
+            {{ form_widget(actItemForm.duration,{'attr':{'placeholder':'Duration'}}) }}
+        </div>
+        <div class="col-md-4 text-center">
+            <h4>Total:<span id="currency-sign">$</span><span class="currency-amount">999,00</span></h4>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+{#{{ form(actItemForm) }}#}
+{{ form_end(actForm) }}

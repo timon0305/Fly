@@ -1,0 +1,22 @@
+{% extends "::group.html.twig" %}
+
+
+{% block breadcrumbs %}
+    {{ breadcrumbs('groups')|raw }}
+{% endblock %}
+{% block body_main %}
+        <div class="card">
+            {#<div class="card-header">#}
+                {#<h2>Edit Group</h2>#}
+            {#</div>#}
+            <div class="card-body card-padding">
+                        {% include "FlyUserBundle:Group:edit_content.html.twig" %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+{#{% block javascripts %}#}
+    {#{{ parent() }}#}
+    {#<script src="{{ asset('/bundles/flyplatform/js/group.new.js') }}" ></script>#}
+{#{% endblock %}#}

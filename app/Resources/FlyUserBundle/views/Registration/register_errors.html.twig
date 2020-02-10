@@ -1,0 +1,16 @@
+{% if form_errors(form)|length %}
+    <div class="login-errors ">
+        {{ form_errors(form) }}
+    </div>
+{% endif %}
+{% if form_errors(form.email) %}
+    <div class="login-errors ">
+        {{ form_errors(form.email) }}
+    </div>
+{% endif %}
+{% if userAlreadyExists %}
+    <div class="login-errors ">
+        User already exists
+    </div>
+{% endif %}
+<div class="clearfix"></div>

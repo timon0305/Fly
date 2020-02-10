@@ -1,0 +1,57 @@
+{#{% extends "FOSUserBundle::layout.html.twig" %}#}
+
+{#{% block fos_user_content %}#}
+{#{% include "FOSUserBundle:Registration:register_content.html.twig" %}#}
+{#{% endblock fos_user_content %}#}
+
+{% extends "::login.html.twig" %}
+
+
+{% block fos_user_content %}
+
+    <div class="lc-block toggled" id="l-login">
+        <div class="form-block">
+            {% include 'FOSUserBundle:Security:login_form.html.twig'  %}
+        </div>
+    </div>
+
+    <!-- Register -->
+    <div class="lc-block" id="l-register">
+        <div class="form-block">
+            {% include 'FOSUserBundle:Registration:register_form.html.twig' with {'form':form} %}
+        </div>
+
+    </div>
+
+    <!-- Forgot Password -->
+    <div class="lc-block" id="l-forget-password">
+        <form action="{{ path("fos_user_resetting_send_email") }}" method="post" id="form-recover">
+            <a href="" class="btn btn-login btn-danger btn-float"><i class="md md-arrow-forward"></i></a>
+            <ul class="login-navigation">
+                <li data-block="#l-login" class="bgm-green">Login</li>
+                <li data-block="#l-register" class="bgm-red">Register</li>
+            </ul>
+        </form>
+    </div>
+{% endblock fos_user_content %}
+
+{% block javascripts %}
+    <script src="{{ asset('/bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+    <script>
+        $(function () {
+            $('#l-register').addClass('toggled');
+            $('#l-login').removeClass('toggled');
+
+            $('#action-login').click(function () {
+                $('#form-login').submit();
+                return false;
+            });
+
+            $('#action-register').click(function () {
+                $('#form-register').submit();
+                return false;
+            })
+
+        });
+    </script>
+{% endblock %}

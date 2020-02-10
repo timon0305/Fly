@@ -1,0 +1,9 @@
+notification:
+    path:     /
+    defaults: { _controller: "FlyUserBundle:Notification:index" }
+
+notification_remove_ajx:
+  path: /remove/ajx
+  defaults: { _controller: FlyUserBundle:Notification:removeNoticeAjax }
+  options:
+    expose: true

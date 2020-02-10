@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>AccItem list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Checkin</th>
+                <th>Checkout</th>
+                <th>Duration</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('accitem_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.checkin %}{{ entity.checkin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.checkout %}{{ entity.checkout|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.duration }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('accitem_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('accitem_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('accitem_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

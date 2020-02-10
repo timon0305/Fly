@@ -1,0 +1,21 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% if form_errors(form.plainPassword.first) %}
+    <div class="login-errors ">
+        {{ form_errors(form.plainPassword.first) }}
+    </div>
+{% endif %}
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="login-errors ">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="login-notice ">
+        <i class="fa fa-exclamation-circle"></i>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+

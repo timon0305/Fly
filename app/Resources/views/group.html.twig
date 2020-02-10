@@ -1,0 +1,61 @@
+{% extends "::material.html.twig" %}
+{% block title %}
+    Groups
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="{{ asset("bundles/flyplatform/bootstrap-datepicker/dist/css/bootstrap-datepicker.css") }}">
+        <link href="{{ asset('bundles/flyplatform/css/feed.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/flyplatform/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
+    <script>
+        $(function () {
+
+            var dep = null;
+            var back = null;
+
+            $('#datepicker_dep').datepicker({format: 'yyyy-mm-dd'});
+
+            $('#datepicker_dep').on("changeDate", function (event) {
+                if ($("#datepicker_back").datepicker('getDate') && $("#datepicker_dep").datepicker('getDate') > $("#datepicker_back").datepicker('getDate')) {
+                    alert('Departure date can not be greater than the Way Back date');
+                    $('#datepicker_back').datepicker('update', $("#datepicker_dep").datepicker('getDate'));
+                    $(".datepicker_back").val($("#datepicker_dep").datepicker('getFormattedDate'));
+                } else {
+                    $(".datepicker_dep").val(
+                            $("#datepicker_dep").datepicker('getFormattedDate')
+                    );
+                    if (!$("#datepicker_back").datepicker('getDate')) {
+                        $('#datepicker_back').datepicker('update', $(".datepicker_dep").val());
+                        $(".datepicker_back").val($(".datepicker_dep").val());
+                    }
+                }
+
+            });
+
+            $('#datepicker_back').datepicker({format: 'yyyy-mm-dd'});
+            $('#datepicker_back').on("changeDate", function (event) {
+                if ($("#datepicker_dep").datepicker('getDate') && $("#datepicker_dep").datepicker('getDate') > $("#datepicker_back").datepicker('getDate')) {
+                    alert('Departure date can not be greater than the Way Back date');
+                    $('#datepicker_dep').datepicker('update', $("#datepicker_back").datepicker('getDate'));
+                    $(".datepicker_dep").val($("#datepicker_back").datepicker('getFormattedDate'));
+                } else {
+
+                    $(".datepicker_back").val(
+                            $("#datepicker_back").datepicker('getFormattedDate')
+                    )
+                    if (!$("#datepicker_dep").datepicker('getDate')) {
+                        $('#datepicker_dep').datepicker('update', $(".datepicker_back").val());
+                        $(".datepicker_dep").val($(".datepicker_back").val());
+                    }
+                }
+            });
+        });
+
+    </script>
+{% endblock %}

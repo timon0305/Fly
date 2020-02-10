@@ -1,0 +1,60 @@
+<div class="card">
+    <div class="card-header">
+        <h2>Group invitations</h2>
+    </div>
+    <div class="card-body ">
+        {% for inv in entities %}
+            <div class="card">
+
+                <img src="{{ web_image('uploads/'~inv.group.picture) }}" alt="" class="img-responsive">
+
+                <div class="card-header ch-alt m-b-20">
+
+                    <h2>{{ inv.group.name }}
+                        <small><i class="md md-person"></i> {{ inv.group.users|length }} | <i class="md md-schedule"></i> closes
+                            in {{ inv.group.expiredTime }} days
+                        </small>
+                    </h2>
+
+                    <ul class="actions">
+                        <li class="dropdown action-show">
+                            <a href="" data-toggle="dropdown">
+                                <i class="md md-more-vert"></i>
+                            </a>
+
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a href="#" id="accept-group" title="Accept Invite" >
+                                        <i class="md md-add-circle c-green"></i>
+                                        Accept Invite
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('fos_user_group_show',{'groupName':inv.group.name}) }}" id="view-group" title="Preview Group" >
+                                        <i class="md md-visibility c-blue"></i>
+                                        Preview Group
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" id="reject-group" title="Reject Invite" >
+                                        <i class="md md-remove-circle c-red"></i>
+                                        Reject Invite
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+
+                {#<div class="card-body card-padding">#}
+
+                {#</div>#}
+            </div>
+
+        {% endfor %}
+    </div>
+</div>
+{#<div class="block-header">#}
+    {#<h2>Group invitations</h2>#}
+{#</div>#}

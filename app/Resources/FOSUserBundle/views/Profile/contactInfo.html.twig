@@ -1,0 +1,238 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Profile{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header_title %}Profile: {{ app.user.firstName }} {{ app.user.lastName }}{% endblock %}
+{% block body_main %}
+    <div class="card mt20" id="profile-main">
+
+
+        <div class="pm-body clearfix">
+            <ul class="tab-nav tn-justified" role="tablist" >
+                <li class="active waves-effect"><a href="#about" area-controls="about" role="tab" data-toggle="tab">Please confirm/enter your email address before proceeding.</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" role="tab-panel" id="about">
+
+                    <div class="pmb-block toggled">
+                        <div class="pmbb-header">
+                            <h2><i class="md md-email m-r-5"></i> Email Address</h2>
+
+                            <ul class="actions">
+                                <li>
+                                    
+                                        <i class="md md-edit"></i>
+                                    
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pmbb-body p-l-30" id="profile-contact-form-block">
+                           <div class="pmbb-edit">
+                                {{ form_start(contactForm,{'attr':{'id':'profile-contact-form'}}) }}
+                                <dl class="dl-horizontal">
+                                    <dt class="p-t-10">{{ form_label(contactForm.email) }}</dt>
+                                    <dd>
+                                        <div class="fg-line">
+                                            {{ form_errors(contactForm.email) }}
+                                            {{ form_widget(contactForm.email,{'attr':{'placeholder':"eg. john.doe@gmail.com"}}) }}
+                                        </div>
+                                    </dd>
+                                </dl>
+                                 <div class="m-t-30">
+                                    <button class="btn btn-primary btn-sm waves-effect waves-button waves-float" id="submit-contact">Save</button>
+                                </div>
+                                {{ form_end(contactForm) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('/plupload/js/plupload.full.min.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+
+    <script type="text/javascript">
+        // Custom example logic
+
+        var uploader = new plupload.Uploader({
+            runtimes: 'html5',
+            browse_button: 'picfile', // you can pass in id...
+            url: "{{ path('fly_user_upload_profile_photo') }}",
+            filters: {
+                max_file_size: '20mb',
+                mime_types: [
+                    {title: "Image files", extensions: "jpg,gif,png"}
+                ]
+            },
+            // Flash settings
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            // Silverlight settings
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+            init: {
+//                PostInit: function () {
+////                document.getElementById('filelist').innerHTML = '';
+//                },
+
+                FilesAdded: function (up, files) {
+                    uploader.start();
+                    return false;
+                },
+
+//                UploadProgress: function (up, file) {
+//                    console.log(file.percent + '%');
+////                $('#artwork-progress .progress-bar')
+////                        .attr('aria-valuenow', file.percent)
+////                        .css('width', file.percent + '%');
+//                },
+
+
+                FileUploaded: function (up, file, response) {
+                    try {
+                        var data = $.parseJSON(response.response);
+                        if (data.asc == 'success') {
+                            $('#user-profile-img').attr('src', '/uploads/' + data.url + '?' + Date.now());
+                        }
+
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+
+                },
+
+//                UploadComplete: function () {
+//                $('#artwork-progress').hide();
+//                var scroll = $("#artwork-container").offset().top;
+//                $('html, body').animate({
+//                    scrollTop: scroll - 50,
+//                    easing: 'swing'
+//                }, 500);
+//                $.notify("Uploaded complete", "success");
+//                $("#artwork-submit-container").show();
+//                },
+
+                Error: function (up, err) {
+                    alert(err.message);
+//                document.getElementById('upload-error').innerHTML += "\nError #" + err.code + ": " + err.message;
+                }
+            }
+        });
+
+        uploader.init();
+
+
+        var uploaderCover = new plupload.Uploader({
+            runtimes: 'html5',
+            browse_button: 'cover-upload', // you can pass in id...
+            url: "{{ path('fly_user_upload_profile_cover') }}",
+            filters: {
+                max_file_size: '20mb',
+                mime_types: [
+                    {title: "Image files", extensions: "jpg,gif,png"}
+                ]
+            },
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+            init: {
+                FilesAdded: function (up, files) {
+                    uploaderCover.start();
+                    return false;
+                },
+
+                FileUploaded: function (up, file, response) {
+                    try {
+                        var data = $.parseJSON(response.response);
+                        if (data.asc == 'success') {
+                            var imgUrl = '/uploads/' + data.url + '?' + Date.now();
+                            $('#user-profile-cover').attr('src', '/uploads/' + data.url + '?' + Date.now());
+                            updateSideProfile();
+//                            $('#cover-bg').css('background-image','/uploads/' + data.url + '?' + Date.now());
+                        }
+
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+
+                },
+
+                Error: function (up, err) {
+                    alert(err.message);
+                }
+            }
+        });
+
+        uploaderCover.init();
+
+        $(function () {
+            $('#submit-summary').click(function () {
+                $('#profile-summary-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-summary-form-block').html(data);
+                        $('#profile-summary-form-block .reset-profile-form').click();
+                    }
+                });
+
+            });
+
+            $('#submit-basic').click(function () {
+                $('#profile-basic-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-basic-form-block').html(data);
+                        $('#profile-basic-form-block .reset-profile-form').click();
+
+
+                    }
+                });
+
+            });
+
+            $(document).delegate('#submit-contact', 'click', function () {
+                $('#profile-contact-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-contact-form-block').html(data);
+                        $('#profile-contact-form-block .reset-profile-form').click();
+
+
+                    }
+                });
+
+            });
+        });
+
+        function updateSideProfile(){
+            $.ajax({
+                url: Routing.generate('fly_user_profile_update_side'),
+                async: true,
+                type: 'POST',
+                data: {},
+                dataType: 'html',
+                timeout: 100000,
+                success: function (data) {
+                    if(data != 'login'){
+                        $('#side-profile-menu').html(data);
+                    }else{
+                        window.location.href = '{{ path('fos_user_security_login') }}';
+                    }
+                },
+                error: function (a, b, c) {
+                    console.log("Ajax Error: " + b);
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}
+

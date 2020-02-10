@@ -1,0 +1,31 @@
+# This file is a "template" of what your parameters.yml file should look like
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    #facebook login
+    facebook_client_id: 1234567890
+    facebook_client_secret: 1234567890
+    google_client_id: 1234567890
+    google_client_secret: 1234567890
+    twitter-consumer-key: 1234567890
+    twitter-consumer-secret: 1234567890
+    asca_wsdlurl: url
+    asca_user: user
+    asca_password: password

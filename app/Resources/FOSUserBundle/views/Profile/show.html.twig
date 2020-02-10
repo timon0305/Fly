@@ -1,0 +1,362 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Profile{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header_title %}Profile: {{ app.user }} {% endblock %}
+{% block body_main %}
+
+    <div class="card mt20" id="profile-main">
+
+        <div class="pm-overview c-overflow" tabindex="4" style="overflow: hidden; outline: none;">
+            <div class="pmo-pic">
+                <div class="p-relative">
+                    <a href="">
+                        {% if app.user.photo %}
+                        <img class="img-responsive" id="user-profile-img"
+                             src="{{ asset('/uploads/'~app.user.photo) }}" alt="">
+                        {% endif %}
+                    </a>
+                    <a href="" class="pmop-edit" id="picfile">
+                        <i class="md md-camera-alt"></i> <span class="hidden-xs">Update Profile Picture</span>
+                    </a>
+                </div>
+
+
+                <div class="pmo-stat">
+                    <h2 class="m-0 c-white">{{ app.user.groups|length }}</h2>
+                    Total Groups
+                </div>
+
+            </div>
+        </div>
+
+        <div class="pm-body clearfix">
+            <ul class="tab-nav tn-justified" role="tablist" >
+                <li class="active waves-effect"><a href="#about" area-controls="about" role="tab" data-toggle="tab">About</a></li>
+                <li class="waves-effect"><a href="#cover" area-controls="cover" role="tab" data-toggle="tab">Cover Image</a></li>
+                <li class="waves-effect"><a href="#friends" area-controls="friends" role="tab" data-toggle="tab">Friends</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" role="tab-panel" id="about">
+                    <div class="pmb-block">
+                        <div class="pmbb-header">
+                            <h2><i class="md md-equalizer m-r-5"></i> Summary</h2>
+                            <ul class="actions">
+                                <li>
+                                    <a data-pmb-action="edit" href="">
+                                        <i class="md md-edit"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pmbb-body p-l-30" id="profile-summary-form-block">
+                            {% include 'FOSUserBundle:Profile:form_summary.html.twig' with {'form':summaryForm} %}
+                        </div>
+                    </div>
+
+                    <div class="pmb-block">
+                        <div class="pmbb-header">
+                            <h2><i class="md md-person m-r-5"></i> Basic Information</h2>
+                            <ul class="actions">
+                                <li>
+                                    <a data-pmb-action="edit" href="">
+                                        <i class="md md-edit"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pmbb-body p-l-30" id="profile-basic-form-block">
+                            {% include 'FOSUserBundle:Profile:form_basic_info.html.twig' with {'form':basicForm} %}
+                        </div>
+                    </div>
+
+                    <div class="pmb-block">
+                        <div class="pmbb-header">
+                            <h2><i class="md md-phone m-r-5"></i> Contact Information</h2>
+
+                            <ul class="actions">
+                                <li>
+                                    <a data-pmb-action="edit" href="">
+                                        <i class="md md-edit"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="pmbb-body p-l-30" id="profile-contact-form-block">
+                            {% include 'FOSUserBundle:Profile:form_contact.html.twig' with {'form':contactForm} %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" role="tab-panel" id="cover">
+                    <div class="col-md-12">
+                        <div class="text-center mt25">
+                            <a class="btn btn-success waves-effect" id="cover-upload"><i class="md md-cloud-upload"></i> Upload Cover Image</a>
+                        </div>
+                        <div class="text-center mt25" id="cover-block">
+                            {% if app.user.cover %}
+                                <img class="img-responsive" id="user-profile-cover"
+                                     src="{{ web_image(asset('/uploads/'~app.user.cover)) }}" alt="">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" role="tab-panel" id="friends">
+                    {% include 'FOSUserBundle:Profile:friends.html.twig' with {'friends':friends} %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('/plupload/js/plupload.full.min.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+
+    <script type="text/javascript">
+        // Custom example logic
+
+        var uploader = new plupload.Uploader({
+            runtimes: 'html5',
+            browse_button: 'picfile', // you can pass in id...
+            url: "{{ path('fly_user_upload_profile_photo') }}",
+            filters: {
+                max_file_size: '20mb',
+                mime_types: [
+                    {title: "Image files", extensions: "jpg,gif,png"}
+                ]
+            },
+            // Flash settings
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            // Silverlight settings
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+            init: {
+//                PostInit: function () {
+////                document.getElementById('filelist').innerHTML = '';
+//                },
+
+                FilesAdded: function (up, files) {
+                    uploader.start();
+                    return false;
+                },
+
+//                UploadProgress: function (up, file) {
+//                    console.log(file.percent + '%');
+////                $('#artwork-progress .progress-bar')
+////                        .attr('aria-valuenow', file.percent)
+////                        .css('width', file.percent + '%');
+//                },
+
+
+                FileUploaded: function (up, file, response) {
+                    try {
+                        var data = $.parseJSON(response.response);
+                        if (data.asc == 'success') {
+                            $('#user-profile-img').attr('src', '/uploads/' + data.url + '?' + Date.now());
+                        }
+
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+
+                },
+
+//                UploadComplete: function () {
+//                $('#artwork-progress').hide();
+//                var scroll = $("#artwork-container").offset().top;
+//                $('html, body').animate({
+//                    scrollTop: scroll - 50,
+//                    easing: 'swing'
+//                }, 500);
+//                $.notify("Uploaded complete", "success");
+//                $("#artwork-submit-container").show();
+//                },
+
+                Error: function (up, err) {
+                    alert(err.message);
+//                document.getElementById('upload-error').innerHTML += "\nError #" + err.code + ": " + err.message;
+                }
+            }
+        });
+
+        uploader.init();
+
+
+        var uploaderCover = new plupload.Uploader({
+            runtimes: 'html5',
+            browse_button: 'cover-upload', // you can pass in id...
+            url: "{{ path('fly_user_upload_profile_cover') }}",
+            filters: {
+                max_file_size: '20mb',
+                mime_types: [
+                    {title: "Image files", extensions: "jpg,gif,png"}
+                ]
+            },
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+            init: {
+                FilesAdded: function (up, files) {
+                    uploaderCover.start();
+                    return false;
+                },
+
+                FileUploaded: function (up, file, response) {
+                    try {
+                        var data = $.parseJSON(response.response);
+                        if (data.asc == 'success') {
+                            var imgUrl = '/uploads/' + data.url + '?' + Date.now();
+                            $('#user-profile-cover').attr('src', '/uploads/' + data.url + '?' + Date.now());
+                            updateSideProfile();
+//                            $('#cover-bg').css('background-image','/uploads/' + data.url + '?' + Date.now());
+                        }
+
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+
+                },
+
+                Error: function (up, err) {
+                    alert(err.message);
+                }
+            }
+        });
+
+        uploaderCover.init();
+
+        $(function () {
+            $('#submit-summary').click(function () {
+                $('#profile-summary-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-summary-form-block').html(data);
+                        $('#profile-summary-form-block .reset-profile-form').click();
+                    }
+                });
+
+            });
+
+            $('#submit-basic').click(function () {
+                $('#profile-basic-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-basic-form-block').html(data);
+                        $('#profile-basic-form-block .reset-profile-form').click();
+
+
+                    }
+                });
+
+            });
+
+            $(document).delegate('#submit-contact', 'click', function () {
+                $('#profile-contact-form').ajaxSubmit({
+                    dataType: 'html',
+                    success: function (data) {
+                        console.log(data);
+                        $('#profile-contact-form-block').html(data);
+                        $('#profile-contact-form-block .reset-profile-form').click();
+
+
+                    }
+                });
+
+            });
+        });
+
+        function updateSideProfile(){
+            $.ajax({
+                url: Routing.generate('fly_user_profile_update_side'),
+                async: true,
+                type: 'POST',
+                data: {},
+                dataType: 'html',
+                timeout: 100000,
+                success: function (data) {
+                    if(data != 'login'){
+                        $('#side-profile-menu').html(data);
+                    }else{
+                        window.location.href = '{{ path('fos_user_security_login') }}';
+                    }
+                },
+                error: function (a, b, c) {
+                    console.log("Ajax Error: " + b);
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+{% endblock %}
+
+{#{% block fbapiRoot %}#}
+    {#<div id="fb-root"></div>#}
+{#{% endblock %}#}
+{#{% block fbapi %}#}
+
+    {#<script>#}
+
+        {#// FB JS API //-->#}
+
+        {#window.fbAsyncInit = function() {#}
+            {#// init the FB JS SDK#}
+            {#FB.init({#}
+                {#appId      : '{{ facebookId }}',                        // App ID from the app dashboard#}
+                {#version    : 'v2.5',#}
+                {#xfbml      : true                                  // Look for social plugins on the page#}
+            {#});#}
+        {#};#}
+
+        {#// Load the SDK asynchronously#}
+        {#(function(d, s, id){#}
+            {#var js, fjs = d.getElementsByTagName(s)[0];#}
+            {#if (d.getElementById(id)) {return;}#}
+            {#js = d.createElement(s); js.id = id;#}
+            {#js.src = "//connect.facebook.net/en_US/all.js";#}
+            {#fjs.parentNode.insertBefore(js, fjs);#}
+        {#}(document, 'script', 'facebook-jssdk'));#}
+
+        {#function fb_login() {#}
+            {#alert('ok');#}
+            {#FB.getLoginStatus(function(response) {#}
+                {#if (response.status === 'connected') {#}
+                    {#// connected#}
+{#//                        alert('Already connected, redirect to login page to create token.');#}
+                    {#window.open(#}
+                            {#"{{ path("hwi_oauth_service_redirect", {service: "facebook"}) }}",#}
+                            {#"_blank",#}
+                            {#"toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400"#}
+                    {#);#}
+                    {#document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";#}
+                {#} else {#}
+                    {#// not_authorized#}
+                    {#FB.login(function(response) {#}
+                        {#if (response.authResponse) {#}
+                            {#window.open(#}
+                                    {#"{{ path("hwi_oauth_service_redirect", {service: "facebook"}) }}",#}
+                                    {#"_blank",#}
+                                    {#"toolbar=yes, scrollbars=yes, resizable=yes, top=500, left=500, width=400, height=400"#}
+                            {#);#}
+                            {#document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";#}
+                        {#} else {#}
+                            {#alert('Cancelled.');#}
+                        {#}#}
+                    {#}, {display: 'popup', scope: 'email, public_profile, user_hometown, user_location'});#}
+                {#}#}
+            {#});#}
+        {#}#}
+
+    {#</script>#}
+
+
+{#{% endblock %}#}

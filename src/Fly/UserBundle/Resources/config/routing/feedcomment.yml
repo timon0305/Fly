@@ -1,0 +1,12 @@
+feedcomment_ajx_create:
+    path:     /
+    defaults: { _controller: "FlyUserBundle:FeedComment:createAjx" }
+    options:
+        expose: true
+
+feedcomment_ajx_delete:
+    path:     /delete
+    defaults: { _controller: "FlyUserBundle:FeedComment:deleteAjx" }
+    methods: DELETE
+    options:
+        expose: true

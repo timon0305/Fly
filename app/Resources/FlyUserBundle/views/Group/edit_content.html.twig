@@ -1,0 +1,101 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<legend><h3>Group: "{{ group.name }}"</h3></legend>
+{% if not group.isActive %}
+    <div class="alert alert-info">
+        <h4><i class="fa fa-info-circle"></i> The group is disabled now.</h4>
+    </div>
+{% endif %}
+<form action="{{ path('fos_user_group_edit', {'groupName': group.name} ) }}" {{ form_enctype(form) }} method="POST"
+      class="fos_user_group_edit">
+    {#{{ form_widget(form) }}#}
+    {#<div>#}
+    {#<input type="submit" value="{{ 'group.edit.submit'|trans }}" />#}
+    {#</div>#}
+    {{ form_row(form.name) }}
+    {#{{ form_row(form.description) }}#}
+    {% if  group.picture %}
+        <img src="{{ web_image('uploads/'~group.picture).resize(100,100) }}" class="thumbnail img-rounded"/>
+    {% endif %}
+    {{ form_row(form.picture) }}
+    <legend><h3>Describe your group</h3></legend>
+    {{ form_row(form.travelingWith) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.spirits) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.accomodations) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.transportations) }}
+    <div class="clearfix"></div>
+    {#{{ form_row(form.activities) }}#}
+    {#<div class="clearfix"></div>#}
+
+    <legend><h3>Where to go?</h3></legend>
+    {{ form_row(form.is_wheretogo) }}
+    {#{{ form_row(form.city) }}#}
+    {#{{ form_row(form.country) }}#}
+    {#{{ form_row(form.world_zones) }}#}
+    <div class="clearfix"></div>
+    <legend><h3>When to go?</h3></legend>
+    {{ form_row(form.is_whentogo) }}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_label(form.departure_date) }}</label>
+
+            <div id="datepicker_dep" data-date="{{ group.departureDate|date('Y-m-d') }}"></div>
+            {{ form_widget(form.departure_date,{'attr':{'class':'datepicker_dep hide'}}) }}
+        </div>
+
+        {#{{ form_row(form.departure_date_flexibility) }}#}
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_label(form.wayback_date) }}</label>
+
+            <div id="datepicker_back" data-date="{{ group.waybackDate|date('Y-m-d') }}"></div>
+            {{ form_widget(form.wayback_date,{'attr':{'class':'datepicker_back hide'}}) }}
+        </div>
+        {#{{ form_row(form.wayback_date_flexibility) }}#}
+    </div>
+    <div class="clearfix"></div>
+
+    <legend><h3>When does this group expire</h3></legend>
+    {{ form_row(form.expired_time) }}
+    <legend><h3>Group Goals</h3></legend>
+    <ul class="group_goals" data-prototype="{{ form_widget(form.goal.vars.prototype)|e }}">
+        {% for goal in form.goal %}
+            <li class="goal-form-row">
+                {#{{ form_widget(goal) }}#}
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>{{ form_label(goal.title) }}</label>
+                        {{ form_widget(goal.title) }}
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label>{{ form_label(goal.goal_date) }}</label>
+                        {#{{ dump(goal.goal_date.vars) }}#}
+                        {#<div class="goal-date-datepicker" data-date="{{ goal.goal_date.vars.value|date('Y-m-d') }}"></div>#}
+                        {{ form_widget(goal.goal_date) }}
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <a class="remove-goal btn btn-xs btn-danger" href="#"><i class="md md-remove-circle"></i></a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    {{ form_rest(form) }}
+    {#{{ form_widget(form) }}#}
+    <hr/>
+    <div>
+
+        {% if group.isActive %}
+            <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> {{ 'group.edit.submit'|trans }}</button>
+            <a class="btn btn-warning delete-confirm" data-msg="Do you really whant to Disable group?" href="{{ path('fly_group_disable',{'groupName':group.name}) }}"><i class="fa fa-ban"></i> Disable Group</a>
+        {% else %}
+            <a class="btn btn-primary delete-confirm" data-msg="Do you really whant to Eisable group?" href="{{ path('fly_group_enable',{'groupName':group.name}) }}"><i class="fa fa-power-off"></i> Enable Group</a>
+        {% endif %}
+        <a class="btn btn-danger delete-confirm" data-msg="Are you sure you want to delete this group? All data will be removed and all members will be ejected" href="{{ path('fos_user_group_delete',{'groupName':group.name}) }}"><i class="fa fa-trash-o"></i> Delete Group</a>
+    </div>
+</form>

@@ -1,0 +1,49 @@
+<form class="form-inline" action="{{ path('fly_search') }}" method="post">
+    <div class="form-group col-md-3">
+        <label for="departure" class="pull-left">Departure</label><br/>
+        <select class="form-control" id="departure"  name="departure" required="required" >
+            <option value="" selected="selected" >Where from?</option>
+        </select>
+    </div>
+    <div class="form-group col-md-3">
+        <label for="destination" class="pull-left">Destination</label><br/>
+        <select class="form-control" id="destination" name="destination" required="required">
+            <option value="" selected="selected" >Where to?</option>
+        </select>
+    </div>
+    <div class="form-group col-md-1">
+        <label for="outbound" class="pull-left">Outbound</label><br/>
+        <input type="text" class="form-control" id="outbound" name="outbound">
+    </div>
+    <div class="form-group col-md-1">
+        <label for="inbound" class="pull-left">Inbound</label><br/>
+        <input type="text" class="form-control" id="inbound" name="inbound" >
+    </div>
+    <div class="form-group col-md-2">
+        <label for="passengers" class="pull-left">Passengers</label><br/>
+        <div class="col-md-12 nopad">
+            <input type="number" class="form-control " id="passengers" name="passengers" min="1" placeholder="0">
+        {#<div class="col-md-6">#}
+            <select class="form-control" id="passengers-type" name="passengers-type" required="required">
+                <option value="adt" selected="selected" >Adt</option>
+            </select>
+        </div>
+
+
+        {#<input type="number" class="form-control" id="passengers" name="passengers" min="1" placeholder="Adult(>12)">#}
+    </div>
+    <div class="form-group col-md-1">
+        <label for="stops" class="pull-left">Stops</label><br/>
+        <select class="form-control" id="stops" name="stops" required="required">
+            <option value="0" selected="selected" >Direct</option>
+            <option value="1">1 stop</option>
+            <option value="3">All stops</option>
+        </select>
+        {#<input type="number" class="form-control" id="stops" name="stops" min="0" placeholder="Direct Only">#}
+    </div>
+    <div class="form-group col-md-1">
+        <label for="stops">&nbsp;</label><br/>
+        <button type="submit" class="btn btn-default "><i class="fa fa-plane"></i> GO</button>
+    </div>
+
+</form>

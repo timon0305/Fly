@@ -1,0 +1,44 @@
+group_feed:
+    path:     /
+    defaults: { _controller: "FlyUserBundle:Feed:index" }
+
+group_feed_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyUserBundle:Feed:show" }
+
+group_feed_new:
+    path:     /new
+    defaults: { _controller: "FlyUserBundle:Feed:new" }
+
+group_feed_create:
+    path:     /create
+    defaults: { _controller: "FlyUserBundle:Feed:create" }
+    methods:  POST
+
+group_feed_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyUserBundle:Feed:edit" }
+
+group_feed_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyUserBundle:Feed:update" }
+    methods:  [POST, PUT]
+
+group_feed_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyUserBundle:Feed:delete" }
+    methods:  [POST, DELETE]
+
+group_feed_ajx_post:
+    path:     /ajx/post
+    defaults: { _controller: "FlyPlatformBundle:Ajx:postFeed" }
+    methods:  POST
+    options:
+         expose: true
+
+group_feed_ajx_get:
+    path:     /ajx/get
+    defaults: { _controller: "FlyPlatformBundle:Ajx:getFeed" }
+    methods:  POST
+    options:
+         expose: true

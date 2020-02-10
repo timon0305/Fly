@@ -1,0 +1,26 @@
+{# src/Fly/PlatformBundle/Resources/views/Advert/delete.html.twig #}
+
+{% extends "FlyPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Remove an advert - {{ parent() }}
+{% endblock %}
+
+{% block flyplatform_body %}
+
+  <div class="flash-messages">
+   
+      {% for flashMessage in app.session.flashbag.get('info') %}
+      <div class="alert alert-success">
+       {{ flashMessage }}
+      </div>
+      {% endfor %}
+  
+</div> 
+
+  <p>
+    your advert was deleted successfully!
+  </p>
+
+
+{% endblock %}

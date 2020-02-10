@@ -1,0 +1,30 @@
+airport:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:Airport:index" }
+
+airport_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyPlatformBundle:Airport:show" }
+
+airport_new:
+    path:     /new
+    defaults: { _controller: "FlyPlatformBundle:Airport:new" }
+
+airport_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:Airport:create" }
+    methods:  POST
+
+airport_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:Airport:edit" }
+
+airport_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:Airport:update" }
+    methods:  [POST, PUT]
+
+airport_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyPlatformBundle:Airport:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,21 @@
+{# src/Fly/PlatformBundle/Resources/views/Advert/add.html.twig #}
+
+{% extends "FlyPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier une annonce - {{ parent() }}
+{% endblock %}
+
+{% block flyplatform_body %}
+
+   <h2>Ajouter une annonce</h2>
+
+  {{ include("FlyPlatformBundle:Advert:form.html.twig") }}
+
+  <p>
+    Attention : cette annonce sera ajoutée directement
+    sur la page d'accueil après validation du formulaire.
+  </p>
+
+
+{% endblock %}

@@ -1,0 +1,112 @@
+{% if lowFareSearchData|length %}
+    <h5>Serch Results for <span class="label {% if flyRes.cached == true %} label-success {% else %} label-default {% endif %}">From Cache</span>
+    </h5>
+    <h4>{{ lowFareSearchData.departureDate }}  {{ lowFareSearchData.departureAid }} -> {{ lowFareSearchData.arrivalAid }} | {{ lowFareSearchData.arrivalDate }}  {{ lowFareSearchData.arrivalAid }} -> {{ lowFareSearchData.departureAid }}</h4>
+{% endif %}
+<hr/>
+
+{% if flyRes|length %}
+    {% if flyRes.asc == 'success' %}
+        {% if flyRes.flyData|length %}
+            {% for flyRoute in flyRes.flyData %}
+                <div class="row row-routeblock">
+                    <div class="container-route">
+                        <div class="col-md-2">
+                            <h4>{{ flyRoute.price }}</h4>
+                            <form name="booking-form-quick" class="booking-form-small" action="{{ path('fly_payment') }}" method="post">
+                                <input type="hidden" name="booking_form_quick[price]" value="{{ flyRoute.price }}">
+
+                                <input type="hidden" name="booking_form_quick[outbound][operatingAirlineCode]" value="{{ flyRoute.outboundsSummary.operatingAirlineCode }}">
+                                <input type="hidden" name="booking_form_quick[outbound][start]" value="{{ flyRoute.outboundsSummary.start|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][end]" value="{{ flyRoute.outboundsSummary.end|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][airports]" value="{{ flyRoute.outboundsSummary.airports|join(',') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][duration]" value="{{ flyRoute.outboundsSummary.duration }}">
+                                {% if flyRoute.outboundsSummary.stops|length %}
+                                    <input type="hidden" name="booking_form_quick[outbound][stops]" value="{{ flyRoute.outboundsSummary.stops|length }}">
+                                {% for stp in flyRoute.outboundsSummary.stops %}
+                                    <input type="hidden" name="booking_form_quick[outbound][stops][airport][]" value="{{ stp.airport }}">
+                                    <input type="hidden" name="booking_form_quick[outbound][stops][interval][]" value="{{ stp.time.interval }}">
+                                {% endfor %}
+                                {% else %}
+                                    <input type="hidden" name="booking_form_quick[outbound][stops]" value="0">
+                                {% endif %}
+
+                                <input type="hidden" name="booking_form_quick[inbound][operatingAirlineCode]" value="{{ flyRoute.inboundsSummary.operatingAirlineCode }}">
+                                <input type="hidden" name="booking_form_quick[inbound][start]" value="{{ flyRoute.inboundsSummary.start|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][end]" value="{{ flyRoute.inboundsSummary.end|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][airports]" value="{{ flyRoute.inboundsSummary.airports|join(',') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][duration]" value="{{ flyRoute.inboundsSummary.duration }}">
+                                {% if flyRoute.inboundsSummary.stops|length %}
+                                    <input type="hidden" name="booking_form_quick[inbound][stops]" value="{{ flyRoute.inboundsSummary.stops|length }}">
+                                    {% for stp in flyRoute.inboundsSummary.stops %}
+                                        <input type="hidden" name="booking_form_quick[inbound][stops][airport][]" value="{{ stp.airport }}">
+                                        <input type="hidden" name="booking_form_quick[inbound][stops][interval][]" value="{{ stp.time.interval }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="hidden" name="booking_form_quick[inbound][stops]" value="0">
+                                {% endif %}
+
+                                <button type="submit" class="btn btn-primary book-fly">Book</button>
+                            </form>
+
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row-route row-route-outbound">
+                                <div class="col-md-1"><i class="fa fa-plane fa-2x"></i></div>
+                                <div class="col-md-2">{{ flyRoute.outboundsSummary.operatingAirlineCode }}</div>
+                                <div class="col-md-2">
+                                    {{ flyRoute.outboundsSummary.start|date('H:i:s') }} - {{ flyRoute.outboundsSummary.end|date('H:i:s') }}
+                                    <br/>{{ flyRoute.outboundsSummary.airports|join(',') }}
+                                </div>
+                                <div class="col-md-2">{{ flyRoute.outboundsSummary.duration }}</div>
+                                <div class="col-md-2">
+                                    {% if flyRoute.outboundsSummary.stops|length %}
+                                        {{ flyRoute.outboundsSummary.stops|length }} stops
+                                        {% for stp in flyRoute.outboundsSummary.stops %}
+                                            <br/>{{ stp.time.interval }} in {{ stp.airport }}
+                                        {% endfor %}
+                                    {% else %}
+                                        Nonstop
+                                    {% endif %}
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="row-route row-route-inbound">
+                                <div class="col-md-1"><i class="fa fa-plane fa-2x" style="transform: scale(-1, -1)"></i> </div>
+                                <div class="col-md-2">{{ flyRoute.inboundsSummary.operatingAirlineCode }}</div>
+                                <div class="col-md-2">
+                                    {{ flyRoute.inboundsSummary.start|date('H:i:s') }} - {{ flyRoute.inboundsSummary.end|date('H:i:s') }}
+                                    <br/>{{ flyRoute.inboundsSummary.airports|join(',') }}
+                                </div>
+                                <div class="col-md-2">{{ flyRoute.inboundsSummary.duration }}</div>
+                                <div class="col-md-2">
+                                    {% if flyRoute.inboundsSummary.stops|length %}
+                                        {{ flyRoute.inboundsSummary.stops|length }} stops
+                                        {% for stp in flyRoute.inboundsSummary.stops %}
+                                            <br/>{{ stp.time.interval }} in {{ stp.airport }}
+                                        {% endfor %}
+                                    {% else %}
+                                        Nonstop
+                                    {% endif %}
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-warning">
+                <h4> Flyght Routes not found </h4>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            <h4> {{ flyRes.msg }} </h4>
+        </div>
+    {% endif %}
+
+{% endif %}
+</div>
+</div>

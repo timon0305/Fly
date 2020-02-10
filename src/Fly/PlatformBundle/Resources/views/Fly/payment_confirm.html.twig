@@ -1,0 +1,41 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block stylesheets %}
+
+{% endblock %}
+{% block title %}Fly - Payment{% endblock %}
+{% block body_main %}
+<div class="card notice-list">
+    <div class="card-header">
+        <h2>Fly
+            {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+        </h2>
+    </div>
+
+    <div class="card-body card-padding">
+        <h1>Booking  Prepaid Success</h1>
+
+        <div class="row">
+            <div class="card">
+                <div class="card-body card-padding">
+                    <div class="alert alert-info">
+                        You Succesfully book tickets.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $(function(){
+
+    });
+
+    </script>
+{% endblock %}

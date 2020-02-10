@@ -1,0 +1,337 @@
+
+
+    <div class="container main-block" id="fly-search">
+
+        <div class="col-md-3 " id="fly-search-filter">
+            <form>
+            <div class="panel panel-default panel-fly-filter">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Filter</h3>
+                </div>
+
+                <div class="panel-group filter-block" role="tablist">
+                    <div class="panel panel-default">
+                        <!--- Connections//--->
+                        <div class="panel-heading" role="tab" id="filterGroupConnections">
+                            <a href="#filterCollapseConnections" class="filter-group-title" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="filterCollapseConnections">
+                                <h4 class="panel-title">
+                                    Connections
+                                    <div class="caret pull-right"></div>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse in" role="tabpanel" id="filterCollapseConnections" aria-labelledby="filterGroupConnections" aria-expanded="true">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Direct</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="stopDirect"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>1 Stop</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="stopDirect"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>+2 Stop</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="stopDirect"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--- Baggage//--->
+                        <div class="panel-heading" role="tab" id="filterGroupBaggage">
+                            <a href="#filterCollapseBaggage" class="filter-group-title" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="filterCollapseBaggage">
+                                <h4 class="panel-title">
+                                    Baggage
+                                    <div class="caret pull-right"></div>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse in" role="tabpanel" id="filterCollapseBaggage" aria-labelledby="filterGroupBaggage" aria-expanded="true">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Cabin Baggage</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="baggageCabin"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Checked Baggage</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="baggageChecked"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--- Airlines//--->
+                        <div class="panel-heading" role="tab" id="filterGroupAirlines">
+                            <a href="#filterCollapseAirlines" class="filter-group-title" role="button" data-toggle="collapse" aria-expanded="true" aria-controls="filterCollapseAirlines">
+                                <h4 class="panel-title">
+                                    Airlines
+                                    <div class="caret pull-right"></div>
+                                </h4>
+                            </a>
+                        </div>
+                        <div class="panel-collapse collapse in" role="tabpanel" id="filterCollapseAirlines" aria-labelledby="filterGroupAirlines" aria-expanded="true">
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Air China</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airChina"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Air France</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airFrance"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>American Airlines</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airAmerica"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>British Airways</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airBritish"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>KLM</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airKLM"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="#" class="filter-param">
+                                        <div class="row">
+                                            <div class="col-md-9"><h4>Lufthansa</h4></div>
+                                            <div class="col-md-3"><input type="checkbox" class="regular-checkbox" name="airLufthansa"></div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer text-center">
+                    <button type="submit" class="btn btn-filter">Apply Filter</button>
+                </div>
+            </div>
+
+
+            </form>
+        </div>
+        <div class="col-md-9 " id="fly-search-results">
+
+            <div class="panel panel-default panel-fly-results">
+                <div class="panel-body">
+                    <table class="table fly-item">
+                        <tr>
+                            <td class="outbnd">
+                                <div class="row ">
+                                    <div class="col-md-2"><img src="{{ asset('img/logo-af-app.png') }}" class="img-responsive"></div>
+                                    <div class="col-md-5">
+                                        <div class="row departure">
+                                            <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Paris Charlies da Gaulle (CDG)</h4></div>
+                                            <div class="col-md-6 nopad">
+                                                <h4 style="font-size: 16px;"><i class=" fa fa-plane"></i> 15:15</h4>
+                                            </div>
+                                            <div class="col-md-6 nopad text-center">
+                                                <div class="stopline"><hr style="width:70%; border-top: 1px solid #000; margin-bottom:5px;"/></div>
+                                                <div class="stoptext" style="font-size: 11px;"><i>Non stop</i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row departure">
+                                            <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Los Angeles Int. Airport (LAX)</h4></div>
+                                            <div class="col-md-12 nopad">
+                                                <h4 style="font-size: 16px;"><i class=" fa fa-plane" style="transform: scale(1, -1)"></i> 18:50</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="padding: 0 45px"><hr style="border-top: 1px solid #ccc; margin-top: 5px; margin-bottom: 5px;"/></div>
+                                    <div class="col-md-6" style="padding: 0 25px"><hr style="border-top: 1px solid #ccc; margin-top: 5px; margin-bottom: 5px;"/></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 style="font-size: 12px;"><i class=" fa fa-clock"></i> 11:10</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 style="font-size: 12px;"><i class=" fa fa-case"></i> 1 Bag<br>(20KG)</h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td rowspan="2" class="price">Social</td>
+                        </tr>
+                        <tr>
+                            <td class="inbnd">
+                                <div class="row ">
+                                    <div class="col-md-2"><img src="{{ asset('img/48x48-aa.png') }}" class="img-responsive"></div>
+                                    <div class="col-md-5">
+                                        <div class="row departure">
+                                            <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Los Angeles Int. Airport (LAX)</h4></div>
+                                            <div class="col-md-6 nopad">
+                                                <h4 style="font-size: 16px;"><i class=" fa fa-plane"></i> 17:45</h4>
+                                            </div>
+                                            <div class="col-md-6 nopad text-center">
+                                                <div class="stopline"><hr style="width:70%; border-top: 1px solid #000; margin-bottom:5px;"/></div>
+                                                <div class="stoptext" style="font-size: 11px;"><i>1:50 - RAK</i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row departure">
+                                            <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Paris Charlies da Gaulle (CDG)</h4></div>
+                                            <div class="col-md-12 nopad">
+                                                <h4 style="font-size: 16px;"><i class=" fa fa-plane" style="transform: scale(1, -1)"></i> 10:50<sup><i>+1</i></sup></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h4 style="font-size: 12px;"><i class=" fa fa-clock"></i> 14:40</h4>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h4 style="font-size: 12px;"><i class=" fa fa-case"></i> 2 Bag<br>(35KG)</h4>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><hr/></td>
+                        </tr>
+                    </table>
+                    <div class="row fly-info-row" style="border-bottom: 1px solid #ccc; padding-bottom: 15px; margin-bottom: 15px;">
+                        <div class="col-md-8 fly-data" style="border-right: 1px solid #ccc;">
+
+                            <div class="row ">
+                                <div class="col-md-2"><img src="{{ asset('img/logo-af-app.png') }}" class="img-responsive"></div>
+                                <div class="col-md-5">
+                                    <div class="row departure">
+                                        <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Paris Charlies da Gaulle (CDG)</h4></div>
+                                        <div class="col-md-6 nopad">
+                                            <h4 style="font-size: 16px;"><i class=" fa fa-plane"></i> 15:15</h4>
+                                        </div>
+                                        <div class="col-md-6 nopad text-center">
+                                            <div class="stopline"><hr style="width:70%; border-top: 1px solid #000; margin-bottom:5px;"/></div>
+                                            <div class="stoptext" style="font-size: 11px;"><i>Non stop</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row departure">
+                                        <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Los Angeles Int. Airport (LAX)</h4></div>
+                                        <div class="col-md-12 nopad">
+                                            <h4 style="font-size: 16px;"><i class=" fa fa-plane" style="transform: scale(1, -1)"></i> 18:50</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6" style="padding: 0 45px"><hr style="border-top: 1px solid #ccc; margin-top: 5px; margin-bottom: 5px;"/></div>
+                                <div class="col-md-6" style="padding: 0 25px"><hr style="border-top: 1px solid #ccc; margin-top: 5px; margin-bottom: 5px;"/></div>
+                            </div>
+                            <div class="row ">
+                                <div class="col-md-2"><img src="{{ asset('img/48x48-aa.png') }}" class="img-responsive"></div>
+                                <div class="col-md-5">
+                                    <div class="row departure">
+                                        <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Los Angeles Int. Airport (LAX)</h4></div>
+                                        <div class="col-md-6 nopad">
+                                            <h4 style="font-size: 16px;"><i class=" fa fa-plane"></i> 17:45</h4>
+                                        </div>
+                                        <div class="col-md-6 nopad text-center">
+                                            <div class="stopline"><hr style="width:70%; border-top: 1px solid #000; margin-bottom:5px;"/></div>
+                                            <div class="stoptext" style="font-size: 11px;"><i>1:50 - RAK</i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="row departure">
+                                        <div class="col-md-12 nopad"><h4 style="font-size: 11px;">Paris Charlies da Gaulle (CDG)</h4></div>
+                                        <div class="col-md-12 nopad">
+                                            <h4 style="font-size: 16px;"><i class=" fa fa-plane" style="transform: scale(1, -1)"></i> 10:50<sup><i>+1</i></sup></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="col-md-2 fly-time">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 style="font-size: 12px;"><i class=" fa fa-clock"></i> 11:10</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 style="font-size: 12px;"><i class=" fa fa-case"></i> 1 Bag<br>(20KG)</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr style="border-top: 1px solid #ccc; margin-top: 5px; margin-bottom: 5px;"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 style="font-size: 12px;"><i class=" fa fa-clock"></i> 14:40</h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 style="font-size: 12px;"><i class=" fa fa-case"></i> 2 Bag<br>(35KG)</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 fly-social">
+                            <h1>Price</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>

@@ -1,0 +1,125 @@
+fly_platform_airport:
+    resource: "@FlyPlatformBundle/Resources/config/routing/airport.yml"
+    prefix:   /airport
+
+fly_platform_actitem:
+    resource: "@FlyPlatformBundle/Resources/config/routing/actitem.yml"
+    prefix:   /actitem
+
+fly_platform_actcategory:
+    resource: "@FlyPlatformBundle/Resources/config/routing/actcategory.yml"
+    prefix:   /actcategory
+
+fly_platform_act:
+    resource: "@FlyPlatformBundle/Resources/config/routing/act.yml"
+    prefix:   /act
+
+fly_platform_accitem:
+    resource: "@FlyPlatformBundle/Resources/config/routing/accitem.yml"
+    prefix:   /accitem
+    options:
+      expose: true
+
+
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+
+
+fly_platform_home:
+    path:     /
+    defaults: { _controller: FlyPlatformBundle:Default:index }
+fly_platform_view:
+    path:     /advert/{id}
+    defaults: { _controller: FlyPlatformBundle:Advert:view }
+    requirements:
+        id: \d+
+fly_platform_add:
+    path:     /add
+    defaults: { _controller: FlyPlatformBundle:Advert:add }
+fly_platform_mamak:
+    path:     /mamak
+    defaults: { _controller: FlyPlatformBundle:Advert:mamak }
+fly_platform_edit:
+    path:     /edit/{id}
+    defaults: { _controller: FlyPlatformBundle:Advert:edit }
+    requirements:
+         id: \d+
+fly_platform_delete:
+    path:    /delete/{id}
+    defaults: { _controller: FlyPlatformBundle:Advert:delete }
+    requirements:
+        id: \d+
+
+fly_platform_delete_success:
+    path: /platform/delete/success
+    defaults: { _controller: FlyPlatformBundle:Advert:deleteSuccess }
+
+fly_platform_accept_invite:
+  path: /ajx/accept/invite
+  defaults: { _controller: FlyPlatformBundle:Ajx:acceptInvite }
+
+fly_platform_decline_invite:
+  path: /ajx/decline/invite
+  defaults: { _controller: FlyPlatformBundle:Ajx:declineInvite }
+
+fly_platform_geturlcontent:
+  path: /ajx/get/urlcontent
+  defaults: { _controller: FlyPlatformBundle:Ajx:getUrlContent }
+  options:
+    expose: true
+
+fly_platform_create_steps:
+  path: /ajx/group/createsteps
+  defaults: { _controller: FlyPlatformBundle:Ajx:createGroupSteps }
+  options:
+    expose: true
+
+fly_platform_group_create:
+  path: /ajx/group/create
+  defaults: { _controller: FlyPlatformBundle:Ajx:createGroup }
+  options:
+    expose: true
+
+fly_platform_group_check:
+  path: /ajx/group/check/{name}
+  defaults: { _controller: FlyPlatformBundle:Ajx:checkGroup }
+  options:
+    expose: true
+
+fly_platform_package_calendar_events:
+  path: /ajx/package/events
+  defaults: { _controller: FlyPlatformBundle:Ajx:calendarEvents }
+  options:
+    expose: true
+
+fly_platform_package_calendar_events_edit_form:
+  path: /ajx/package/events/edit/form/{id}/{type}
+  defaults: { _controller: FlyPlatformBundle:Ajx:calendarEventEditForm }
+  options:
+    expose: true
+
+fly_platform_package_calendar_events_remove:
+  path: /ajx/package/events/remove/{id}/{type}
+  defaults: { _controller: FlyPlatformBundle:Ajx:calendarEventRemove }
+  options:
+    expose: true
+
+fly_platform_airport_search:
+  path: /ajx/airport/search
+  defaults: { _controller: FlyPlatformBundle:Ajx:airportSearch }
+  options:
+    expose: true
+
+fly_platform_acc:
+    resource: "@FlyPlatformBundle/Resources/config/routing/acc.yml"
+    prefix:   /acc
+    options:
+      expose: true
+
+fly_platform_fly:
+    resource: "@FlyPlatformBundle/Resources/config/routing/fly.yml"
+    prefix:   /fly
+    options:
+      expose: true

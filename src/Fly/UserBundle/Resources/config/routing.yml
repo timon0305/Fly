@@ -1,0 +1,133 @@
+fly_user_package:
+    resource: "@FlyUserBundle/Resources/config/routing/package.yml"
+    prefix:   /packages
+
+fly_user_notification:
+    resource: "@FlyUserBundle/Resources/config/routing/notification.yml"
+    prefix:   /notifications
+
+fly_user_feed_like:
+    resource: "@FlyUserBundle/Resources/config/routing/feedlike.yml"
+    prefix:   /feedlike
+
+fly_user_feed_comment:
+    resource: "@FlyUserBundle/Resources/config/routing/feedcomment.yml"
+    prefix:   /feedcomment
+
+fly_user_group_feed:
+    resource: "@FlyUserBundle/Resources/config/routing/feed.yml"
+    prefix:   /group/{groupName}/feed
+
+
+fly_user_friends:
+    resource: "@FlyUserBundle/Resources/config/routing/friends.yml"
+    prefix:   /friends
+
+
+fly_user_waller:
+    resource: "@FlyUserBundle/Resources/config/routing/wallet.yml"
+    prefix:   /wallet
+
+fly_user_invitation_unconfirmed:
+  path:     /unconfirmed
+  defaults: { _controller: FlyUserBundle:Invitation:unconfirmed }
+
+
+fly_user_upload_profile_photo:
+  path: /ajx/upload/profile_photo
+  defaults: { _controller: FlyPlatformBundle:Ajx:uploadProfileImage}
+
+fly_user_upload_profile_cover:
+  path: /ajx/upload/profile_cover
+  defaults: { _controller: FlyPlatformBundle:Ajx:uploadProfileCover}
+
+fly_user_profile_update_summary:
+  path: /profile/update/summary
+  defaults: { _controller: FlyUserBundle:Profile:updateSummary}
+  methods: [POST]
+
+fly_user_profile_update_basic_info:
+  path: /profile/update/basicinfo
+  defaults: { _controller: FlyUserBundle:Profile:updateBasicInfo}
+  methods: [POST]
+
+fly_user_profile_update_contact:
+  path: /profile/update/contact
+  defaults: { _controller: FlyUserBundle:Profile:updateContact}
+  methods: [POST]
+
+fly_user_profile_update_side:
+  path: /profile/update/side
+  defaults: { _controller: FlyUserBundle:Profile:updateSideProfile}
+  options:
+     expose: true
+
+fly_user_profile_change_email:
+  path: /profile/change/email
+  defaults: { _controller: FlyUserBundle:Profile:changeEmail}
+
+fly_user_profile_update_email:
+  path: /profile/update/contact/email
+  defaults: { _controller: FlyUserBundle:Profile:updateEmail}
+  methods: [POST]
+
+fly_user_profile_change_password:
+  path: /profile/change/password
+  defaults: { _controller: FlyUserBundle:Profile:changePassword}
+  methods: [POST|GET]
+
+fly_facebook_callback_url:
+  path: /facebook/login/callback
+  defaults: { _controller: FlyUserBundle:Security:facebookLoginBack}
+
+fly_twitter_callback_url:
+  path: /twitter/login-back
+  defaults: { _controller: FlyUserBundle:Security:twitterLoginBack }
+fly_facebook_register_url:
+  path: /facebook/register/callback
+  defaults: { _controller: FlyUserBundle:Registration:facebookRegister}
+fly_twitter_register_url:
+  path: /twitter/register/callback
+  defaults: { _controller: FlyUserBundle:Registration:twitterRegister }
+
+
+fly_group_create_steps:
+  path: /group/new/steps
+  defaults: { _controller: FlyUserBundle:StepForm:new }
+  options:
+    expose: true
+
+fly_group_register_invited_user:
+  path: /register/group/invite/{code}
+  defaults: { _controller: FlyUserBundle:Group:registerInvitedUsers }
+  options:
+    expose: true
+
+fly_group_disable:
+  path: /group/disable/{groupName}
+  defaults: { _controller: FlyUserBundle:Group:disable }
+  options:
+    expose: true
+
+fly_group_enable:
+  path: /group/enable/{groupName}
+  defaults: { _controller: FlyUserBundle:Group:enable }
+  options:
+    expose: true
+
+fly_group_invite_friends_index:
+  path: /group/{groupName}/invite/friends
+  defaults: { _controller: FlyUserBundle:Group:inviteFriends }
+  options:
+    expose: true
+
+fly_group_invite_friends_invite:
+  path: /group/{groupName}/invite/to/group
+  defaults: { _controller: FlyUserBundle:Group:inviteFriendsToGroup }
+  options:
+    expose: true
+  
+    
+  
+  
+  

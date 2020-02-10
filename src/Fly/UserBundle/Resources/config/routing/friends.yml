@@ -1,0 +1,54 @@
+fly_user_friends_index:
+  path: /
+  defaults: { _controller: FlyUserBundle:Friends:index}
+  options:
+     expose: true
+
+fly_user_friends_invite:
+  path: /invite
+  defaults: { _controller: FlyUserBundle:Friends:invite}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_group_invite:
+  path: /invite/group
+  defaults: { _controller: FlyUserBundle:Friends:inviteGroup}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_confirm:
+  path: /confirm
+  defaults: { _controller: FlyUserBundle:Friends:confirm}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_ignore:
+  path: /ignore
+  defaults: { _controller: FlyUserBundle:Friends:ignore}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_unfriend:
+  path: /unfriend
+  defaults: { _controller: FlyUserBundle:Friends:unfriend}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_restore:
+  path: /restore
+  defaults: { _controller: FlyUserBundle:Friends:restore}
+  methods:  POST
+  options:
+     expose: true
+
+fly_user_friends_activate:
+  path: /activate/{hashe}
+  defaults: { _controller: FlyUserBundle:Friends:activate}
+  methods:  GET
+  options:
+     expose: true

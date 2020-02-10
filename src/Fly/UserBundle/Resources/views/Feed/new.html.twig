@@ -1,0 +1,107 @@
+{% extends "::group.html.twig" %}
+{% block header_title %}<a href="{{ path('fos_user_group_show',{'groupName':group.name}) }}">{{ group.name }}</a> {% endblock %}
+{% block breadcrumbs %}
+    {{ breadcrumbs('groups')|raw }}
+{% endblock %}
+{#{% block header_action %}#}
+    {#{% if group.owner.id == app.user.id %}#}
+        {#{% include "FlyUserBundle:Group:header_actions.html.twig" %}#}
+    {#{% endif %}#}
+{#{% endblock %}#}
+
+{% block body_main %}
+    <div class="card">
+        <div class="card-header">
+            <h2><i class="md md-share"></i> Share a link/photo
+                <small>Share the link or photo or any informaion to this group</small>
+            </h2>
+        </div>
+        <div class="card-body card-padding">
+
+            {{ form_start(form) }}
+            <div class="mb20">
+                <div class="col-md-6"><a id="image-holder" class="btn btn-default"><i class="md md-photo-camera"></i> Photo</a></div>
+                <div class="col-md-6 text-right"><a id="post-feed" class="btn btn-info"><i class="md md-done"></i> Post Feed</a></div>
+                <div class="clearfix"></div>
+            </div>
+            {{ form_widget(form.description) }}
+            <div id="feed-urls-block">
+
+            </div>
+            <div class="clearfix"></div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+
+    <script src="{{ asset('/plupload/js/plupload.full.min.js') }}"></script>
+    <script>var GroupName = '{{ group.name  }}';</script>
+    <script src="{{ asset('/bundles/flyplatform/js/parceFeedUrl.js') }}"></script>
+
+    <script>
+
+        var uploaderFeed = new plupload.Uploader({
+            runtimes: 'html5',
+            drop_element: 'image-holder',
+            browse_button: 'image-holder', // you can pass in id...
+            url: "{{ path('fly_ajx_upload_tmp_file') }}",
+            multi_selection: false,
+            filters: {
+                max_file_size: '20mb',
+                mime_types: [
+                    {title: "Image files", extensions: "jpg,gif,png"}
+                ]
+            },
+            flash_swf_url: '/plupload/js/Moxie.swf',
+            silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+            init: {
+                FilesAdded: function (up, files) {
+                    console.log(files[0].id);
+                    $('#feed-urls-block').append('<div class="link-block col-md-3 mb20" data-url="'+files[0].id+'"><div class="link-action"><a class="remove-link-block"><i class="md  md-clear"></i></a></div><div class="feed-content-box"><div class="loader-box"><img src="/img/ring-alt.svg"></div></div></div>');
+                    uploaderFeed.start();
+                    return false;
+                },
+
+                FileUploaded: function (up, file, response) {
+                    console.log(file);
+                    try {
+                        var data = $.parseJSON(response.response);
+                        if (data.asc == 'success') {
+                            var tmpUrl = '/uploads/'+data.url;
+                            var template = FeedContent.imageTemplate(tmpUrl);
+                            $('#feed-urls-block .link-block').each(function(){
+                                if($(this).attr('data-url') == file.id){
+                                    $(this).remove('.loader-box');
+                                    $(this).find('div.feed-content-box').html(template);
+                                    var data = {description:'', image:'', resourceUrl:'', thumb:'', title:'', type:'uploadImage', tmpPath:tmpUrl }
+                                    FeedContent.addResource(data);
+                                    console.log(data);
+                                }
+                            });
+                            console.log(data)
+                        }
+
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+
+                },
+
+                Error: function (up, err) {
+                    alert(err.message);
+                }
+            }
+        });
+
+        uploaderFeed.init();
+
+
+    </script>
+
+{% endblock %}

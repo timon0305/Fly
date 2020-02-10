@@ -1,0 +1,53 @@
+{% extends "::material.html.twig" %}
+{% block title %}
+
+{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet"
+          href="{{ asset("bundles/flyplatform/bootstrap-datepicker/dist/css/bootstrap-datepicker.css") }}">
+    <link rel="stylesheet"
+          href="{{ asset("bundles/flyplatform/bootstrap-datepicker/dist/css/bootstrap-datepicker.css") }}">
+{% endblock %}
+
+
+    {% block body %}
+        <div class="col-md-12">
+            {% for type, messages in app.session.flashBag.all %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ type }}">
+                        {{ message|trans({}, 'FOSUserBundle') }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
+            <div>
+                {% block fos_user_content %}{% endblock fos_user_content %}
+            </div>
+
+        </div>
+    {% endblock body %}
+
+{% block javascripts %}
+    <script src="{{ asset('bundles/flyplatform/bootstrap-datepicker/dist/js/bootstrap-datepicker.js') }}"></script>
+    <script>
+        $(function () {
+
+            $('#datepicker_dep').datepicker({format: 'yyyy-mm-dd'});
+
+            $('#datepicker_dep').on("changeDate", function (event) {
+                $(".datepicker_dep").val(
+                        $("#datepicker_dep").datepicker('getFormattedDate')
+                )
+            });
+
+            $('#datepicker_back').datepicker({format: 'yyyy-mm-dd'});
+            $('#datepicker_back').on("changeDate", function (event) {
+                $(".datepicker_back").val(
+                        $("#datepicker_back").datepicker('getFormattedDate')
+                )
+            });
+
+        });
+    </script>
+{% endblock %}

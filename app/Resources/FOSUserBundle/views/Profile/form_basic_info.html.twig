@@ -1,0 +1,118 @@
+<div class="pmbb-view">
+    <dl class="dl-horizontal">
+        <dt>First Name</dt>
+        <dd>{{ app.user.firstName }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Last Name</dt>
+        <dd>{{ app.user.lastName }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Gender</dt>
+        <dd>{{ app.user.gender }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Birthday</dt>
+        <dd>{{ app.user.birthday|date('M d, Y') }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Home Town</dt>
+        <dd id="profile-hometown">{{ app.user.UserHometown }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Current city</dt>
+        <dd id="profile-current-city">{{ app.user.UserCurrentCity }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Martial Status</dt>
+        <dd>{{ app.user.mstatus }}</dd>
+    </dl>
+</div>
+
+<div class="pmbb-edit">
+    {{ form_start(form,{'attr':{'id':'profile-basic-form'}}) }}
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.first_name) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.first_name,{'attr':{'placeholder':"eg. John"}}) }}
+            </div>
+
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.last_name) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.last_name,{'attr':{'placeholder':"eg. Doe"}}) }}
+            </div>
+
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.gender) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.gender) }}
+            </div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.birthday) }}</dt>
+        <dd>
+            <div class="dtp-container dropdown fg-line">
+                {{ form_widget(form.birthday,{
+                    'attr':{
+                        'class':'date-picker',
+                        'data-toggle':'dropdown',
+                        'placeholder':'Click here...'
+                    }
+                }) }}
+            </div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">
+            {{ form_label(form.hometown) }}
+            {% if app.user.facebookId %}
+                <p><a href="#" onClick="getUserHometown(); return false;" class="btn btn-primary btn-sm" title="Get Hometown from Facebook"><i class="fa fa-facebook-f"></i></a></p>
+            {% endif %}
+        </dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.hometown) }}
+                {{ form_widget(form.hometownFb) }}
+            </div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">
+            {{ form_label(form.location) }}
+            {% if app.user.facebookId %}
+                <p><a href="#" onClick="getUserCurrentCity(); return false;" class="btn btn-primary" title="Get Current city from Facebook"><i class="fa fa-facebook-f"></i></a></p>
+            {% endif %}
+        </dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.location) }}
+                {{ form_widget(form.locationFb) }}
+                {{ form_widget(form.locationTw) }}
+            </div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.mstatus) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_widget(form.mstatus) }}
+            </div>
+        </dd>
+    </dl>
+    {{ form_end(form) }}
+    <div class="m-t-30">
+        <button class="btn btn-primary btn-sm waves-effect waves-button waves-float" id="submit-basic">Save</button>
+        <button data-pmb-action="reset"
+                class="btn btn-link btn-sm waves-effect waves-button waves-float reset-profile-form">Cancel
+        </button>
+    </div>
+</div>

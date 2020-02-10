@@ -1,0 +1,11 @@
+fly:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:Default:fly" }
+
+fly_payment:
+    path:     /payment
+    defaults: { _controller: "FlyPlatformBundle:Default:bookFly" }
+
+fly_payment_confirm:
+    path:     /payment/confirm
+    defaults: { _controller: "FlyPlatformBundle:Default:bookFlyConfirm" }

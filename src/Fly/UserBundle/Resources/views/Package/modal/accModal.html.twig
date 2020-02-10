@@ -1,0 +1,75 @@
+<!-- Modal -->
+<div class="modal fade" id="newAccModal" tabindex="-1" role="dialog" aria-labelledby="newAccModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            {{ include('FlyUserBundle:Package/form:accForm.html.twig') }}
+            {#{{ form_start(accForm,{'action':path('acc_create'),'attr':{'id':'form-new-acc'}} ) }}#}
+            {#<div class="modal-header">#}
+                {#<button type="button" class="close btn-action-modal" data-modal-id="#newAccModal" data-modal-action="hide" ><span aria-hidden="true">&times;</span></button>#}
+                {#<h4 class="modal-title" id="newAccModalLabel">Adding new Accomodation</h4>#}
+            {#</div>#}
+
+            {#<div class="modal-body">#}
+
+                {#<div class="col-md-6">#}
+                    {#<div class="form-group">#}
+                        {#{{ form_widget(accForm.name,{'attr':{'placeholder':'Name'}}) }}#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#{{ form_widget(accForm.accCategory) }}#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#<div class="row">#}
+                            {#<div class="col-md-9">#}
+                                {#{{ form_widget(accForm.price,{'attr':{'placeholder':'Price per night'}}) }}#}
+                            {#</div>#}
+                            {#<div class="col-md-3">#}
+                                {#{{ form_widget(accForm.currency) }}#}
+                            {#</div>#}
+                            {#<div class="clearfix"></div>#}
+                        {#</div>#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#{{ form_widget(accForm.description,{'attr':{'placeholder':'Description'}}) }}#}
+                    {#</div>#}
+
+                {#</div>#}
+                {#<div class="col-md-6">#}
+                    {#<div class="form-group">#}
+                        {#<label>Picture: </label>#}
+                        {#{{ form_widget(accForm.picture, {'attr':{'data-image-area':'#accImage','class':'imgUploadStorage'}} ) }}#}
+                        {#<div class="pm-overview c-overflow " tabindex="4" style="overflow: hidden; outline: none;">#}
+                            {#<div class="pmo-pic">#}
+                                {#<div class="p-relativen  ovf-hidden-all">#}
+                                    {#<img class="img-responsive profile-image image-holder" id="accImage"#}
+                                         {#src="{{ asset('/no-image.png') }}"#}
+                                         {#alt="">#}
+                                {#</div>#}
+                            {#</div>#}
+                        {#</div>#}
+
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="col-md-12">#}
+                    {#<div class="form-group">#}
+
+                        {#{{ form_widget(accForm.address) }}#}
+                        {#{{ form_widget(accForm.lat) }}#}
+                        {#{{ form_widget(accForm.lng) }}#}
+                    {#</div>#}
+                    {#<div class="form-group">#}
+                        {#<input id="pac-input-accnew" class="controls" type="text" placeholder="Enter a location">#}
+                        {#<div id="accnew-map"></div>#}
+                    {#</div>#}
+                {#</div>#}
+                {#<div class="clearfix"></div>#}
+
+            {#</div>#}
+            {#<div class="modal-footer">#}
+                {#<button type="button" class="btn btn-default btn-action-modal" data-modal-id="#newAccModal" data-modal-action="hide">Close</button>#}
+                {#<button type="button" class="btn btn-primary" id="btn-acc-save">Save changes</button>#}
+            {#</div>#}
+            {#{{ form_end(accForm) }}#}
+        </div>
+    </div>
+</div>

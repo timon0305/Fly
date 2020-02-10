@@ -1,0 +1,30 @@
+{
+  "name": "fly",
+  "version": "0.0.0",
+  "authors": [
+    "Roman Kotliarenko <swaroge@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "web/assets"
+  ],
+  "dependencies": {
+
+    "bootstrap": "latest",
+    "components-font-awesome": "latest",
+    "jquery-form" : "latest",
+    "masonry" : "latest",
+    "imagesloaded" : "latest",
+    "ekko-lightbox" : "latest",
+    "eonasdan-bootstrap-datetimepicker" : "latest",
+    "select2" : "latest",
+    "qtip2" : "latest",
+    "bootstrap-daterangepicker" : "latest",
+    "jquery-validation" : "latest"
+  }
+}

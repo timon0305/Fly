@@ -1,0 +1,108 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Notifications{% endblock %}
+{% block body_main %}
+
+    <div class="card notice-list">
+        <div class="card-header">
+            <h2>Notifications
+                {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+            </h2>
+        </div>
+
+        <div class="card-body card-padding" id="notices-list">
+            {% if pagination.count %}
+                {% for notice in pagination %}
+                    <div class="media media-notice" >
+
+                        <button type="button" class="close notice-remove" data-notice="{{ notice.id }}" id="notice-{{ notice.id }}" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                        {% set type = notice.getNotificationType() %}
+                        {% set aHref = '#' %}
+                        {% if notice.group %}
+                            {% set aHref = path('fos_user_group_show',{'groupName':notice.group.name}) %}
+                        {% endif %}
+                        <div class="pull-left">
+                            <a href="#">
+                                <img class="media-object" src="{{ userPhoto(notice.sender, 60, 60) }}" alt="">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ type.title }}</h4>
+                            {% if notice.group %}
+                                {{ type.msg|format(notice.sender) }} <a href="{{ path('fos_user_group_show',{'groupName':notice.group.name}) }}">{{ notice.group.name }}</a>
+                            {% else %}
+                                {{ type.msg|format(notice.sender) }}
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-info" role="alert">No notifications yet.</div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% if pagination.count %}
+    <div class="card notice-list">
+        <div class="card-body card-padding">
+                {{ knp_pagination_render(pagination) }}
+                <div><b>Total</b>: {{ pagination.getTotalItemCount }}</div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(function(){
+            // invite action
+            $('.notice-remove').click(function(){
+                var noticeId = $(this).attr('data-notice') ;
+                if(noticeId){
+                    removeNoticeAction(noticeId);
+                }
+
+                return false;
+            });
+
+        });
+
+        function removeNoticeAction(id){
+            $.ajax({
+                url: Routing.generate('notification_remove_ajx'),
+                type: 'POST',
+                format: 'json',
+                data: {noticeId: id },
+                success: function (data, textStatus, xhr) {
+                    checkAjxLogging(xhr.status);
+                    console.log(data);
+                    if(data.asc=='success'){
+                        showAjxActionMessage('success',data.msg);
+                        $('#notice-'+id).closest('.media-notice').remove();
+                        if(data.countNotices == 0){
+                            var nonotices = '<div class="alert alert-info" role="alert">No notifications yet.</div>';
+                            $('#notices-list').html(nonotices);
+                        }
+
+
+                    }else{
+                        showAjxActionMessage('danger',data.msg);
+                    }
+
+                },
+                error: function(jqXHR,textStatus,errorThrown){
+                    showAjxActionAlerts(500);
+                }
+            });
+        }
+
+    </script>
+{% endblock %}

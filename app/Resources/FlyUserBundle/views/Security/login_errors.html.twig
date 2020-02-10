@@ -1,0 +1,21 @@
+{% if  error %}
+    <div class="login-errors  ">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ error.message|trans({}, 'FOSUserBundle') }}
+    </div>
+{% endif %}
+
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <div class="login-errors ">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="login-notice ">
+        <i class="fa fa-exclamation-circle"></i>
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+<div class="clearfix"></div>

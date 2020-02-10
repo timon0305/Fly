@@ -1,0 +1,15 @@
+
+<div class="fos_user_group_list">
+    {% for group in groups %}
+        <div class="col-md-2">
+            {% if  group.picture %}
+                <img src="{{ web_image('uploads/'~group.picture).resize(100,100) }}" class="thumbnail img-rounded" />
+            {% endif %}
+            </div>
+        <div class="col-lg-10">
+            <a href="{{ path('fos_user_group_edit', {'groupName': group.getName()} ) }}">{{ group.getName() }}</a>
+        </div>
+        <div class="clearfix"></div>
+    {% endfor %}
+</div>
+

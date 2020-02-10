@@ -1,0 +1,153 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Invite Friends to group {{ group.name }} {% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header_title %}Invite Friends to group {{ group.name }}{% endblock %}
+{% block body_main %}
+
+    <div class="card group-invite-friends-card">
+        <div class="card-header ">
+            <h2>Friends list</h2>
+            <hr />
+            <div class="p-header">
+                <ul class="p-menu">
+                    <li class="active"><a href="" id="list-all" class="switch-list" ><i class="fa fa-list"></i>
+                            All</a></li>
+                    <li ><a href="" id="list-awaiting" class="switch-list" data-show="group-awaiting"><i class="fa fa-refresh"></i>
+                            Awaiting</a></li>
+                    <li><a href="" id="list-members" class="switch-list" data-show="group-members" ><i class="fa fa-users"></i> Members</a></li>
+                    {#<li class="pm-search">#}
+                        {#<div class="pms-inner">#}
+                            {#<i class="fa fa-search"></i>#}
+                            {#<input type="text" placeholder="Search...">#}
+                        {#</div>#}
+                    {#</li>#}
+                </ul>
+            </div>
+            <hr/>
+        </div>
+        <div class="card-body card-padding">
+
+            <div class="contacts c-profile clearfix row" id="friend-list">
+
+                {% if pagination.count %}
+                    {% for friend in pagination %}
+
+                        {% set userFriend  =  (friend.friendOne.id == app.user.id ) ? friend.friendTwo : friend.friendOne %}
+                        {% set groupStatus =  userFriend.isGroupMember(group) ? 'group-members' : group.isHaveGroupInvite(userFriend) ? 'group-awaiting' : '' %}
+
+                        <div class="col-md-2 col-sm-6 col-xs-6 {{ groupStatus }} friend-item">
+                            <div class="c-item">
+                                <a href="" class="ci-avatar">
+                                    <img src="{{ userPhoto(userFriend,512,512) }}" alt="">
+                                </a>
+
+                                <div class="c-info">
+                                    <strong>{{ userFriend }}</strong>
+                                    {#<small>cathy.shelton31@example.com</small>#}
+                                </div>
+
+                                <div class="c-footer">
+                                    {% if groupStatus == 'group-members' %}
+                                        <button class="waves-effect bgm-green" disabled="disabled"><i class="fa fa-users"></i> Member
+                                        </button>
+                                    {% else %}
+                                        {% if groupStatus == 'group-awaiting' %}
+                                            <button class="waves-effect bgm-orange" disabled="disabled"><i class="fa fa-refresh"></i> Awaiting
+                                            </button>
+                                        {% else %}
+                                            <button data-friend="{{ userFriend.id }}" id="{{ userFriend.id }}" class="waves-effect bgm-blue invite-friend-action"><i class="fa fa-user-plus"></i> Add
+                                            </button>
+                                        {% endif %}
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class=" alert alert-info">You dont have friends yet.</div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(function(){
+            $('.switch-list').click(function(){
+                $('.group-invite-friends-card ul.p-menu li').each(function(){
+                  $(this).removeClass('active');
+                });
+                $(this).parent('li').addClass('active');
+
+                var showClass = $(this).attr('data-show');
+                console.log(showClass);
+                if(showClass){
+                    $('#friend-list .friend-item').each(function(){
+                       if($(this).hasClass(showClass)){
+                           console.log("Showing: "+showClass);
+                           $(this).show();
+                       }else{
+                           $(this).hide();
+                       }
+                    });
+                }else{
+                    $('#friend-list .friend-item').each(function(){
+                        $(this).show();
+                    });
+                }
+
+                return false;
+            });
+
+            // invite action
+            $('.invite-friend-action').click(function(){
+               var friendId = $(this).attr('data-friend') ;
+               if(friendId){
+                   inviteFriendAction(friendId);
+               }
+
+               return false;
+            });
+
+        });
+
+    function inviteFriendAction(id){
+        $.ajax({
+            url: Routing.generate('fly_group_invite_friends_invite',{groupName:'{{ group.name }}'}),
+            type: 'POST',
+            format: 'json',
+            data: {friendId: id },
+            success: function (data, textStatus, xhr) {
+                checkAjxLogging(xhr.status);
+                console.log(data);
+                if(data.asc=='success'){
+                    showAjxActionMessage('success',data.msg);
+                    $('#'+id).removeClass('bgm-blue')
+                            .removeClass('invite-friend-action')
+                            .addClass('bgm-orange')
+                            .attr('disabled','disabled')
+                            .html('<i class="fa fa-refresh"></i> Awaiting');
+                    $('#'+id).closest('.friend-item').addClass('group-awaiting');
+                }else{
+                    showAjxActionMessage('danger',data.msg);
+                }
+
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+                showAjxActionAlerts(500);
+            }
+        });
+    }
+
+    </script>
+
+
+
+{% endblock %}

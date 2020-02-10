@@ -1,0 +1,61 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block body_main %}
+
+<div class="card notice-list">
+    <div class="card-header">
+        <h2>Airport list</h2>
+    </div>
+    <div class="card-body card-padding">
+
+    <table class="records_list table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>City_name</th>
+                <th>City_code</th>
+                <th>Airport_code</th>
+                <th>Airport_name</th>
+                <th>Country_name</th>
+                <th>Country_abbrev</th>
+                <th>World_area_code</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('airport_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.cityname }}</td>
+                <td>{{ entity.citycode }}</td>
+                <td>{{ entity.airportcode }}</td>
+                <td>{{ entity.airportname }}</td>
+                <td>{{ entity.countryname }}</td>
+                <td>{{ entity.countryabbrev }}</td>
+                <td>{{ entity.worldareacode }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('airport_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('airport_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('airport_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+
+    </div>
+</div>
+    {% endblock %}

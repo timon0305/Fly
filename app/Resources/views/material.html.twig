@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock title %}</title>
+
+    <!-- Vendor CSS -->
+    {#{% stylesheets#}
+    {#'bundles/flyplatform/vendors/animate-css/animate.min.css'#}
+    {#'bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.css'#}
+    {#'bundles/flyplatform/vendors/material-icons/material-design-iconic-font.min.css'#}
+    {#'bundles/flyplatform/vendors/socicon/socicon.min.css'#}
+    {#'bundles/flyplatform/vendors/light-gallery/lightGallery.css'#}
+    {#'bundles/flyplatform/vendors/mediaelement/mediaelementplayer.min.css'#}
+    {#'bundles/flyplatform/ekko-lightbox/dist/ekko-lightbox.min.css'#}
+
+    {#'bundles/flyplatform/css/app.min.1.css'#}
+    {#'bundles/flyplatform/css/app.min.2.css'#}
+    {#'bundles/flyplatform/css/frontend.css'#}
+    {#filter="yui_css, cssrewrite" %}#}
+    {#<link rel="stylesheet" href="{{ asset_url }}">#}
+    {#{% endstylesheets %}#}
+    <link href="{{ asset('bundles/flyplatform/components-font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/fullcalendar/fullcalendar.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/animate-css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/material-icons/material-design-iconic-font.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/socicon/socicon.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/light-gallery/lightGallery.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/mediaelement/mediaelementplayer.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/select2/dist/css/select2.min.css') }}" rel="stylesheet">
+    <!-- CSS -->
+    <link href="{{ asset('bundles/flyplatform/css/app.min.1.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/app.min.2.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/frontend.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/ajax-loader.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/group.step.form.css') }}" rel="stylesheet">
+
+    <!-- Templates CSS -->
+    {% block stylesheets %}{% endblock %}
+
+    {% set fbapi = block('fbapi') %}
+    {% if fbapi is not empty %}
+        <!-- FB API -->
+        {{ fbapi|raw }}
+    {% endif %}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" ></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" ></script>
+</head>
+<style>
+.loading-main {
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:111;
+}
+.loading-main .inner {
+	background-color:#fff;
+	border-radius:10px;
+	-moz-border-radius:10px;
+	padding:15px;
+	display:inline-block;
+	text-align:center;
+	margin:0 auto;
+	position:absolute;
+	top:250px;
+	left:50%;
+	width:150px;
+	margin-left:-75px;
+}
+.loading-main .inner span {
+	color:#000;
+	display:block;
+	font-size:15px;
+	margin-bottom:10px;
+}
+</style>
+<body class="container">
+{% set fbapiRoot = block('fbapiRoot') %}
+{% if fbapiRoot is not empty %}
+    <!-- FB API ROOT -->
+    {{ fbapiRoot|raw }}
+{% endif %}
+{#{% block fbapiRoot %}#}
+    {#<div id="fb-root"></div>#}
+{#{% endblock %}#}
+
+<div class="overlay"><div class="overlay-modal"><img width='50px' height="50px" src="{{ asset('/img/ring-alt.svg') }}"></div></div>
+<div class="logged" style="display:none;"></div>
+<header id="header">
+    {% include '@FlyPlatform/Partials/material_navbar.html.twig' %}
+</header>
+
+<section id="main">
+    {% include '@FlyPlatform/Partials/side.html.twig' %}
+    {% include '@FlyPlatform/Partials/chat.html.twig' %}
+    <section id="content">
+
+        {#Breadcrumbs, Header Title, Header Action blocks#}
+        {% set breadcrumbs = block('breadcrumbs') %}
+        {% set header_title = block('header_title') %}
+        {% set header_action = block('header_action') %}
+
+        {% if breadcrumbs is not empty %}
+            {#{% block breadcrumbs %}#}
+                {#{{ breadcrumbs('homepage')|raw }}#}
+            {#{% endblock %}#}
+            {{ breadcrumbs|raw }}
+        {% endif %}
+
+        {% if header_title is not empty %}
+        <div class="">
+            <div class="block-header">
+
+                {#<h2>{% block header_title %}{% endblock %}</h2>#}
+                <h2> {{ header_title|raw }} </h2>
+                {% if header_action is not empty %}
+                    {#{% block header_action %}{% endblock %}#}
+                    {{ header_action|raw }}
+                {% endif %}
+            </div>
+        {% endif %}
+
+        {#Body Side, Body Main Blocks    #}
+        {% set body_side = block('body_side') %}
+        {% set body_main = block('body_main') %}
+
+        {% if body_side is not empty and body_main is not empty %}
+            <div class="col-md-3">
+                {{ body_side|raw }}
+            </div>
+            <div class="col-md-9">
+                {#Flash Messages#}
+                {#{% for flashMessage in app.session.flashbag.get('success-msg') %}#}
+                    {#<div class="alert alert-success" role="alert">#}
+                        {#{{ flashMessage }}#}
+                    {#</div>#}
+                {#{% endfor %}#}
+                {{ body_main|raw }}
+            </div>
+        {% else %}
+            <div class="col-md-12">
+                {#Flash Messages#}
+                {#{% for flashMessage in app.session.flashbag.get('success-msg') %}#}
+                    {#<div class="alert alert-success alert-dismissible" role="alert">#}
+                        {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>#}
+                        {#{{ flashMessage }}#}
+                    {#</div>#}
+                {#{% endfor %}#}
+                {{ body_main|raw }}
+            </div>
+        {% endif %}
+        </div>
+    </section>
+</section>
+
+{% block groupStepFormModal %}
+    {{ render(controller('FlyUserBundle:StepForm:createGroupSteps')) }}
+{% endblock %}
+
+{% block modals %}{% endblock %}
+<!-- Older IE warning message -->
+<!--[if lt IE 9]>
+{% include '@FlyPlatform/Partials/oldie.html.twig' %}
+<![endif]-->
+{#'bundles/flyplatform/js/jquery-2.1.1.min.js'#}
+{% javascripts
+'bundles/flyplatform/js/jquery-2.1.1.min.js'
+'bundles/flyplatform/js/bootstrap.min.js'
+'bundles/flyplatform/jquery-form/dist/jquery.form.min.js'
+'bundles/flyplatform/vendors/flot/jquery.flot.min.js'
+'bundles/flyplatform/vendors/flot/jquery.flot.resize.min.js'
+'bundles/flyplatform/vendors/flot/plugins/curvedLines.js'
+'bundles/flyplatform/vendors/sparklines/jquery.sparkline.min.js'
+'bundles/flyplatform/vendors/easypiechart/jquery.easypiechart.min.js'
+'bundles/flyplatform/vendors/fullcalendar/lib/moment.min.js'
+'bundles/flyplatform/vendors/fullcalendar/fullcalendar.js'
+'bundles/flyplatform/vendors/simpleWeather/jquery.simpleWeather.min.js'
+'bundles/flyplatform/vendors/auto-size/jquery.autosize.min.js'
+'bundles/flyplatform/vendors/nicescroll/jquery.nicescroll.min.js'
+'bundles/flyplatform/vendors/waves/waves.min.js'
+'bundles/flyplatform/vendors/bootstrap-growl/bootstrap-growl.min.js'
+'bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.js'
+'bundles/flyplatform/vendors/bootstrap-wizard/jquery.bootstrap.wizard.min.js'
+'bundles/flyplatform/js/flot-charts/curved-line-chart.js'
+'bundles/flyplatform/js/flot-charts/line-chart.js'
+'bundles/flyplatform/js/charts.js'
+
+'bundles/flyplatform/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js'
+'bundles/flyplatform/vendors/light-gallery/lightGallery.min.js'
+'bundles/flyplatform/vendors/mediaelement/mediaelement-and-player.js'
+'bundles/flyplatform/ekko-lightbox/dist/ekko-lightbox.min.js'
+'bundles/flyplatform/masonry/dist/masonry.pkgd.min.js'
+'bundles/flyplatform/imagesloaded/imagesloaded.pkgd.min.js'
+'bundles/flyplatform/sw/sw-lightbox-b3.js'
+
+
+
+'bundles/flyplatform/js/functions.js'
+'bundles/flyplatform/js/ajx.global.js'
+'bundles/flyplatform/js/group.new.js'
+ %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% block googleApi %}
+    <script>
+        function initMap() {}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDrn6-alx-7LOyRLBpgxVU_8TIf0R1CTKw&libraries=places&"
+    ></script>
+    <script src="{{ asset('bundles/flyplatform/js/google.geocoding.service.js') }}"></script>
+{% endblock %}
+
+<!-- javascripts block-->
+{% block javascripts %}{% endblock javascripts %}
+<!-- // -->
+
+{% block groupStepFormJs %}
+    <script src="{{ asset('bundles/flyplatform/js/group.new.steps.js') }}"></script>
+    <script src="{{ asset('bundles/flyplatform/select2/dist/js/select2.min.js') }}"></script>
+    <script>
+        /* object init*/
+        var StepForm = Object.create(GroupStepForm);
+        StepForm.init($('#modalGroupNew'));
+
+        /*friend list init select2*/
+        function formatFriendListTpl (user) {
+            if (!user.id) { return user.text; }
+
+            var $user;
+            var img = $(user.element).attr('data-img');
+
+            if(img){
+                $user = $(
+                        '<div class="pull-left"><img src="'+img+'"  class="select2-user-icon"/></div><div class="pull-left"> ' + user.text + '</div><div class="clearfix"></div>'
+                );
+            }else{
+                $user = $(
+                        '<span>' + user.text + '</span>'
+                );
+            }
+
+            return $user;
+        };
+        $('#friends-list-invite').select2({
+            templateResult: formatFriendListTpl
+        });
+    </script>
+{% endblock %}
+
+{% block alerts %}
+    {% include '@FlyPlatform/Partials/alerts.html.twig' %}
+{% endblock %}
+{% block ajaxLoader %}
+    {% include '@FlyPlatform/Partials/ajaxLoader.html.twig' %}
+{% endblock %}
+{#{% block userinfo %}#}
+    {#<div class="hide">#}
+        {#<input type="hidden" name="userinfo_image">#}
+    {#</div>#}
+{#{% endblock %}#}
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function()
+            { (i[r].q=i[r].q||[]).push(arguments)}
+            ,i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-81240452-1', 'auto');
+    ga('send', 'pageview');
+</script>
+</body>
+</html>

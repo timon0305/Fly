@@ -1,0 +1,19 @@
+{% extends "::group.html.twig" %}
+
+{% block breadcrumbs %}
+    {{ breadcrumbs('groups')|raw }}
+{% endblock %}
+{% block body_side %}
+    {% include "FlyUserBundle:Group:mygroups.html.twig" %}
+{% endblock %}
+{% block body_main %}
+        <div class="card">
+            <div class="card-header">
+                <h2>News Feed from all my groups</h2>
+            </div>
+            <div class="card-body card-padding">
+                        {% include "FlyUserBundle:Group:list_content.html.twig" %}
+                </div>
+            </div>
+        </div>
+    {% endblock %}

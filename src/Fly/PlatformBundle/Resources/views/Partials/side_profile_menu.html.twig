@@ -1,0 +1,28 @@
+<div class="profile-menu">
+
+    <a id="cover-bg" href=""
+       {% if app.user.cover %}
+       style="background: url('{{ web_image('/uploads/'~app.user.cover).zoomCrop(414,214,0,'center','center') }}') no-repeat scroll left top / 100% auto rgba(0, 0, 0, 0);" {% endif %}>
+        <div class="profile-pic">
+            {% if app.user.photo  %}
+            <img src="{{ web_image('/uploads/'~app.user.photo).zoomCrop(47,47,0,'center','top') }}"
+                 alt="">
+            {% endif %}
+        </div>
+
+        <div class="profile-info">
+            {{ app.user.firstName }} {{ app.user.lastName }}
+            <i class="md md-arrow-drop-down"></i>
+        </div>
+    </a>
+
+    <ul class="main-menu">
+        <li>
+            <a href="{{ path('fos_user_profile_show') }}"><i class="md md-person"></i> View Profile</a>
+        </li>
+        <li>
+            <a href="{{ path('fos_user_security_logout') }}"><i class="md md-history"></i> Logout</a>
+        </li>
+    </ul>
+</div>
+

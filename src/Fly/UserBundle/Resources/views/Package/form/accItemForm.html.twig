@@ -1,0 +1,42 @@
+{% if editAction is defined %}
+    {% set actionUrl = path('accitem_update',{'id':entityId}) %}
+    {% set formId = 'acc-item-edit-form' %}
+{% else %}
+    {% set actionUrl = path('accitem_create') %}
+    {% set formId = 'acc-item-form' %}
+{% endif %}
+
+{{ form_start(accItemForm,{'action':actionUrl,'attr':{'id':formId}}) }}
+{% if editAction is defined %}<input type="hidden" name="_method" value="PUT">{% endif %}
+<div class="pkg-acc-form-block mt10 ">
+    <div class="col-md-6 grey_block p-5">
+        <div class="form-group col-md-6 m-b-5">
+            <label><i class="fa fa-calendar"></i> Check In</label>
+            {{ form_widget(accItemForm.checkin, {'attr':{'class':'p-l-5'}}) }}
+        </div>
+        <div class="form-group col-md-6 m-b-5">
+            <label class="pull-left"><i class="fa fa-clock-o"></i> Duration</label>
+            {{ form_widget(accItemForm.duration,{'attr':{'class':'clr pull-left p-l-5 w-p-50'}}) }}
+            <div class="pull-left p-l-10">night</div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="acc-price-total text-center">
+            <span class="price-word">Price:</span><span class="price-amount" id="acc-price-amount">{% if editAction is defined %}{% else %}---{% endif %}</span>
+        </div>
+        <div class="accprice-btns text-center">
+            {% if editAction is defined %}
+                <button type="submit" class="btn btn-success" id="acc-item-update">Update Package</button>
+                <button type="reset"  class="btn btn-default btn-action-modal" data-modal-id="#newPkgModal" id="acc-pkg-cancel" data-modal-action="close">Cancel</button>
+                <a href="#" class="btn btn-danger waves-effect waves-button waves-float remove-event" id="btn-act-delete" data-event-id="{{ entityId }}" data-event-type="accItem">Delete</a>
+            {% else %}
+                <button type="submit" class="btn btn-primary" id="acc-item-save">Save Package</button>
+                <button type="reset" data-form-id="acc-item-form" class="btn btn-default btn-action-modal" data-modal-id="#newPkgModal" id="acc-pkg-cancel"data-modal-action="close">Cancel</button>
+            {% endif %}
+
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{{ form_end(accItemForm) }}

@@ -1,0 +1,22 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block body_main %}
+
+<div class="card notice-list">
+    <div class="card-header">
+        <h2>Airport creation</h2>
+    </div>
+    <div class="card-body card-padding">
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('airport') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+    </div>
+</div>
+{% endblock %}

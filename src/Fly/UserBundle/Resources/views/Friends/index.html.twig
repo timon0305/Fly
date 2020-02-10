@@ -1,0 +1,291 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Profile{% endblock %}
+{% block breadcrumbs %}{% endblock %}
+{% block header_title %}Friends{% endblock %}
+{% block body_main %}
+
+    <div class="card">
+        <div class="card-header">
+            <h2>Invite new Friends</h2>
+            <form class="" id="friend-invite-form" action="{{ path('fly_user_friends_invite') }}" method="post" name="friend-invite-form">
+                {#<div class="col-md-1"><label for="exampleInputEmail2">Email</label></div>#}
+                <div class="col-md-4"><input type="email" class="form-control" id="friend-email" placeholder="jane.doe@example.com" name="email"></div>
+                <div class="col-md-3"><button type="submit" class="btn btn-success"><i class="fa fa-send"></i> Send invitation</button></div>
+                <div class="clearfix"></div>
+            </form>
+        </div>
+        <div class="card-body card-padding">
+
+    {#{{ dump(pagination.count) }}#}
+    {% if pagination.count %}
+    <div class="contacts clearfix row" id="friends-wrap">
+        {% for friend in pagination %}
+            {% if(friend.friendOne.id == user.id) %}
+                {% set inviter = friend.friendOne  %}
+                {% set invitee = friend.friendTwo  %}
+            {% else %}
+                {% set inviter = friend.friendTwo  %}
+                {% set invitee = friend.friendOne  %}
+            {% endif %}
+            {% set userFriend  =  (friend.friendOne.id == user.id ) ? friend.friendTwo : friend.friendOne %}
+        <div class="col-md-3 col-sm-4 col-xs-6" id="{{ userFriend.id }}">
+
+            <div class="card profile-view" >
+                    <div class="pv-header" style="background-image:url('{{ web_image(userFriend.userCoverImage).zoomCrop(500,500,0,'center','top')   }}')" >
+                            <img src="{% if userFriend.getFacebookUserImage or userFriend.getTwitterUserImage %}{{ userFriend.userProfileImage }}{% else %}{{ web_image(userFriend.userProfileImage).zoomCrop(200,200,0,'center','top') }}{% endif %}" class="pv-main" alt="">
+                    </div>
+                <div class="pv-body">
+                        <h2>{{ userFriend }}</h2>
+                    {#{{ dump(userFriend.userProfileImage) }}#}
+                        <small>{{ userFriend.email }}</small>
+                    <div class="friend-action-block">
+                    {% if friend.status == 0 %}
+                        {% if(friend.friendOne.id == user.id) %}
+                            <div class="friend-confirm-block">
+                                <div class="col-md-12 text-center">Invitation sent. Awaiting response</div>
+                                <div class="col-md-6 text-center"><a href="#" data-friend-id="{{ userFriend.id }}" class="friends_unfriends btn btn-sm btn-warning"><i class="fa fa-ban"></i> Decline invitation</a></div>
+                                <div class="clearfix"></div>
+                            </div>
+                        {% else %}
+                            <div class="col-md-12 text-center"><h4>Accept Friend Request?</h4></div>
+                            <div class="col-md-6 text-center"><a href="#"  data-friend-id="{{ userFriend.id }}" class="friends_confirm btn btn-success"><i class="fa fa-check"></i> Yes</a></div>
+                            <div class="col-md-6 text-center"><a href="#" data-friend-id="{{ userFriend.id }}" class="friends_unfriends btn btn-danger"><i class="fa fa-close"></i> Ignore</a></div>
+                            <div class="clearfix"></div>
+                        {% endif %}
+
+                    {% endif %}
+                    {% if friend.status == 1%}
+                        <div class="col-md-12 m-b-10 "><a href="#" data-friend-id="{{ userFriend.id }}" class="btn friends_invite_group btn-sm btn-primary"><i class="fa fa-user-plus"></i> Invite in a group</a></div>
+                        <div class="col-md-12 "><a href="#" data-friend-id="{{ userFriend.id }}" class="friends_unfriends btn btn-sm bgm-gray"><i class="fa fa-ban"></i> Unfriend</a></div>
+                        <div class="clearfix"></div>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% endfor %}
+    </div>
+{% else %}
+{% endif %}
+        </div>
+</div>
+{% endblock %}
+
+{% block modals %}
+    <!-- Group List Modal //-->
+    {#{% include '@FlyUser/Friends/groupModalList.html.twig' %}#}
+    {{ render(controller('FlyUserBundle:Friends:groupInviteForm')) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(function(){
+
+            // confirm friends button
+            $(document).delegate('.friends_confirm','click',function(){
+                var friendId = $(this).attr('data-friend-id');
+                makeFriends(friendId);
+            });
+
+            // ignore friends button
+//            $(document).delegate('.friends_ignore','click',function(){
+//                var friendId = $(this).attr('data-friend-id');
+//                makeIgnore(friendId);
+//            });
+
+            // unfriends friends button
+            $(document).delegate('.friends_unfriends','click',function(){
+                var friendId = $(this).attr('data-friend-id');
+                makeUnfriends(friendId);
+            });
+
+            // restore friends button
+//            $(document).delegate('.friends_restore','click',function(){
+//                var friendId = $(this).attr('data-friend-id');
+//                makeRestore(friendId);
+//            });
+
+            // invite friend to group
+            $(document).delegate('.friends_invite_group','click',function(){
+                $('#fly_userbundle_user_group_list_id').val($(this).attr('data-friend-id'));
+                $('#groupModal').modal('show');
+            });
+
+//            $('#groupModal').on('hide.bs.modal', function (e) {
+//                $('#fly_userbundle_user_group_list_id').val('');
+//            });
+//
+//            $('#groupModal').on('show.bs.modal', function (e) {
+//                $('#fly_userbundle_user_group_list_id').val('');
+//            });
+
+            //submit invite
+            $('#friend-invite-form').submit(function() {
+                // inside event callbacks 'this' is the DOM element so we first
+                // wrap it in a jQuery object and then invoke ajaxSubmit
+                $(this).ajaxSubmit({
+                    dataType:  'json',
+                    success:       function(data, textStatus, xhr){
+                        checkAjxLogging(xhr.status);
+                        console.log(data);
+                        if(data.asc == 'success'){
+                            var html ='';
+                            html += '<div class="col-md-3 col-sm-4 col-xs-6" id="'+data.friend.id+'">';
+                            html += '<div class="card profile-view" >';
+                            html += '<div class="pv-header" style="background-image:url('+data.friend.user_cover+')" >';
+                            html += '<img src="'+data.friend.photo+'" class="pv-main" alt="">';
+                            html += '</div>';
+                            html += '<div class="pv-body">';
+                            html += '<h2>'+data.friend.email+'</h2>';
+                            {#html += '<small>{{ userFriend.email }}</small>';#}
+                            html += '<div class="friend-confirm-block">';
+                            html += '<div class="col-md-12 text-center">Invitation sent. Awaiting response</div>';
+                            html += '<div class="col-md-6 text-center"><a href="#" data-friend-id="'+data.friend.id+'" class="friends_unfriends btn btn-sm btn-warning"><i class="fa fa-ban"></i> Decline invitation</a></div>';
+                            html += '<div class="clearfix"></div>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            $('#friends-wrap').prepend(html);
+                            showAjxActionMessage('success','Invitation successfully send');
+                            $('#friend-invite-form')[0].reset();
+                        }else{
+                            showAjxActionMessage('danger',data.msg);
+                        }
+                    }  // post-submit callback
+                });
+
+                // !!! Important !!!
+                // always return false to prevent standard browser submit and page navigation
+                return false;
+            });
+
+        });
+
+        //submit invite frient to group
+        $('.form-invite-friends-group').submit(function() {
+            $('#groupModal').modal('hide');
+            // inside event callbacks 'this' is the DOM element so we first
+            // wrap it in a jQuery object and then invoke ajaxSubmit
+            $(this).ajaxSubmit({
+                dataType:  'json',
+                success:       function(data, textStatus, xhr){
+                    checkAjxLogging(xhr.status);
+                    console.log(data);
+                    if(data.asc == 'success'){
+                        showAjxActionMessage('success',data.msg);
+                        $('#fly_userbundle_user_group_list_id').val('');
+                        $('.form-invite-friends-group')[0].reset();
+                    }else{
+                        showAjxActionMessage('danger',data.msg);
+                    }
+                }  // post-submit callback
+            });
+
+            // !!! Important !!!
+            // always return false to prevent standard browser submit and page navigation
+            return false;
+        });
+
+
+
+
+    function makeFriends(id){
+        $.ajax({
+            url: Routing.generate('fly_user_friends_confirm'),
+            type: 'POST',
+            format: 'json',
+            data: {id: id },
+            success: function (data, textStatus, xhr) {
+                checkAjxLogging(xhr.status);
+                console.log(data);
+                if(data.asc=='success'){
+                    $('#'+data.friend.id).find('.friend-confirm-block').addClass('animated fadeOut').remove();
+
+                    var html = '';
+                    html += '<div class="col-md-12 m-b-10 "><a href="#" class="btn btn-sm btn-primary"><i class="fa fa-user-plus"></i> Invite in a group</a></div>';
+                    html += '<div class="col-md-12 "><a href="#" data-friend-id="'+data.friend.id+'" class="friends_unfriends btn btn-sm bgm-gray"><i class="fa fa-ban"></i> Unfriend</a></div>';
+                    html += '<div class="clearfix"></div>';
+
+
+                    $('#'+data.friend.id).find('.friend-action-block').html(html);
+                }else{
+                    showAjxActionMessage('danger',data.msg);
+                }
+
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+                showAjxActionAlerts(500);
+            }
+        });
+    }
+
+    function makeUnfriends(id){
+        $.ajax({
+            url: Routing.generate('fly_user_friends_unfriend'),
+            type: 'POST',
+            format: 'json',
+            data: {id: id },
+            success: function (data, textStatus, xhr) {
+                checkAjxLogging(xhr.status);
+                console.log(data);
+                if(data.asc=='success'){
+                    $('#'+data.friend.id).addClass('animated fadeOut').remove();
+                }else{
+                    showAjxActionMessage('danger',data.msg);
+                }
+
+            },
+            error: function(jqXHR,textStatus,errorThrown){
+                showAjxActionAlerts(500);
+            }
+        });
+    }
+
+//    function makeIgnore(id){
+//        $.ajax({
+//            url: Routing.generate('fly_user_friends_ignore'),
+//            type: 'POST',
+//            format: 'json',
+//            data: {id: id },
+//            success: function (data, textStatus, xhr) {
+//                checkAjxLogging(xhr.status);
+//                console.log(data);
+//
+//            },
+//            error: function(jqXHR,textStatus,errorThrown){
+//                showAjxActionAlerts(500);
+//            }
+//        });
+//    }
+//
+//
+//
+//    function makeRestore(id){
+//        $.ajax({
+//            url: Routing.generate('fly_user_friends_unfriend'),
+//            type: 'POST',
+//            format: 'json',
+//            data: {id: id },
+//            success: function (data, textStatus, xhr) {
+//                checkAjxLogging(xhr.status);
+//                console.log(data);
+//
+//            },
+//            error: function(jqXHR,textStatus,errorThrown){
+//                showAjxActionAlerts(500);
+//            }
+//        });
+//    }
+
+
+
+    </script>
+
+{% endblock %}

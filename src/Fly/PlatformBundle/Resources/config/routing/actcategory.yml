@@ -1,0 +1,30 @@
+actcategory:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:index" }
+
+actcategory_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:show" }
+
+actcategory_new:
+    path:     /new
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:new" }
+
+actcategory_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:create" }
+    methods:  POST
+
+actcategory_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:edit" }
+
+actcategory_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:update" }
+    methods:  [POST, PUT]
+
+actcategory_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyPlatformBundle:ActCategory:delete" }
+    methods:  [POST, DELETE]

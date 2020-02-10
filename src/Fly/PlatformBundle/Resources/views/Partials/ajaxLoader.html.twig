@@ -1,0 +1,34 @@
+<div class="ajax-fade-loader"></div>
+<div class="ajax-loader-content">
+    <div class="loader-body">
+        <div class="loader"></div>
+        <p>Please wait</p>
+            {#<i class="fa fa-spin fa-spinner fa-3x"></i> <br/>Wait please...#}
+    </div>
+</div>
+
+<script>
+    /*ajax loader*/
+    $(document).ajaxStart(function(){
+        AjaxFadeLoader.start();
+    }).ajaxComplete(function(){
+            AjaxFadeLoader.complete();
+    }).ajaxError(function(event, jqXHR, ajaxSettings, thrownError){
+        console.log(event, jqXHR, ajaxSettings, thrownError);
+        AjaxFadeLoader.complete();
+    });
+
+
+    var AjaxFadeLoader = {
+        start: function(){
+            $('.ajax-fade-loader').show();
+            $('.ajax-loader-content').show();
+        },
+        complete: function(){
+            $('.ajax-fade-loader').fadeOut(500);
+            $('.ajax-loader-content').fadeOut(500);
+        }
+
+    }
+
+</script>

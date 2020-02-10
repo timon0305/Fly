@@ -1,0 +1,76 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/flyplatform/css/package.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.css') }}" />
+{% endblock %}
+{% block title %}Packages{% endblock %}
+{% block body_main %}
+    <div class="card notice-list">
+        <div class="card-header">
+            <h2>Packages
+                {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+            </h2>
+        </div>
+
+        <div class="card-body card-padding">
+            <div id='calendar'></div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newPkgModal" tabindex="-1" role="dialog" aria-labelledby="newPkgModalLabel" data-backdrop="static">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="newPkgModalLabel"><i class="fa fa-cube"></i> Create New Package</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="package-modal-body">
+                        <div class="pkg-block">
+
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs pkg-tab" role="tablist" id="packageTabs">
+                                <li role="presentation"><a class="pkg-acc" href="#accommodation" aria-controls="accommodation" role="tab" data-toggle="tab"><i class="fa fa-hotel"></i> Accommodation</a></li>
+                                <li role="presentation"><a class="pkg-act" href="#activites" aria-controls="activites" role="tab" data-toggle="tab"><i class="fa fa-rocket"></i> Activites</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content pkg-tab-content">
+                                <!-- Tab Accommodations-->
+                                {{ include('FlyUserBundle:Package/tab:accommodation.html.twig') }}
+                                <!-- Tab Activities-->
+                                {{ include('FlyUserBundle:Package/tab:activities.html.twig') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include '@FlyUser/Package/modal/accModal.html.twig' %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('plupload/js/plupload.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+    <script> var uploadUrl = "{{ path('fly_user_upload_profile_photo') }}";</script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/js/package.js') }}"></script>
+    <script>
+        $(function(){
+            Package.init('#newPkgModal','#calendar');
+        });
+    </script>
+{% endblock %}

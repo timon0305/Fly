@@ -1,0 +1,30 @@
+actitem:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:ActItem:index" }
+
+actitem_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyPlatformBundle:ActItem:show" }
+
+actitem_new:
+    path:     /new
+    defaults: { _controller: "FlyPlatformBundle:ActItem:new" }
+
+actitem_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:ActItem:create" }
+    methods:  POST
+
+actitem_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:ActItem:edit" }
+
+actitem_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:ActItem:update" }
+    methods:  [POST, PUT]
+
+actitem_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyPlatformBundle:ActItem:delete" }
+    methods:  [POST, DELETE]

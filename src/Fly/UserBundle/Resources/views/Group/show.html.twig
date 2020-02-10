@@ -1,0 +1,49 @@
+{% extends "::group.html.twig" %}
+
+{% block stylesheets %}
+    <link href="{{ asset('bundles/flyplatform/css/feed.css') }}" rel="stylesheet">
+{% endblock %}
+{% block header_title %}{{ group.name }} {% endblock %}
+{% block breadcrumbs %}
+    {{ breadcrumbs('groups')|raw }}
+{% endblock %}
+{% block header_action %}
+    {% if group.owner.id == app.user.id %}
+        {% include "FlyUserBundle:Group:header_actions.html.twig"  %}
+    {% endif %}
+{% endblock %}
+
+{% block body_main %}
+        <div class="card">
+            <div class="card-body">
+                        {% include "FlyUserBundle:Group:show_content.html.twig" %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('/bundles/flyplatform/masonry/dist/masonry.pkgd.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/imagesloaded/imagesloaded.pkgd.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/group.feeds.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/feed.comment.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/feed.like.js') }}"></script>
+    <script>
+        GroupFeeds.group = '{{ group.name }}';
+        GroupFeeds.getFeeds();
+        $(function(){
+            $('.side-group-name').mouseover(function(){
+                if(!$('.md-side-group-title').hasClass('norotate')){
+                    $('.md-side-group-title').addClass('fastRotate').addClass('norotate');
+                    setTimeout(function(){
+                        $('.md-side-group-title').removeClass('fastRotate');
+                    }, 200);
+                }
+
+            });
+
+        });
+    </script>
+{% endblock %}

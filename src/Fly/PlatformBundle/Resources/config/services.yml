@@ -1,0 +1,25 @@
+services:
+    fly_platform.antispam:
+        class: Fly\PlatformBundle\Antispam\FlyAntispam
+        arguments: [@mailer, %locale%, 5]
+
+    fly_platform.doctrine.notification:
+        class: Fly\PlatformBundle\DoctrineListener\ApplicationNotification
+        arguments: [@mailer]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    fly.local.uploader:
+      class:  Fly\PlatformBundle\Service\Uploader
+      arguments: [@local_storage_filesystem, @image.handling]
+
+    fly_platform.twig.extension:
+        class: Fly\PlatformBundle\Twig\PlatformExtension
+        arguments: [%breadcrumbs%, @router, @doctrine.orm.entity_manager, @image.handling]
+        tags:
+            - { name: twig.extension }
+
+
+    fly_platform.fly:
+        class: Fly\PlatformBundle\Service\FlyService
+        arguments: [@doctrine.orm.entity_manager, @templating,%asca_wsdlUrl%,%asca_user% , %asca_password% ]

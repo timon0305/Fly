@@ -1,0 +1,6 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% if invalid_username is defined %}
+    <div class="login-errors ">
+        {{ 'resetting.request.invalid_username'|trans({'%username%': invalid_username}) }}
+    </div>
+{% endif %}

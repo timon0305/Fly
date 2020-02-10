@@ -1,0 +1,5 @@
+wallet:
+    path:     /
+    defaults: { _controller: "FlyUserBundle:Wallet:index" }
+
+

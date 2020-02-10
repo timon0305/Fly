@@ -1,0 +1,74 @@
+<aside id="sidebar" class="toggled">
+    <div class="sidebar-inner">
+        <div class="si-inner">
+            <div class="left-box">
+                <ul class="main-menu">
+                    <li><a href="{{ path('fly_platform_home') }}"><i class="fa fa-home"></i> Home</a></li>
+                    <li>
+                        <a href="{{ path('fos_user_profile_show') }}">
+                            <img class="pull-left img-circle profile-image-side"
+                                src="{{ userPhoto(app.user, 25, 25) }}" alt="" width="25px">
+                            <span>{{ app.user}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            {% if app.request.attributes.get('_route') in ['fos_user_group_show','group_feed_new','fly_group_invite_friends_index'] %}
+                {% set isShowedItems = app.user == group.owner ? true : group.isActive ? true : false %}
+                    <div class="left-box">
+                        <ul class="main-menu">
+                            <li class="side-group-name active"><i class="md md-explore md-side-group-title"></i><a
+                                        href="{{ path('fos_user_group_show',{'groupName':group.name}) }}"> {{ group.name|capitalize }} </a>
+                            </li>
+                    {% if isShowedItems %}
+                            <li class=""><a href="#"><i class="md md-airplanemode-on"></i> Share a deal</a></li>
+                            <li class=""><a href="#"><i class="md md-poll"></i> Throw a poll</a></li>
+                            <li class=""><a href="#"><i class="md md-account-balance"></i> Send a reminder</a></li>
+                            <li class=""><a href="#"><i class="md md-group-work"></i> Group members</a></li>
+                    {% endif %}
+                        </ul>
+                    </div>
+
+                {% if isShowedItems and group.owner ==  app.user %}
+                    <div class="left-box">
+                        <ul class="main-menu">
+
+                                <li class=""><a href="{{ path('fly_group_invite_friends_index',{'groupName':group.name} ) }}"><i class="md md-group-add"></i> Invite friends</a></li>
+                                <li class=""><a href="{{ path('fos_user_group_edit',{'groupName':group.name}) }}"><i
+                                                class="md md-verified-user"></i> Group Admin</a></li>
+                        </ul>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="left-box">
+                    <ul class="main-menu">
+                        {% for group in app.user.groups %}
+                            <li><a href="{{ path('fos_user_group_show',{'groupName':group.name}) }}"><i
+                                            class="fa fa-users"></i> {{ group }}</a></li>
+                        {% endfor %}
+                        <li><a id="create-group" class="create-group-steps"
+                               href="#"><i class="fa fa-plus"></i> Create Group</a>
+                        </li>
+                        <li><a href="{{ path('package') }}"><i class="fa fa-cube"></i> Packages</a>
+                        <li><a href="{{ path('fly') }}"><i class="fa fa-plane"></i> Fly</a>
+                        <li><a href="{{ path('wallet') }}"><i class="fa fa-google-wallet"></i> Wallet</a>
+                        </li>
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        <div class="left-box">
+            <ul class="main-menu">
+                <li><a href="{{ path('fly_user_friends_index') }}"><i class="fa fa-users"></i> Friends</a></li>
+                <li><a href="#"><i class="fa fa-envelope"></i> Inbox</a></li>
+                <li><a href="{{ path('notification') }}"><i class="fa fa-flag"></i> Notifications {{ render(controller('FlyUserBundle:Notification:sidebar')) }}</a></li>
+                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out"></i> Logout</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+
+    </div>
+</aside>

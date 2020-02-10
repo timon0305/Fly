@@ -1,0 +1,18 @@
+{% extends "FlyUserBundle::login_layout.html.twig" %}
+
+{% block login_errors %}
+    {% include 'FlyUserBundle:Resetting:request_errors.html.twig' %}
+{% endblock %}
+{% block formblock %}
+    {% include "FlyUserBundle:Resetting:request_content.html.twig" %}
+{% endblock %}
+
+{#{% block fos_user_content %}#}
+
+{#<div class="lc-block toggled" id="l-login">#}
+        {#<div class="form-block">#}
+            {#{% include "FOSUserBundle:Resetting:request_content.html.twig" %}#}
+        {#</div>#}
+{#</div>#}
+
+{#{% endblock fos_user_content %}#}

@@ -1,0 +1,251 @@
+{% extends "frontend.html.twig" %}
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.css') }}" />
+    {#<link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/qtip2/basic/jquery.qtip.css') }}" />#}
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/select2/dist/css/select2.css') }}" />
+    <link type="text/css" rel="stylesheet" href="{{ asset('bundles/flyplatform/css/jcarousel.css') }}" />
+{% endblock %}
+{% block body %}
+
+
+    {% include ('@FlyPlatform/Fly/search_content.html.twig') %}
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/moment/min/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-validation/dist/jquery.validate.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/jquery-form/dist/jquery.form.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/flyplatform/select2/dist/js/select2.full.min.js') }}"></script>
+    {#<script type="text/javascript" src="{{ asset('bundles/flyplatform/js/jquery.jcarousel.min.js') }}"></script>#}
+    <script>
+
+        $(function(){
+
+
+            $('.filter-param').click(function(){
+                var inp = $(this).find('input[type=checkbox]:checked');
+                console.log(inp.length)
+                if(inp.length){
+                    inp.prop('checked', false);
+                    console.log('uncheck');
+                }else{
+                    $(this).find('input[type=checkbox]').prop('checked', true);
+//                    inp.attr('checked','checked');
+                    console.log('check');
+                }
+               return false;
+            });
+
+
+
+            
+            // form submit
+//            $('form[name="LowFareSearch"]').submit(function() {
+//                // inside event callbacks 'this' is the DOM element so we first
+//                // wrap it in a jQuery object and then invoke ajaxSubmit
+//                $(this).ajaxSubmit({
+//                    beforeSubmit: function(){
+//                        $('#lowfare-search-res').html('');
+//                    },
+//                    success: function(data, statusText, xhr, $form)
+//                    {
+//                        if(data.asc == 'success'){
+//                            $('#lowfare-search-res').html(data.html);
+//                        }
+//
+//                        if(data.asc == 'error'){
+//                            $('#lowfare-search-res').html("<div class='alert alert-error'>Service Error. Please try again later.</div>");
+//                        }
+//                    }
+//                });
+//
+//                // !!! Important !!!
+//                // always return false to prevent standard browser submit and page navigation
+//                return false;
+//            });
+
+
+            $("#departure").on('change',function(){
+//                $("#LowFareSearch_whereFromSelect").val($(this).val());
+            });
+            $("#departure").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            $("#destination").on('change',function(){
+//                $("#LowFareSearch_whereToSelect").val($(this).val());
+            });
+            $("#destination").select2({
+                ajax: {
+                    url: Routing.generate('fly_platform_airport_search'),
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, params) {
+                        console.log(data);
+                        // parse the results into the format expected by Select2
+                        // since we are using custom formatting functions we do not need to
+                        // alter the remote JSON data, except to indicate that infinite
+                        // scrolling can be used
+                        params.page = params.page || 1;
+
+                        return {
+                            results: data,
+//                            pagination: {
+//                                more: (params.page * 30) < data.total_count
+//                            }
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 3,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+
+
+            // Dates formats
+            var dateFormatSQL = 'YYYY-MM-DD';
+            var dateFormat = 'MMMM D, YYYY';
+            var currDate = moment().format(dateFormat);
+            var weekDate =  moment(currDate, dateFormat).add(7, 'days').format(dateFormat);
+            var currdateSQL = moment().format(dateFormatSQL);
+            var weekDateSQL = moment(currdateSQL, dateFormatSQL).add(7, 'days').format(dateFormatSQL);
+
+            //set default dates
+//            $('#LowFareSearch_searchStart').val(currdateSQL);
+//            $('#LowFareSearch_searchEnd').val(weekDateSQL);
+
+            // Outbound Date
+            $('#outbound').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": currDate,
+                "endDate": currDate
+            }, function(start, end, label) {
+                var diff = moment().diff(start,'days');
+                if(diff > 0){
+                    alert('Date Cannot be in the past');
+                    $('#outbound').data('daterangepicker').setStartDate(currDate);
+                    $('#outbound').data('daterangepicker').setEndDate(currDate);
+//                    $('#LowFareSearch_searchStart').val(currdateSQL);
+                }else{
+                    var weekDiff = moment(start, dateFormat).add(7, 'days').format(dateFormat);
+                    var weekDiffSql = moment(start, dateFormat).add(7, 'days').format(dateFormatSQL);
+                    $('#inbound').data('daterangepicker').setStartDate(weekDiff);
+                    $('#inbound').data('daterangepicker').setEndDate(weekDiff);
+
+//                    $('#LowFareSearch_searchStart').val(start.format(dateFormatSQL));
+//                    $('#LowFareSearch_searchEnd').val(weekDiffSql);
+                }
+
+
+
+                console.log('date outbound change');
+            });
+
+            // Inbound Date
+            $('#inbound').daterangepicker({
+                singleDatePicker: true,
+                locale: {
+                    format: dateFormat
+                },
+                "startDate": weekDate,
+                "endDate": weekDate
+            }, function(start, end, label) {
+
+                var diffNow = moment().diff(start,'days');
+                var outboundDate = moment($('#outbound').val());
+                var diffOutbound = start.diff(outboundDate,'days');
+
+                if(diffNow > 0){ /*check past*/
+                    alert('Date Cannot be in the past');
+                    var lastDate = moment($('#inbound').val()).format(dateFormat);
+                    $('#inbound').data('daterangepicker').setStartDate(lastDate);
+                    $('#inbound').data('daterangepicker').setEndDate(lastDate);
+                    // $('#LowFareSearch_searchEnd').val(weekDateSQL);
+                }else if(diffOutbound < 0){ /*check with outbound Date, must be same or bigger*/
+                    alert(' Inbound date must be same day or later than outbound ');
+                    var lastDate = moment($('#inbound').val()).format(dateFormat);
+                    $('#inbound').data('daterangepicker').setStartDate(lastDate);
+                    $('#inbound').data('daterangepicker').setEndDate(lastDate);
+                } else{
+//                    $('#LowFareSearch_searchEnd').val(start.format(dateFormatSQL));
+                }
+
+
+            });
+
+        });
+
+
+
+        function formatRepo (repo) {
+            console.log(repo);
+            if (repo.loading) return repo.text;
+
+            var markup = "<div class='select2-result-repository clearfix'>" +
+
+                "<div class='select2-result-repository__title'>" + repo.city_name + " - "+ repo.country_name +"</div>";
+
+            markup += "<div class='select2-result-repository__description'>" + repo.airport_name + ", "+ repo.airport_code +"</div>";
+
+
+
+            return markup;
+        }
+
+        function formatRepoSelection (repo) {
+            if(repo.city_name){
+                return repo.city_name + ' - ' + repo.airport_name+', '+ repo.airport_code;
+            }
+            return  repo.text;
+//            return repo.city_name || repo.text;
+        }
+
+
+    </script>
+{% endblock %}

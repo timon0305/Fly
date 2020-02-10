@@ -1,0 +1,26 @@
+{# src/Fly/PlatformBundle/Resources/views/Advert/edit.html.twig #}
+
+{% extends "FlyPlatformBundle::layout.html.twig" %}
+
+{% block title %}
+  Edit an advert - {{ parent() }}
+{% endblock %}
+
+{% block flyplatform_body %}
+
+  <h2>Edit an advert</h2>
+
+  {{ include("FlyPlatformBundle:Advert:form.html.twig") }}
+
+  <p>
+    Thanks for sharing!
+  </p>
+
+  <p>
+    <a href="{{ path('fly_platform_view', {'id': advert.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Back to advert
+    </a>
+  </p>
+
+{% endblock %}

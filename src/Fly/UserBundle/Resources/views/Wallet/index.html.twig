@@ -1,0 +1,117 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}My Wallet{% endblock %}
+{% block body_main %}
+
+    <div class="card notice-list">
+        <div class="card-header">
+            <h2>My Wallet
+                {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+            </h2>
+        </div>
+
+        <div class="card-body card-padding" id="notices-list">
+            {% if pagination.count %}
+                <table class="table wallet">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Passenger</th>
+                            <th>Fly Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                {% for order in pagination %}
+                        <tr {% if loop.index is odd %}class="odd"{% endif %}>
+                            <td>{{ order.id }}</td>
+                            <td>{{ order.orderid }}</td>
+                            <td>{{ order.created|date('d/m/Y H:i:s') }}</td>
+                            <td>{{ order.firstname }} {{ order.familyname }}</td>
+                            <td>
+                                {% set formData = order %}
+                                <div class="row row-routeblock">
+                                    <div class="container-route">
+                                            <div class="row-route row-route-outbound">
+                                                {#<div class="col-md-1"></div>#}
+                                                <div class="col-md-1"><i class="fa fa-plane"></i> {{ formData.outbound.operatingAirlineCode }}</div>
+                                                <div class="col-md-5">
+                                                    {{ formData.outbound.start|date('H:i:s') }} - {{ formData.outbound.end|date('H:i:s') }}
+                                                    <br/>{{ formData.outbound.airports|join(',') }}
+                                                </div>
+                                                <div class="col-md-3">{{ formData.outbound.duration }}</div>
+                                                <div class="col-md-3">
+                                                    {% if formData.outbound.stops|length and formData.outbound.stops != '0' %}
+                                                        {{ formData.outbound.stops.airport|length }} stops
+                                                        {% for stp in formData.outbound.stops.airport %}
+                                                            <br/>{{ formData.outbound.stops.interval[loop.index-1] }} in {{ formData.outbound.stops.airport[loop.index-1] }}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        Nonstop
+                                                    {% endif %}
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                            <div class="row-route row-route-inbound">
+                                                {#<div class="col-md-1"><i class="fa fa-plane fa-2x" style="transform: scale(-1, -1)"></i> </div>#}
+                                                <div class="col-md-1"><i class="fa fa-plane" style="transform: scale(-1, -1)"></i> {{ formData.inbound.operatingAirlineCode }}</div>
+                                                <div class="col-md-5">
+                                                    {{ formData.inbound.start|date('H:i:s') }} - {{ formData.inbound.end|date('H:i:s') }}
+                                                    <br/>{{ formData.inbound.airports|join(',') }}
+                                                </div>
+                                                <div class="col-md-3">{{ formData.inbound.duration }}</div>
+                                                <div class="col-md-3">
+                                                    {% if formData.inbound.stops|length and formData.inbound.stops != '0' %}
+                                                        {{ formData.inbound.stops.airport|length }} stops
+                                                        {% for stp in formData.inbound.stops.airport %}
+                                                            <br/>{{ formData.inbound.stops.interval[loop.index-1] }} in {{ formData.inbound.stops.airport[loop.index-1] }}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        Nonstop
+                                                    {% endif %}
+                                                </div>
+                                                <div class="clearfix"></div>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                {#</div>#}
+                                {#{{ dump(order.outbound) }}#}
+                                {#{{ dump(order.inbound) }}#}
+                            </td>
+                        </tr>
+
+
+                {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="alert alert-info" role="alert">No any orders yet.</div>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% if pagination.count %}
+    <div class="card notice-list">
+        <div class="card-body card-padding">
+                {{ knp_pagination_render(pagination) }}
+                <div><b>Total</b>: {{ pagination.getTotalItemCount }}</div>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+
+        $(function(){
+
+        });
+
+    </script>
+{% endblock %}

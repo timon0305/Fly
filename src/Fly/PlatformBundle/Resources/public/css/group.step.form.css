@@ -1,0 +1,247 @@
+.group-form-step{
+    /*display: none;*/
+}
+.form-step-progress{
+    margin-bottom: 10px;
+    background-color: rgba(255,255,255,0.5);
+}
+.form-first-step{
+    /*display: block !important;*/
+}
+
+.form-last-step, .form-inner-step{
+    display: none;
+}
+
+.step-prev{}
+.step-next{}
+.step-submit{}
+
+.fstlabel {
+    border-radius: 4px;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    padding: 10px;
+    font-weight: normal;
+    margin: 10px;
+}
+
+
+input.fst[type="radio"],
+input.fst[type="checkbox"] {
+    display:none;
+}
+
+.checkbox label.fstlabel, .radio label.fstlabel  {
+    padding-left: 7px;
+}
+
+input.fst[type="radio"] + span:before,
+input.fst[type="checkbox"] + span:before,
+.fstlabel > input[type="radio"] + span:before,
+.fstlabel > input[type="checkbox"] + span:before
+
+{
+    font: normal normal normal 14px/1 'Material Design Iconic Font';
+    padding-right: 3px;
+    font-size: 20px;
+    /*border-radius: 50%;*/
+    width: 40px;
+    height: 40px;
+    /*padding: 10px;*/
+    text-align: center;
+    position: relative;
+    /*box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);*/
+    /*cursor: pointer;*/
+    vertical-align: middle;
+}
+
+input.fst[type="radio"] + span:before {
+    content: "\f29c"; /* circle-blank */
+}
+
+input.fst[type="radio"]:checked + span:before {
+    content: "\f29c"; /* circle */
+}
+
+
+/*form icons*/
+input.fst[type="checkbox"] + span.default:before {
+    content: "\f13c"; /* check-empty */
+}
+/*1*/
+.fstlabel > input[type="radio"] + span.family:before {
+    content: "\f029"; /* check-empty */
+}
+.fstlabel > input[type="radio"] + span.colleague:before {
+    content: "\f2d6"; /* check-empty */
+}
+.fstlabel > input[type="radio"] + span.love:before {
+    content: "\f02a"; /* check-empty */
+}
+.fstlabel > input[type="radio"] + span.tribe:before {
+    content: "\f2d5"; /* check-empty */
+}
+/*.input.fst[type="checkbox"] + span.family:before {*/
+    /*content: "\f029"; !* check-empty *!*/
+/*}*/
+/*input.fst[type="checkbox"] + span.colleague:before {*/
+    /*content: "\f2d6"; !* check-empty *!*/
+/*}*/
+/*input.fst[type="checkbox"] + span.love:before {*/
+    /*content: "\f02a"; !* check-empty *!*/
+/*}*/
+/*input.fst[type="checkbox"] + span.tribe:before {*/
+    /*content: "\f2d5"; !* check-empty *!*/
+/*}*/
+/*2*/
+input.fst[type="checkbox"] + span.coctails:before {
+    content: "\f26c"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.sunshine:before {
+    content: "\f25a"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.beach:before {
+    content: "\f02a"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.party:before {
+    content: "\f190"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.citybreak:before {
+    content: "\f235"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.countrybreak:before {
+    content: "\f036"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.outdoor:before {
+    content: "\f027"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.cultural:before {
+    content: "\f2d5"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.bar:before {
+    content: "\f26d"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.restaurant:before {
+    content: "\f282"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.art:before {
+    content: "\f002"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.sport:before {
+    content: "\f25d"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.sociallocalmeeting:before {
+    content: "\f2d6"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.food:before {
+    content: "\f282"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.photography:before {
+    content: "\f283"; /* check-empty */
+}
+/*3*/
+input.fst[type="checkbox"] + span.hosted:before {
+    content: "\f266"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.hotel1:before {
+    content: "\f2e7"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.hotel2:before {
+    content: "\f2e6"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.hotel3:before {
+    content: "\f2e5"; /* check-empty */
+}
+/*4*/
+
+input.fst[type="checkbox"] + span.car:before {
+    content: "\f25f"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.flight:before {
+    content: "\f122"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.train:before {
+    content: "\f262"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.bus:before {
+    content: "\f25e"; /* check-empty */
+}
+input.fst[type="checkbox"] + span.boat:before {
+    content: "\f260"; /* check-empty */
+}
+/*5*/
+/*6*/
+/* end form icons*/
+
+input.fst[type="checkbox"]:checked + span:before {
+    /*content: "\f023"; /!* check *!/*/
+    /*background-color: #4caf50;*/
+    /*color: #4caf50;*/
+}
+
+/*google map*/
+#map{
+    height: 300px;
+}
+.controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+}
+
+#pac-input:focus {
+    border-color: #4d90fe;
+}
+
+.pac-container {
+    font-family: Roboto;
+}
+
+#type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.add_collection_item{
+    margin-bottom: 15px;
+}
+.collection-item-block{
+    margin-bottom: 15px;
+}
+.remove-collection-item{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.select2-user-icon{
+    /*float:left;*/
+    width: 38px;
+    margin-right: 5px;
+}
+.select2-container{
+    width: 100% !important;
+}

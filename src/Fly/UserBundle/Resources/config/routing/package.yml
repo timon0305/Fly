@@ -1,0 +1,4 @@
+package:
+    path:     /
+    defaults: { _controller: "FlyUserBundle:Package:index" }
+

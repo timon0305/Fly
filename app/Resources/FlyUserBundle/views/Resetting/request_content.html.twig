@@ -1,0 +1,26 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<form action="{{ path('fos_user_resetting_send_email') }}" method="POST" class="fos_user_resetting_request"
+      id="form-recover">
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="text" id="username" name="username" required="required" class="form-control"
+                   placeholder="&#xf003; Username or Email" style="font-family:Arial, FontAwesome"/>
+        </div>
+    </div>
+    <div class="col-md-12 text-center">
+        <button type="submit" class="btn btn-login-from">Reset</button>
+    </div>
+    <div class="col-md-6">
+        <div class="checkbox text-right">
+            <a href="{{path('fos_user_security_login')}}" class="login-forget-password"><i class="fa fa-sign-in"></i> Login</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="checkbox text-left">
+            <a href="{{ path('fos_user_registration_register') }}" class="login-forget-password">Register</a>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</form>

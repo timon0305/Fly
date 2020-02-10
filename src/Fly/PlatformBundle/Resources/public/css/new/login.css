@@ -1,0 +1,245 @@
+html {
+    background: url(/img/login-bg.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+body{
+    font-size: 12px;
+    height:100%;
+    background-color: transparent;
+
+}
+/*iPad in portrait*/
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) { /* STYLES GO HERE */ }
+
+/*iPad in landscape*/
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : landscape) { /* STYLES GO HERE */}
+
+/*iPhone 6 in portrait & landscape*/
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px) { /* STYLES GO HERE */}
+
+
+/*iPhone 6 Plus in portrait & landscape*/
+@media only screen
+and (min-device-width : 414px)
+and (max-device-width : 736px) { /* STYLES GO HERE */}
+
+/*iPhone 5 & 5S in portrait & landscape*/
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px) { /* STYLES GO HERE */}
+
+/*iPhone 2G-4S in portrait & landscape*/
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px) { /* STYLES GO HERE */}
+
+
+@media (min-width: 1400px) {
+    .login-wrap{
+        margin-top: 12% !important;
+    }
+
+}
+
+
+.login-wrap{
+    width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5%;
+    background-color: rgba(227, 238, 246, 0.33);
+    border-radius: 4px;
+}
+
+.login-box{
+    padding:8px;
+}
+.login-title{
+    padding: 30px 11px;
+}
+
+.login-username-input, .login-password-input {
+    padding: 6px 12px;
+    background-color: rgba(227, 238, 246, 1);
+    font-size: 12px;
+}
+
+.login-forget-password{
+    color: #fff;
+    text-decoration: none;
+
+}
+
+.login-forget-password:hover,
+.login-forget-password:active,
+.login-forget-password:focus
+{
+    color: #00FFFF;
+    text-decoration: none;
+}
+
+.login-checkbox-remember{
+    position: inherit;
+    color: #fff;
+
+}
+
+.login-checkbox-remember input{
+    margin-left: -30px;
+    margin-top: 3px;
+}
+
+.btn-login-from, .btn-register-from{
+    background-color: #fff;
+    width: 100%;
+    color: #000;
+    border-radius: 4px;
+    padding: 9px 9px;
+    font-size: 12px;
+}
+
+.btn-login-from{
+    margin-top: 11px;
+}
+
+.social-btn{
+    margin-top: 22px;
+    margin-bottom: 22px;
+}
+.btn-login-facebook, .btn-login-twitter{
+    width: 100%;
+    padding: 9px 9px;
+    font-size: 12px;
+    color: #fff;
+
+}
+.btn-login-facebook{
+    background-color: #3A559F;
+}
+.btn-login-facebook:hover,
+.btn-login-facebook:active,
+.btn-login-facebook:focus
+{
+    background-color: #516DBF;
+    color: #fff;
+}
+
+.btn-login-twitter{
+    background-color: #55ACEE;
+}
+
+.btn-login-twitter:hover,
+.btn-login-twitter:active,
+.btn-login-twitter:focus
+{
+    background-color: #3195EA;
+    color: #fff;
+}
+
+.line-on-separator{
+    padding:15px;
+}
+
+.line-on-separator span {
+    display: inline-block;
+    position: relative;
+    width:100%;
+    color: #fff;
+}
+.line-on-separator span:before,
+.line-on-separator span:after
+{
+    content: "";
+    position: absolute;
+    height: 8px;
+    border-bottom: 1px solid #fff;
+    top: 0;
+    width: 50%;
+}
+.line-on-separator span:before {
+    right: 50%;
+    margin-right: 11px;
+}
+.line-on-separator span:after {
+    left: 50%;
+    margin-left: 11px;
+}
+
+
+
+.about-hrefs{
+    list-style-type: none;
+    padding-left: 50%;
+    margin-left: -136px;
+}
+
+.about-hrefs li {
+    float: left;
+    padding: 8px;
+    list-style-type: none;
+}
+
+.about-hrefs a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.about-hrefs a:hover,
+.about-hrefs a:active
+.about-hrefs a:focus
+{
+    color: #00FFFF;
+    text-decoration: none;
+}
+
+
+.login-messages{
+    position: absolute;
+    left: 50%;
+    margin-left: -555px;
+    width: 300px;
+    top: 25%;
+}
+
+.login-errors, .login-notice{
+
+    text-align: center;
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: 1px solid #fff;
+    color: #fff;
+    margin-bottom: 15px;
+    position: relative;
+    margin-left: 15px;
+    margin-right: 15px;
+
+}
+
+.login-errors .help-block,
+.login-notice .help-block{
+    color: #fff;
+}
+
+.login-errors{
+    background-color: rgba(198, 24, 44, 0.47);
+}
+.login-notice{
+    background-color: rgba(21, 208, 236, 0.47);
+}
+
+.login-errors i, .login-notice i {
+    position: absolute;
+    left: 3px;
+    top: 3px;
+}

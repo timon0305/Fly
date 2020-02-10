@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">
+        <h2>Last posted advert</h2>
+    </div>
+    <div class="card-body card-padding">
+        {% for advert in listAdverts %}
+            <div class="card blog-post">
+                <div class="bp-header">
+                    {#<img src="{{ web_image(asset('bundles/flyplatform/img/widgets/preview.jpg')) }}" alt="" class="img-responsive">#}
+
+                    <a href="" class="bp-title">
+                        <h2>{{ advert.title }}</h2>
+                        <small>{{ advert.date|date('d/m/Y') }} - {{ advert.author }}</small>
+                    </a>
+                </div>
+
+                {#<div class="p-20">#}
+                {#{{ advert.content|truncate(100,'...') }}#}
+                {#</div>#}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+

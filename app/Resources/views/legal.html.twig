@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock title %}</title>
+
+    <link href="{{ asset('bundles/flyplatform/components-font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/animate-css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/material-icons/material-design-iconic-font.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/socicon/socicon.min.css') }}" rel="stylesheet">
+    <!-- CSS -->
+    <link href="{{ asset('bundles/flyplatform/css/app.min.1.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/app.min.2.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/legal.css') }}" rel="stylesheet">
+
+    <!-- Templates CSS -->
+    {% block stylesheets %}{% endblock %}
+
+    {% set fbapi = block('fbapi') %}
+    {% if fbapi is not empty %}
+        <!-- FB API -->
+        {{ fbapi|raw }}
+    {% endif %}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" ></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" ></script>
+</head>
+
+<body>
+
+<header id="header">
+    {% include '@FlyPlatform/Partials/legal_navbar.html.twig' %}
+</header>
+
+<section id="main">
+    <section id="content">
+
+        {#Breadcrumbs, Header Title, Header Action blocks#}
+        {% set breadcrumbs = block('breadcrumbs') %}
+        {% set header_title = block('header_title') %}
+        {% set header_action = block('header_action') %}
+
+        {% if breadcrumbs is not empty %}
+            {#{% block breadcrumbs %}#}
+            {#{{ breadcrumbs('homepage')|raw }}#}
+            {#{% endblock %}#}
+            {{ breadcrumbs|raw }}
+        {% endif %}
+
+        {% if header_title is not empty %}
+        <div class="">
+            <div class="block-header">
+
+                {#<h2>{% block header_title %}{% endblock %}</h2>#}
+                <h2> {{ header_title|raw }} </h2>
+                {% if header_action is not empty %}
+                    {#{% block header_action %}{% endblock %}#}
+                    {{ header_action|raw }}
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {#Body Side, Body Main Blocks    #}
+            {% set body_side = block('body_side') %}
+            {% set body_main = block('body_main') %}
+
+            {% if body_side is not empty and body_main is not empty %}
+                <div class="col-md-3">
+                    {{ body_side|raw }}
+                </div>
+                <div class="col-md-9">
+                    {#Flash Messages#}
+                    {#{% for flashMessage in app.session.flashbag.get('success-msg') %}#}
+                    {#<div class="alert alert-success" role="alert">#}
+                    {#{{ flashMessage }}#}
+                    {#</div>#}
+                    {#{% endfor %}#}
+                    {{ body_main|raw }}
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    {#Flash Messages#}
+                    {#{% for flashMessage in app.session.flashbag.get('success-msg') %}#}
+                    {#<div class="alert alert-success alert-dismissible" role="alert">#}
+                    {#<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>#}
+                    {#{{ flashMessage }}#}
+                    {#</div>#}
+                    {#{% endfor %}#}
+                    {{ body_main|raw }}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+</section>
+
+
+
+{% block modals %}{% endblock %}
+<!-- Older IE warning message -->
+<!--[if lt IE 9]>
+{% include '@FlyPlatform/Partials/oldie.html.twig' %}
+<![endif]-->
+
+{% javascripts
+'bundles/flyplatform/js/jquery-2.1.1.min.js'
+'bundles/flyplatform/js/bootstrap.min.js'
+'bundles/flyplatform/vendors/nicescroll/jquery.nicescroll.min.js'
+'bundles/flyplatform/vendors/waves/waves.min.js'
+'bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.js'
+%}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+<!-- javascripts block-->
+{% block javascripts %}{% endblock javascripts %}
+<!-- // -->
+</body>
+</html>

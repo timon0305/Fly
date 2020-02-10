@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>AccItem</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Checkin</th>
+                <td>{{ entity.checkin|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Checkout</th>
+                <td>{{ entity.checkout|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Duration</th>
+                <td>{{ entity.duration }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('accitem') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('accitem_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

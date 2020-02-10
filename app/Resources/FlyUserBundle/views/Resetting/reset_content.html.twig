@@ -1,0 +1,70 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+{#<div class="login-wrap">#}
+    {#<div class="login-box">#}
+        {#<div class="login-title text-center">#}
+            {#<img src="{{ asset('img/login-logo.png') }}" alt="" height="40px"/>#}
+        {#</div>#}
+        {#{% if form_errors(form.plainPassword.first) %}#}
+            {#<div class="login-errors col-md-12">#}
+                {#{{ form_errors(form.plainPassword.first) }}#}
+            {#</div>#}
+        {#{% endif %}#}
+        {#{% for flashMessage in app.session.flashbag.get('error') %}#}
+            {#<div class="login-errors col-md-12">#}
+                {#<i class="fa fa-exclamation-triangle"></i>#}
+                {#{{ flashMessage }}#}
+            {#</div>#}
+        {#{% endfor %}#}
+
+        {#{% for flashMessage in app.session.flashbag.get('notice') %}#}
+            {#<div class="login-notice col-md-12">#}
+                {#<i class="fa fa-exclamation-circle"></i>#}
+                {#{{ flashMessage }}#}
+            {#</div>#}
+        {#{% endfor %}#}
+
+
+
+        {#<div class="login-form-wrap">#}
+            {{ form_start(form, { 'action': path('fos_user_resetting_reset', {'token': token}), 'attr': { 'class': 'fos_user_resetting_reset' } }) }}
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ form_widget(form.plainPassword.first,{'attr':{'placeholder':'New Password','style':'font-family:Arial, FontAwesome'} }) }}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {{ form_widget(form.plainPassword.second,{'attr':{'placeholder':'Repeat New Password','style':'font-family:Arial, FontAwesome'} }) }}
+                    </div>
+                </div>
+
+                <div class="col-md-12 text-center">
+                    <button type="submit" class="btn btn-login-from">Reset Password</button>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-6">
+                    <div class="checkbox text-right">
+                        <a href="{{path('fos_user_security_login')}}" class="login-forget-password"><i class="fa fa-sign-in"></i>  Login</a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checkbox text-left">
+                        <a href="{{ path('fos_user_registration_register') }}" class="login-forget-password">Register</a>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            {{ form_end(form) }}
+
+        {#</div>#}
+
+    {#</div>#}
+{#</div>#}
+{#<ul class="about-hrefs">#}
+    {#<li><a href="">Who We Are</a></li>#}
+    {#<li><a href="">Privacy Policy</a></li>#}
+    {#<li><a href="">Sales Condition</a></li>#}
+{#</ul>#}
+{#<div class="clearfix"></div>#}
+

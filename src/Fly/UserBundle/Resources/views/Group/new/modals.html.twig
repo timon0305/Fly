@@ -1,0 +1,80 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+
+<form action="{{ path('fos_user_group_new') }}" {{ form_enctype(form) }} method="POST" class="fos_user_group_new">
+    {{ form_row(form.name) }}
+    {{ form_row(form.description) }}
+    {{ form_row(form.picture) }}
+    <legend><h3>Describe your group</h3></legend>
+    {{ form_row(form.travelingWith) }}
+    {{ form_row(form.spirits) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.accomodations) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.transportations) }}
+    <div class="clearfix"></div>
+    {{ form_row(form.activities) }}
+    <div class="clearfix"></div>
+
+    <legend><h3>Where to go?</h3></legend>
+    {{ form_row(form.is_wheretogo) }}
+    {{ form_row(form.city) }}
+    {{ form_row(form.country) }}
+    {{ form_row(form.world_zones) }}
+    <div class="clearfix"></div>
+
+    <legend><h3>When to go?</h3></legend>
+    {{ form_row(form.is_whentogo) }}
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_label(form.departure_date) }}</label>
+
+            <div id="datepicker_dep"></div>
+            {{ form_widget(form.departure_date,{'attr':{'class':'datepicker_dep hide'}}) }}
+        </div>
+
+        {{ form_row(form.departure_date_flexibility, {'attr':{'min':'0'}}) }}
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label>{{ form_label(form.wayback_date) }}</label>
+
+            <div id="datepicker_back"></div>
+            {{ form_widget(form.wayback_date,{'attr':{'class':'datepicker_back hide'}}) }}
+        </div>
+        {{ form_row(form.wayback_date_flexibility,{'attr':{'min':'0'}}) }}
+    </div>
+    <div class="clearfix"></div>
+
+    <legend><h3>When does this group expire</h3></legend>
+    <div class="text-center">
+        <div class="col-sm-1">in</div><div class="col-sm-2">{{ form_widget(form.expired_time,{'attr':{'min':'0'}}) }} </div><div class="col-sm-1">hours</div>
+        <div class="clearfix"></div>
+    </div>
+
+    <legend><h3>Group Goals</h3></legend>
+    <ul class="group_goals" data-prototype="{{ form_widget(form.goal.vars.prototype)|e }}">
+        {#{% for goal in form.goals %}#}
+            {#<li>#}
+                {#<div class="col-md-6">{{ form_row(goal.description) }}</div>#}
+                    {#<div class="col-md-6">{{ form_row(goal.goal_date) }}</div>#}
+            {#</li>#}
+        {#{% endfor %}#}
+    </ul>
+
+    {#{{ form_widget(form) }}#}
+    <legend><h3>Invite Friends</h3></legend>
+        <ul class="invitations" data-prototype="{{ form_widget(form.invitation.vars.prototype)|e }}">
+            {% for inv in form.invitation %}
+                <li>{{ form_row(inv.email) }}</li>
+            {% endfor %}
+        </ul>
+
+
+    {{ form_rest(form) }}
+    <hr/>
+    <div>
+        <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> {{ 'group.new.submit'|trans }}</button>
+    </div>
+</form>

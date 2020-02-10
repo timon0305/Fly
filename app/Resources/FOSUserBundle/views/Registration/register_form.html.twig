@@ -1,0 +1,75 @@
+{#<form action="{{ path("fos_user_registration_register") }}" method="post" id="form-register">#}
+    {#{{ form_errors(form) }}#}
+    {#<div class="input-group m-b-20 {% if form_errors(form.email) %} has-error {% endif %}">#}
+        {#<span class="input-group-addon"><i class="md md-mail"></i></span>#}
+        {#<div class="fg-line">#}
+            {#{% if form_errors(form.email) %}{{ form_errors(form.email) }}{% endif %}#}
+            {#{{ form_widget(form.email,{'attr':{'placeholder':'Email'}}) }}#}
+        {#</div>#}
+    {#</div>#}
+    {#<div class="clearfix"></div>#}
+    {#{{ form_rest(form) }}#}
+{#</form>#}
+{#<a href="" class="btn btn-login btn-danger btn-float" id="action-register"><i class="md md-arrow-forward"></i></a>#}
+
+{#<ul class="login-navigation">#}
+    {#<li data-block="#l-login" class="bgm-green">Login</li>#}
+    {#<li data-block="#l-forget-password" class="bgm-orange">Forgot Password?</li>#}
+{#</ul>#}
+
+
+<div class="login-wrap">
+    <div class="login-box">
+        <div class="login-title text-center">
+            <img src="{{ asset('img/login-logo.png') }}" alt="" height="40px"/>
+        </div>
+        {% if form_errors(form)|length %}
+            <div class="login-errors col-md-12">
+                {{ form_errors(form) }}
+            </div>
+        {% endif %}
+        {% if form_errors(form.email) %}
+            <div class="login-errors col-md-12">
+                {{ form_errors(form.email) }}
+            </div>
+        {% endif %}
+        {% if userAlreadyExists %}
+            <div class="login-notice col-md-12">
+                User already exists, <a href="{{path('fos_user_resetting_request')}}">click here</a> to reset password
+            </div>
+        {% endif %}
+
+        <div class="login-form-wrap">
+            <form action="{{ path("fos_user_registration_register") }}" method="post" id="form-register">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control login-username-input"
+                               id="username" name="_username" value="{{ last_username }}" required="required"
+                               placeholder="&#xf003; Email" style="font-family:Arial, FontAwesome">
+                    </div>
+                </div>
+            <div class="col-md-12 text-center">
+                <button type="submit" class="btn btn-login-from">Register</button>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 text-center line-on-separator">
+                <span> OR </span>
+            </div>
+            <div class="col-md-6 text-center social-btn">
+                <a id="fb-login" href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook' }) }}" class="btn btn-login-facebook">Sign In <i class="fa fa-facebook-f"></i></a>
+            </div>
+            <div class="col-md-6 text-center social-btn">
+                <a id="twitter-login" href="{{ path('hwi_oauth_service_redirect', {'service': 'twitter' }) }}" class="btn btn-login-twitter">Sign In <i class="fa fa-twitter"></i></a>
+            </div>
+            <div class="clearfix"></div>
+                {{ form_rest(form) }}
+            </form>
+        </div>
+    </div>
+</div>
+<ul class="about-hrefs">
+    <li><a href="">Who We Are</a></li>
+    <li><a href="">Privacy Policy</a></li>
+    <li><a href="">Sales Condition</a></li>
+</ul>
+<div class="clearfix"></div>

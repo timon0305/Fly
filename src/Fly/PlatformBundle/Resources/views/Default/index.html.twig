@@ -1,0 +1,56 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block title %}Flyeurope20{% endblock %}
+
+{% block header_title %}{% endblock %}
+
+{% block body_main %}
+    {% include 'FlyPlatformBundle:Default:groups.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        $(function(){
+            $('.invite-action').click(function(){
+                var groupId = $(this).attr('data-group');
+                var userId = $(this).attr('data-user');
+                if(groupId && userId){
+                    acceptInvite(groupId,userId,$(this));
+                }
+                return false;
+            });
+        });
+
+        function acceptInvite(groupId,userId,obj){
+//            alert(groupId+','+userId); return false;
+            $.ajax({
+                url: '{{ path('fly_platform_accept_invite') }}',
+                type: 'POST',
+                format: 'json',
+                data: {groupId: groupId, userId: userId},
+                //Succès de la requête
+                success: function(data) {
+                    if(data.asc == 'unlogged'){
+                        window.location.href = '{{ path('fos_user_security_login') }}';
+                        return false;
+                    }
+                    if(data.asc == 'success'){
+                       $('.invitation-btn-block-'+groupId).addClass('fadeOut',function(){
+
+                       });
+                        setTimeout(function() {
+                            $('.invitation-accept-block-' + groupId).addClass('fadeIn').show();
+                            setTimeout(function () {
+                                $('.invitation-accept-block-' + groupId).removeClass('fadeIn').addClass('fadeOut');
+                            }, 1000);
+                        },1000);
+                    }else{
+                        console.log(data.msg);
+                    }
+
+                }
+            });
+        }
+    </script>
+{% endblock %}

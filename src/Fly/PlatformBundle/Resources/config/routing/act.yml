@@ -1,0 +1,30 @@
+act:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:Act:index" }
+
+act_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyPlatformBundle:Act:show" }
+
+act_new:
+    path:     /new
+    defaults: { _controller: "FlyPlatformBundle:Act:new" }
+
+act_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:Act:create" }
+    methods:  POST
+
+act_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:Act:edit" }
+
+act_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:Act:update" }
+    methods:  [POST, PUT]
+
+act_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyPlatformBundle:Act:delete" }
+    methods:  [POST, DELETE]

@@ -1,0 +1,11 @@
+{#{% extends "::login.html.twig" %}#}
+{% extends "FlyUserBundle::login_layout.html.twig" %}
+{% block login_errors %}
+    {% include 'FlyUserBundle:Registration:register_errors.html.twig' %}
+{% endblock %}
+{% block formblock %}
+    {% include 'FlyUserBundle:Registration:register_form.html.twig' with {'form':form} %}
+{% endblock %}
+{#{% block fos_user_content %}#}
+            {#{% include 'FlyUserBundle:Registration:register_form.html.twig' with {'form':form} %}#}
+{#{% endblock fos_user_content %}#}

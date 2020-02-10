@@ -1,0 +1,23 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Welcome!{% endblock title %}</title>
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/flyplatform/bootstrap-3.3.7/css/bootstrap.css'
+    'bundles/flyplatform/components-font-awesome/css/font-awesome.min.css'
+    'bundles/flyplatform/css/frontend.css'
+     %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+
+    {% block stylesheets %}{% endblock stylesheets %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+</head>
+<body>
+        {% block body %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+</body>
+</html>

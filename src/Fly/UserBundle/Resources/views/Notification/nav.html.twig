@@ -1,0 +1,36 @@
+<a href="#" data-toggle="dropdown"><i class="fa fa-flag"></i>{% if newNoticesCount %}<div style="position: absolute; top: -20px; right:0; font-size: 11px; " ><span class="label label-warning">{{ newNoticesCount }}</span></div>{% endif %}</a>
+<div class="dropdown-menu dropdown-menu-lg pull-right">
+    <div class="listview notice-nav-list">
+        <div class="lv-header">
+            Last Notifications
+        </div>
+        <div class="lv-body c-overflow notice-nav">
+            {% for notice in lastNotices %}
+                {% set type = notice.getNotificationType() %}
+                {% set aHref = '#' %}
+                {#{{ dump(notice) }}#}
+            {% if notice.group %}
+                {% set aHref = path('fos_user_group_show',{'groupName':notice.group.name}) %}
+            {% endif %}
+            <a class="lv-item notification-nav {% if notice.isRead %} wasread {% endif %}" href="{{ aHref }}">
+                <div class="media">
+                    <div class="pull-left">
+                        <img class="lv-img-sm" src="{{ userPhoto(notice.sender, 60, 60) }}" alt="">
+                    </div>
+                    <div class="media-body">
+                        <div class="lv-title">{{ type.title }}</div>
+                        <small class="lv-small notice-message">
+                            {% if notice.group %}
+                                {{ type.msg|format(notice.sender) }} <b>{{ notice.group.name }}</b>
+                            {% else %}
+                                {{ type.msg|format(notice.sender) }}
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <a class="lv-footer" href="{{ path('notification') }}">View All</a>
+    </div>
+</div>

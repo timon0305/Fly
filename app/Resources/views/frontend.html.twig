@@ -1,0 +1,46 @@
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>{% block title %}Travel Buddy{% endblock title %}</title>
+
+    {% stylesheets filter='cssrewrite'
+    'bundles/flyplatform/bootstrap-3.3.7/css/bootstrap.css'
+    'bundles/flyplatform/components-font-awesome/css/font-awesome.min.css'
+    'bundles/flyplatform/css/frontend.css'
+     %}
+    <link rel="stylesheet" href="{{ asset_url }}">
+    {% endstylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+    {% block stylesheets %}{% endblock stylesheets %}
+
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}" ></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}" ></script>
+</head>
+<body>
+        {% block nav %}
+            {{ include('@FlyPlatform/Default/nav.html.twig') }}
+        {% endblock %}
+
+        {% block header %}
+            {{ include('@FlyPlatform/Default/header.html.twig') }}
+        {% endblock %}
+
+        {% block body %}{% endblock %}
+
+        {% block footer %}
+            {{ include('@FlyPlatform/Default/footer.html.twig') }}
+        {% endblock %}
+    {% javascripts
+    'bundles/flyplatform/js/jquery-2.1.1.min.js'
+    'bundles/flyplatform/bootstrap/dist/js/bootstrap.js'
+    %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="config.yml" server="monsieurtraduction.fr" local="130703307297002050" remote="130707249600000000" Dst="1" />
+<file name="config_dev.yml" server="monsieurtraduction.fr" local="130674295400000000" remote="130707249600000000" Dst="1" />
+<file name="config_prod.yml" server="monsieurtraduction.fr" local="130674295400000000" remote="130707249600000000" Dst="1" />
+<file name="config_test.yml" server="monsieurtraduction.fr" local="130674295400000000" remote="130707249600000000" Dst="1" />
+<file name="parameters.yml" server="monsieurtraduction.fr" local="130702138286429208" remote="130707249600000000" Dst="1" />
+<file name="parameters.yml.dist" server="monsieurtraduction.fr" local="130674295400000000" remote="130707249600000000" Dst="1" />
+<file name="routing.yml" server="monsieurtraduction.fr" local="130689425667732720" remote="130707249600000000" Dst="1" />
+<file name="routing_dev.yml" server="monsieurtraduction.fr" local="130689422502226201" remote="130707249600000000" Dst="1" />
+<file name="security.yml" server="monsieurtraduction.fr" local="130674300580000000" remote="130707249600000000" Dst="1" />
+<file name="services.yml" server="monsieurtraduction.fr" local="130674295400000000" remote="130707249600000000" Dst="1" />
+</dwsync>

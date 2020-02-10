@@ -1,0 +1,37 @@
+accitem:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:AccItem:index" }
+
+accitems_json_calendar:
+    path:     /json
+    defaults: { _controller: "FlyPlatformBundle:AccItem:calendarItems" }
+
+#accitem_show:
+#    path:     /{id}/show
+#    defaults: { _controller: "FlyPlatformBundle:AccItem:show" }
+
+#accitem_new:
+#    path:     /new
+#    defaults: { _controller: "FlyPlatformBundle:AccItem:new" }
+
+accitem_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:AccItem:create" }
+    methods:  POST
+
+
+
+
+accitem_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:AccItem:edit" }
+
+accitem_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:AccItem:update" }
+    methods:  [POST, PUT]
+
+#accitem_delete:
+#    path:     /{id}/delete
+#    defaults: { _controller: "FlyPlatformBundle:AccItem:delete" }
+#    methods:  [POST, DELETE]

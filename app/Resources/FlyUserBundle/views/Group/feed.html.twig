@@ -1,0 +1,76 @@
+{% if group.feed|length %}
+    <div class="feed-block">
+        <div class="timeline">
+            {% for feed in feeds %}
+
+                <div class="t-view" data-tv-type="text">
+                    <div class="tv-header media">
+                        <a href="" class="tvh-user pull-left">
+                            <img class="img-responsive"
+                                 src="{{ web_image('/uploads/'~feed.user.photo).zoomCrop(47,47,0,'center','top') }}"
+                                 alt="">
+                        </a>
+
+                        <div class="media-body p-t-5">
+                            <strong class="d-block">{{ feed.user.firstName }} {{ feed.user.lastName }}</strong>
+                            <small class="c-gray">{{ feed.created|date("M d, Y") }}
+                                at {{ feed.created|date("h:m") }}</small>
+                        </div>
+                    </div>
+                    <div class="tv-body">
+                        <p>{{ feed.description }}</p>
+                        <div class="clearfix"></div>
+                        {% if feed.resource|length %}
+                            {% include 'FlyUserBundle:FeedResource:item.html.twig' with {'resources':feed.resource} %}
+                        {% endif %}
+                        <div class="clearfix"></div>
+                        <ul class="tvb-stats">
+                            <li class="tvbs-comments">54 Comments</li>
+                            <li class="tvbs-likes">254 Likes</li>
+                            <li class="tvbs-views">23K Views</li>
+                        </ul>
+                        <a class="tvc-more" href=""><i class="md md-mode-comment"></i> View all 54 Comments</a>
+                        <div class="tv-comments">
+                            <ul class="tvc-lists">
+                                <li class="media">
+                                    <a href="" class="tvh-user pull-left">
+                                        <img class="img-responsive" src="img/profile-pics/1.jpg" alt="">
+                                    </a>
+                                    <div class="media-body">
+                                        <strong class="d-block">David Peiterson</strong>
+                                        <small class="c-gray">April 23, 2014 at 05:10</small>
+
+                                        <div class="m-t-10">Maecenas fermentum tellus ex, ac aliquet nisl malesuada id.</div>
+
+                                    </div>
+                                </li>
+
+                                <li class="p-20">
+                                    <div class="fg-line">
+                                        <textarea class="form-control auto-size" placeholder="Write a comment..." data-autosize-on="true" style="overflow: hidden; word-wrap: break-word; height: 43px;"></textarea>
+                                    </div>
+
+                                    <button class="m-t-15 btn btn-primary btn-sm waves-effect">Post</button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="feed-comments">
+                            {% include 'FOSCommentBundle:Thread:async.html.twig' with {'id': 'feed-'~feed.id} %}
+                        </div>
+
+                    </div>
+                </div>
+
+            {% endfor %}
+            <div class="clearfix"></div>
+
+            <div class="load-more">
+                <a href=""><i class="md md-refresh"></i> Load More...</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        <i class="md md-info-outline"></i> No feed yet.
+    </div>
+{% endif %}

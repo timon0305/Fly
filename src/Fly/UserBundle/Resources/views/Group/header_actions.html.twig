@@ -1,0 +1,29 @@
+<ul class="actions">
+    {#<li>#}
+        {#<a class="icon-pop" href="">#}
+            {#<i class="md md-trending-up"></i>#}
+        {#</a>#}
+    {#</li>#}
+    {#<li>#}
+        {#<a class="icon-pop" href="">#}
+            {#<i class="md md-done-all"></i>#}
+        {#</a>#}
+    {#</li>#}
+    <li class="dropdown">
+        <a class="icon-pop" href="" data-toggle="dropdown">
+            <i class="md md-settings"></i>
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-right">
+            <li>
+                <a href="{{ path('fos_user_group_edit',{'groupName':group.name}) }}">Edit</a>
+            </li>
+            {#<li>#}
+                {#<a href="">Manage Widgets</a>#}
+            {#</li>#}
+            {#<li>#}
+                {#<a href="">Widgets Settings</a>#}
+            {#</li>#}
+        </ul>
+    </li>
+</ul>

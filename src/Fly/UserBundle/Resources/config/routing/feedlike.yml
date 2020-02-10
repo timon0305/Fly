@@ -1,0 +1,5 @@
+feedlike_ajx:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:Ajx:feedLike" }
+    options:
+        expose: true

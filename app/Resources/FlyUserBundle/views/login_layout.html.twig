@@ -1,0 +1,25 @@
+{% extends "::login.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="login-wrap">
+        <div class="login-box">
+            <div class="login-title text-center">
+                <img src="{{ asset('img/login-logo.png') }}" alt="" height="40px"/>
+            </div>
+            <div class="login-form-wrap">
+                {% block login_errors %}{% endblock %}
+            </div>
+            <div class="login-form-wrap">
+                {% block formblock %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <ul class="about-hrefs">
+        <li><a href="">Who We Are</a></li>
+        <li><a href="{{ path('fly_private_policy') }}">Privacy Policy</a></li>
+        <li><a href="">Sales Condition</a></li>
+    </ul>
+    <div class="clearfix"></div>
+{% endblock %}
+

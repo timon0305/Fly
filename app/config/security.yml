@@ -1,0 +1,76 @@
+# you can read more about security in the related section of the documentation
+# http://symfony.com/doc/current/book/security.html
+security:
+    # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
+    encoders:
+            FOS\UserBundle\Model\UserInterface: sha512
+
+    # http://symfony.com/doc/current/book/security.html#hierarchical-roles
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ADMIN:       [ROLE_MANAGER]
+        ROLE_MANAGER:     [ROLE_USER]
+
+    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+    providers:
+        fos_userbundle:
+          id: fos_user.user_provider.username
+
+    # the main part of the security, where you can set up firewalls
+    # for specific sections of your app
+    firewalls:
+        # disables authentication for assets and the profiler, adapt it according to your needs
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+#                login_path:     /login
+#                use_forward:    false
+#                check_path:     /login_check
+#                failure_path:   null
+#                always_use_default_target_path: true
+                default_target_path: /platform
+
+            logout:
+                path:   /logout
+                target: /
+            anonymous: ~
+
+            oauth:
+              login_path:        /login
+              use_forward:       true
+              failure_path:      /login
+              check_path: /connect_check
+              provider: fos_userbundle
+#              success_handler: app_user_security.component.authentication.handler.login_success_handler
+              resource_owners:
+                  facebook: "/login/check-facebook"
+                  google: "/login/check-google"
+                  twitter: "/login/check-twitter"
+              oauth_user_provider:
+                  service: app.provider.oauth
+
+    # with these settings you can restrict or allow access for different parts
+    # of your application based on roles, ip, host or methods
+    # http://symfony.com/doc/current/cookbook/security/access_control.html
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/twitter/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/facebook/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect/facebook, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connect/twitter, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/legal/*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/admin/, role: [ROLE_SUPER_ADMIN, ROLE_ADMIN] }
+        - { path: ^/group, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/platform, role: IS_AUTHENTICATED_FULLY }

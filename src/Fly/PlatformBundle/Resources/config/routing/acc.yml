@@ -1,0 +1,30 @@
+acc:
+    path:     /
+    defaults: { _controller: "FlyPlatformBundle:Acc:index" }
+
+acc_show:
+    path:     /{id}/show
+    defaults: { _controller: "FlyPlatformBundle:Acc:show" }
+
+acc_new:
+    path:     /new
+    defaults: { _controller: "FlyPlatformBundle:Acc:new" }
+
+acc_create:
+    path:     /create
+    defaults: { _controller: "FlyPlatformBundle:Acc:create" }
+    methods:  POST
+
+acc_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "FlyPlatformBundle:Acc:edit" }
+
+acc_update:
+    path:     /{id}/update
+    defaults: { _controller: "FlyPlatformBundle:Acc:update" }
+    methods:  [POST, PUT]
+
+acc_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "FlyPlatformBundle:Acc:delete" }
+    methods:  [POST, DELETE]

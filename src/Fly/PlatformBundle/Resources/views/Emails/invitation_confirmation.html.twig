@@ -1,0 +1,11 @@
+{% extends '::email.html.twig' %}
+{% block body %}
+<h3>Welcome to Flyeurope20 platform.</h3>
+<p>Hello {{ user }}!</p>
+<p>Your account has been successfully activated on Flyeurope20 platform!</p>
+<p>Your login: {{ user.email }} </p>
+<p>Your password: {{ password }} </p>
+    <small><i>Be careful, do not pass this information to anyone else.</i></small>
+<p>You can always change Your Profile information from this link: <a href="{{ profileLink }}">My Profile</a> to register on our site.</p>
+{% endblock %}
+

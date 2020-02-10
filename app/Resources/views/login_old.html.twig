@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock title %}</title>
+
+    <!-- Vendor CSS -->
+    <link href="{{ asset('bundles/flyplatform/vendors/animate-css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/sweet-alert/sweet-alert.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/vendors/material-icons/material-design-iconic-font.min.css') }}" rel="stylesheet">
+    <!-- CSS -->
+    <link href="{{ asset('bundles/flyplatform/css/app.min.1.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/app.min.2.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/css/login.css') }}" rel="stylesheet">
+    <link href="{{ asset('bundles/flyplatform/components-font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+
+    <style>
+        body.login-content:before {
+            background-image: url("{{asset('img/travel2.jpg') }}");
+            background-position: 50% 82%;
+            /*background-size: 100% 525%;*/
+        }
+    </style>
+
+</head>
+
+<body class="login-content">
+
+{% include "::fblogin.html.twig" %}
+{% block fos_user_content %}{% endblock fos_user_content %}
+
+{% javascripts
+'bundles/flyplatform/js/jquery-2.1.1.min.js'
+'bundles/flyplatform/js/bootstrap.min.js'
+'bundles/flyplatform/vendors/waves/waves.min.js'
+'bundles/flyplatform/js/functions.js'
+ %}
+<script src="{{ asset_url }}"></script>
+{% endjavascripts %}
+{% block javascripts %}
+
+{% endblock %}
+</body>
+</html>

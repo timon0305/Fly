@@ -1,0 +1,192 @@
+{% extends "::group.html.twig" %}
+{% block stylesheets %}
+    <link href="{{ asset('bundles/flyplatform/css/feed.css') }}" rel="stylesheet">
+{% endblock %}
+
+
+{% block body_main %}
+        <div class="card">
+            <div class="card-body">
+                {% if group.isActive %}
+                        {% include "FlyUserBundle:Group:show_content.html.twig" %}
+                {% else %}
+                    <div class=" mt10">
+                        <div class="col-md-12 mt10">
+                            <div class="alert alert-danger">
+                                <p><strong><i class="fa fa-info-circle"></i> The group "{{ group.name }}" was disabled by owner.</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+{% endblock %}
+
+
+
+{% block javascripts %}
+    <script src="{{ asset('/bundles/flyplatform/masonry/dist/masonry.pkgd.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/imagesloaded/imagesloaded.pkgd.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/group.feeds.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/feed.comment.js') }}"></script>
+    <script src="{{ asset('/bundles/flyplatform/js/feed.like.js') }}"></script>
+    <script>
+        GroupFeeds.group = '{{ group.name }}';
+        GroupFeeds.getFeeds();
+        $(function(){
+            $('.side-group-name').mouseover(function(){
+                if(!$('.md-side-group-title').hasClass('norotate')){
+                    $('.md-side-group-title').addClass('fastRotate').addClass('norotate');
+                    setTimeout(function(){
+                        $('.md-side-group-title').removeClass('fastRotate');
+                    }, 200);
+                }
+
+            });
+
+        });
+    </script>
+
+
+        <script src="{{ asset('/plupload/js/plupload.full.min.js') }}"></script>
+        <script>var GroupName = '{{ group.name  }}';</script>
+        <script src="{{ asset('/bundles/flyplatform/js/parceFeedUrl.js') }}"></script>
+
+        <script>
+
+            var uploaderFeed = new plupload.Uploader({
+                runtimes: 'html5',
+                drop_element: 'image-holder',
+                browse_button: 'image-holder', // you can pass in id...
+                url: "{{ path('fly_ajx_upload_tmp_file') }}",
+                multi_selection: false,
+                filters: {
+                    max_file_size: '20mb',
+                    mime_types: [
+                        {title: "Image files", extensions: "jpg,gif,png"}
+                    ]
+                },
+                flash_swf_url: '/plupload/js/Moxie.swf',
+                silverlight_xap_url: '/plupload/js/Moxie.xap',
+
+                init: {
+                    FilesAdded: function (up, files) {
+                        console.log(files[0].id);
+                        $('#feed-urls-block').append('<div class="link-block col-md-3 mb20" data-url="'+files[0].id+'"><div class="link-action"><a class="remove-link-block"><i class="md  md-clear"></i></a></div><div class="feed-content-box"><div class="loader-box"><img src="/img/ring-alt.svg"></div></div></div>');
+                        uploaderFeed.start();
+                        return false;
+                    },
+
+                    FileUploaded: function (up, file, response) {
+                        console.log(file);
+                        try {
+                            var data = $.parseJSON(response.response);
+                            if (data.asc == 'success') {
+                                var tmpUrl = '/uploads/'+data.url;
+                                var template = FeedContent.imageTemplate(tmpUrl);
+                                $('#feed-urls-block .link-block').each(function(){
+                                    if($(this).attr('data-url') == file.id){
+                                        $(this).remove('.loader-box');
+                                        $(this).find('div.feed-content-box').html(template);
+                                        var data = {description:'', image:'', resourceUrl:'', thumb:'', title:'', type:'uploadImage', tmpPath:tmpUrl }
+                                        FeedContent.addResource(data);
+                                        console.log(data);
+                                    }
+                                });
+                                console.log(data)
+                            }
+
+                        } catch (err) {
+                            console.log(err.message);
+                        }
+
+                    },
+
+                    Error: function (up, err) {
+                        alert(err.message);
+                    }
+                }
+            });
+
+            uploaderFeed.init();
+
+
+        </script>
+
+    {% if userHasInvite %}
+        <script>
+            $(function(){
+                $('.invite-action').click(function(){
+                    var groupId = $(this).attr('data-group');
+                    var userId = $(this).attr('data-user');
+                    if(groupId && userId){
+                        acceptInvite(groupId,userId,$(this));
+                    }else{
+                        console.log(groupId,userId);
+                    }
+                    return false;
+                });
+                $('.decline-invite-action').click(function(){
+                    var groupId = $(this).attr('data-group');
+                    var userId = $(this).attr('data-user');
+                    if(groupId && userId){
+                        declineInvite(groupId,userId,$(this));
+                    }else{
+                        console.log(groupId,userId);
+                    }
+                    return false;
+                });
+            });
+
+            function acceptInvite(groupId,userId,obj){
+                //            alert(groupId+','+userId); return false;
+                $.ajax({
+                    url: '{{ path('fly_platform_accept_invite') }}',
+                    type: 'POST',
+                    format: 'json',
+                    data: {groupId: groupId, userId: userId},
+                    //Succès de la requête
+                    success: function(data) {
+                        if(data.asc == 'unlogged'){
+                            window.location.href = '{{ path('fos_user_security_login') }}';
+                            return false;
+                        }
+                        if(data.asc == 'success'){
+                                $('.notice-invitation').remove();
+                        }else{
+                            showAjxActionMessage('danger',data.msg);
+                        }
+
+                    }
+                });
+            }
+
+            function declineInvite(groupId,userId,obj){
+                //            alert(groupId+','+userId); return false;
+                $.ajax({
+                    url: '{{ path('fly_platform_decline_invite') }}',
+                    type: 'POST',
+                    format: 'json',
+                    data: {groupId: groupId, userId: userId},
+                    //Succès de la requête
+                    success: function(data) {
+                        if(data.asc == 'unlogged'){
+                            window.location.href = '{{ path('fos_user_security_login') }}';
+                            return false;
+                        }
+                        if(data.asc == 'success'){
+                            $('.notice-invitation').remove();
+                        }else{
+                            showAjxActionMessage('danger',data.msg);
+                        }
+
+                    }
+                });
+            }
+        </script>
+
+    {% endif %}
+
+
+{% endblock %}

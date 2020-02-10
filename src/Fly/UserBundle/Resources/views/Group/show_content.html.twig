@@ -1,0 +1,66 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class=" mt10">
+    <div class="col-md-12 mt10">
+    <!-- Nav tabs -->
+    <ul class="tab-nav" role="tablist">
+        <li role="presentation" class="active"><a href="#feed" aria-controls="feed" role="tab" data-toggle="tab">News Feed</a></li>
+        <li role="presentation"><a href="#calendar" aria-controls="suggestions" role="tab" data-toggle="tab">Common Calendar</a></li>
+        <li role="presentation"><a href="#todo" aria-controls="calendar" role="tab" data-toggle="tab">ToDo List</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="feed">
+            <div class="feed-block">
+                <div class="refresh-feeds">
+                        <button  class="btn btn-default btn-icon refreshFeeds" data-refresh="1" title="Refresh feeds"> <i class="md md-sync"></i></button>
+                </div>
+                <div class="timeline" id="feeds-holder">
+                </div>
+                <div class="text-center">
+                    <a href=""  class="btn btn-default bgm-red btn-icon-text  refreshFeeds" > <i class="md md-sync"></i> Show older feeds</a>
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="calendar">...</div>
+        <div role="tabpanel" class="tab-pane" id="todo">
+            <div id="todo-lists">
+                <div class="tl-header">
+                    <h2>Todo Lists</h2>
+                    <small>Add, edit and manage your Todo Lists</small>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="tl-body goals-list">
+                    {% if group.goal|length %}
+                        {% for goal in group.goal %}
+                            <div class="checkbox media">
+                                <div class="media-body">
+                                    <label onclick="return false;">
+                                        {%  if goal.checked or goal.goalDate|date('U') < 'now'|date('U') %}
+                                            <i class="md md-done"></i>
+                                        {% else %}
+                                            <i class="md-check-box-outline-blank"></i>
+                                        {% endif %}
+                                        <span>{{ goal.title }}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="nogoals">
+                            <i class="md  md-info-outline"></i> No Goals for this Group.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    {#<div class="col-md-5 mt10">#}
+        {##}
+    {#</div>#}
+    <div class="clearfix"></div>
+</div>
+

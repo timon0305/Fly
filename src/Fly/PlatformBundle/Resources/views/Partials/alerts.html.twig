@@ -1,0 +1,62 @@
+{% for flashMessage in app.session.flashbag.get('error') %}
+    <script>
+        $(function() {
+            $.growl("{{ flashMessage }}", {
+//                ele: 'body', // which element to append to
+                type: 'danger', // (null, 'info', 'danger', 'success')
+                offset: 70, // 'top', or 'bottom'
+                align: 'right', // ('left', 'right', or 'center')
+                width: 'auto', // (integer, or 'auto')
+//                delay: 400000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
+//                allow_dismiss: true, // If true then will display a cross to close the popup.
+//                stackup_spacing: 10 // spacing between consecutively stacked growls.);
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutRight'
+                }
+            });
+        });
+    </script>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('success') %}
+    <script>
+        $(function() {
+            $.growl("{{ flashMessage }}", {
+//                ele: 'body', // which element to append to
+                type: 'success', // (null, 'info', 'danger', 'success')
+                offset: 70, // 'top', or 'bottom'
+                align: 'right', // ('left', 'right', or 'center')
+                width: 'auto', // (integer, or 'auto')
+//                delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
+//                allow_dismiss: true, // If true then will display a cross to close the popup.
+//                stackup_spacing: 10 // spacing between consecutively stacked growls.);
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutRight'
+                }
+            });
+        });
+    </script>
+{% endfor %}
+
+{% for flashMessage in app.session.flashbag.get('info') %}
+    <script>
+        $(function() {
+            $.growl("{{ flashMessage }}", {
+//                ele: 'body', // which element to append to
+                type: 'info', // (null, 'info', 'danger', 'success')
+                offset: 70, // 'top', or 'bottom'
+                align: 'right', // ('left', 'right', or 'center')
+                width: 'auto', // (integer, or 'auto')
+//                delay: 4000, // Time while the message will be displayed. It's not equivalent to the *demo* timeOut!
+//                allow_dismiss: true, // If true then will display a cross to close the popup.
+//                stackup_spacing: 10 // spacing between consecutively stacked growls.);
+                animate: {
+                    enter: 'animated fadeInRight',
+                    exit: 'animated fadeOutRight'
+                }
+            });
+        });
+    </script>
+{% endfor %}

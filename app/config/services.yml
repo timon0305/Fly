@@ -1,0 +1,12 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+#    service_name:
+#        class: AppBundle\Directory\ClassName
+#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+  app.provider.oauth:
+      class: Fly\PlatformBundle\Security\Core\User\OAuthUserProvider
+      arguments: [@fos_user.user_manager,{facebook: facebookId, google: googleId, twitter: twitterId}]

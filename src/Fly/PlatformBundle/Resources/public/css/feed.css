@@ -1,0 +1,28 @@
+.feed-minds-row{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.feed-minds-row img{
+    width:60px;
+    position: absolute;
+}
+
+.feed-minds-row textarea{
+    padding-left:70px;
+    min-height:80px;
+    border: 0;
+    resize: none;
+    font-size: 14px;
+}
+
+.feed-minds-actions{
+
+}
+.feed-minds-actions li{
+    list-style: none;
+    float: left;
+    padding: 5px;
+}

@@ -1,0 +1,46 @@
+{% set itemCount = resources|length %}
+{% set width = 12/itemCount %}
+
+<div class="grid">
+{% for item in resources %}
+    {% if loop.index <= 6 %}
+        <div class="{{ itemCount==1 ? 'col-md-12 feed-media-block' : 'grid-item' }}" data-src="{{ asset(item.resourceUrl) }}">
+    {#<div class="col-md-{{ itemCount==1 ? '12' : '4' }} feed-media-block {% if loop.index == 6 and itemCount > 6 %} last-feed-media-block {% endif %}" >#}
+        {% if item.type == 'uploadImage' %}
+
+            {#<div data-src="{{ asset(item.resourceUrl) }}">#}
+            <a href="{{ asset(item.resourceUrl) }}" class="swlightbox" data-type="image" >
+                <img src="{{ web_image(asset(item.image)).zoomCrop(500, 500, 0, 0, 0) }}" class="img-responsive" />
+            </a>
+                {#</div>#}
+
+        {% endif %}
+        {% if item.type == 'image' %}
+            <a href="{{ item.resourceUrl }}" class="swlightbox" data-type="image" ><img src="{{ item.image }}" class="img-responsive" /></a>
+        {% endif %}
+
+        {% if item.type == 'youtube' %}
+            {% if itemCount == 1 %}
+            <iframe src="https://www.youtube.com/embed/{{ item.embedId }}" frameborder="0" allowfullscreen
+                    width="100%" height = "300px"
+                    ></iframe>
+                {% else %}
+                    <a href="{{ item.resourceUrl }}" class="swlightbox" data-type="youtube" data-embed="https://www.youtube.com/embed/{{ item.embedId }}" ><img src="{{ item.image }}" class="img-responsive" /></a>
+                {% endif %}
+        {% endif %}
+
+        {% if item.type == 'page' %}
+            <a href="{{ item.resourceUrl }}" target="_blank"><img src="{{ item.image }}" class="img-responsive" /></a>
+        {% endif %}
+
+        {% if itemCount == 1 %}
+            {% if item.title %}<a href="{{ item.resourceUrl }}" target="_blank">{{ item.title }}</a>{% endif %}
+            {% if item.description %}{{ item.description }}{% endif %}
+        {% endif %}
+
+    </div>
+{% endif %}
+{% endfor %}
+    </div>
+
+

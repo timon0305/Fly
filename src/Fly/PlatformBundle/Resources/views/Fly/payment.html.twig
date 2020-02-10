@@ -1,0 +1,213 @@
+{% extends "FlyPlatformBundle::material_layout.html.twig" %}
+
+{% block stylesheets %}
+
+{% endblock %}
+{% block title %}Fly - Payment{% endblock %}
+{% block body_main %}
+<div class="card notice-list">
+    <div class="card-header">
+        <h2>Fly
+            {#<small>Wrap any text and an optional dismiss button in '.alert' and one of the four contextual classes (e.g., .alert-success) for basic alert messages.</small>#}
+        </h2>
+    </div>
+
+    <div class="card-body card-padding booking-block">
+        <h1>Booking Form</h1>
+        {{ form_start(form) }}
+        <div class="row">
+
+            <div class="card " id="infopax-block">
+                <div class="card-header bgm-cyan">
+                    <!-- Please refer the Colors page in User Interface for more color classes -->
+                    <h2>Flight details
+                        {#<small>Nam at dui sed lacus lacinia lobortis</small>#}
+                    </h2>
+                </div>
+
+                <div class="card-body card-padding">
+                   <div class="row row-routeblock">
+                        <div class="container-route">
+                            <div class="col-md-2">
+                                <h4>{{ formData.price }}</h4>
+                                <input type="hidden" name="booking_form_quick[price]" value="{{ formData.price }}">
+
+                                <input type="hidden" name="booking_form_quick[outbound][operatingAirlineCode]" value="{{ formData.outbound.operatingAirlineCode }}">
+                                <input type="hidden" name="booking_form_quick[outbound][start]" value="{{ formData.outbound.start|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][end]" value="{{ formData.outbound.end|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][airports]" value="{{ formData.outbound.airports|join(',') }}">
+                                <input type="hidden" name="booking_form_quick[outbound][duration]" value="{{ formData.outbound.duration }}">
+                                {% if formData.outbound.stops|length and formData.outbound.stops != '0' %}
+                                    <input type="hidden" name="booking_form_quick[inbound][stops]" value="{{ formData.outbound.stops.airport|length }}">
+                                    {% for stp in formData.outbound.stops.airport %}
+                                        <input type="hidden" name="booking_form_quick[outbound][stops][airport][]" value="{{ formData.outbound.stops.airport[loop.index-1] }}">
+                                        <input type="hidden" name="booking_form_quick[outbound][stops][interval][]" value="{{ formData.outbound.stops.interval[loop.index-1] }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="hidden" name="booking_form_quick[outbound][stops]" value="0">
+                                {% endif %}
+
+                                <input type="hidden" name="booking_form_quick[inbound][operatingAirlineCode]" value="{{ formData.inbound.operatingAirlineCode }}">
+                                <input type="hidden" name="booking_form_quick[inbound][start]" value="{{ formData.inbound.start|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][end]" value="{{ formData.inbound.end|date('H:i:s') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][airports]" value="{{ formData.inbound.airports|join(',') }}">
+                                <input type="hidden" name="booking_form_quick[inbound][duration]" value="{{ formData.inbound.duration }}">
+                                {% if formData.inbound.stops|length and formData.inbound.stops != '0' %}
+                                    <input type="hidden" name="booking_form_quick[inbound][stops]" value="{{ formData.inbound.stops.airport|length }}">
+                                    {% for stp in formData.inbound.stops.airport %}
+                                        <input type="hidden" name="booking_form_quick[inbound][stops][airport][]" value="{{ formData.inbound.stops.airport[loop.index-1] }}">
+                                        <input type="hidden" name="booking_form_quick[inbound][stops][interval][]" value="{{ formData.inbound.stops.interval[loop.index-1] }}">
+                                    {% endfor %}
+                                {% else %}
+                                    <input type="hidden" name="booking_form_quick[inbound][stops]" value="0">
+                                {% endif %}
+
+
+                            </div>
+                            <div class="col-md-10">
+                                <div class="row-route row-route-outbound">
+                                    <div class="col-md-1"><i class="fa fa-plane fa-2x"></i></div>
+                                    <div class="col-md-2">{{ formData.outbound.operatingAirlineCode }}</div>
+                                    <div class="col-md-2">
+                                        {{ formData.outbound.start|date('H:i:s') }} - {{ formData.outbound.end|date('H:i:s') }}
+                                        <br/>{{ formData.outbound.airports|join(',') }}
+                                    </div>
+                                    <div class="col-md-2">{{ formData.outbound.duration }}</div>
+                                    <div class="col-md-2">
+                                        {% if formData.outbound.stops|length and formData.outbound.stops != '0' %}
+                                            {{ formData.outbound.stops.airport|length }} stops
+                                            {% for stp in formData.outbound.stops.airport %}
+                                                <br/>{{ formData.outbound.stops.interval[loop.index-1] }} in {{ formData.outbound.stops.airport[loop.index-1] }}
+                                            {% endfor %}
+                                        {% else %}
+                                            Nonstop
+                                        {% endif %}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="row-route row-route-inbound">
+                                    <div class="col-md-1"><i class="fa fa-plane fa-2x" style="transform: scale(-1, -1)"></i> </div>
+                                    <div class="col-md-2">{{ formData.inbound.operatingAirlineCode }}</div>
+                                    <div class="col-md-2">
+                                        {{ formData.inbound.start|date('H:i:s') }} - {{ formData.inbound.end|date('H:i:s') }}
+                                        <br/>{{ formData.inbound.airports|join(',') }}
+                                    </div>
+                                    <div class="col-md-2">{{ formData.inbound.duration }}</div>
+                                    <div class="col-md-2">
+                                        {% if formData.inbound.stops|length and formData.inbound.stops != '0' %}
+                                            {{ formData.inbound.stops.airport|length }} stops
+                                            {% for stp in formData.inbound.stops.airport %}
+                                                <br/>{{ formData.inbound.stops.interval[loop.index-1] }} in {{ formData.inbound.stops.airport[loop.index-1] }}
+                                            {% endfor %}
+                                        {% else %}
+                                            Nonstop
+                                        {% endif %}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card " id="infopax-block">
+                <div class="card-header bgm-cyan">
+                    <!-- Please refer the Colors page in User Interface for more color classes -->
+                    <h2>Infopax
+                        {#<small>Nam at dui sed lacus lacinia lobortis</small>#}
+                    </h2>
+                </div>
+
+                <div class="card-body card-padding">
+                    {{ form_row(form.firstname) }}
+                    {{ form_row(form.familyname) }}
+                    {{ form_row(form.date_of_birth) }}
+                </div>
+            </div>
+
+            <div class="card" id="insurance-block">
+                <div class="card-header bgm-cyan">
+                    <!-- Please refer the Colors page in User Interface for more color classes -->
+                    <h2>Insurance
+                        {#<small>Nam at dui sed lacus lacinia lobortis</small>#}
+                    </h2>
+                </div>
+
+                <div class="card-body card-padding">
+                    {{ form_row(form.insurance) }}
+                    <div class="hidden">
+                        {% for ins in insurances %}
+                            <input type="hidden" name="insurance_{{ ins.id }}" id="insurance_{{ ins.id }}" value="{{ ins.insurance }}">
+                        {% endfor %}
+                    </div>
+                    {#{{ dump(insurances) }}#}
+                </div>
+
+            </div>
+
+            <div class="card" id="confirmation-block">
+                <div class="card-header bgm-cyan">
+                    <!-- Please refer the Colors page in User Interface for more color classes -->
+                    <h2>Total Billing
+                        {#<small>Nam at dui sed lacus lacinia lobortis</small>#}
+                    </h2>
+                </div>
+
+                <div class="card-body card-padding">
+
+                    <div class="col-md-2"><h3>Flight</h3></div>
+                    <div class="col-md-8"><h3>{{ formData.price }}</h3></div>
+                    <div class="clearfix"></div>
+
+                    <div class="col-md-2"><h3>Insirance</h3></div>
+                    <div class="col-md-8" id="insurace-price"><h3>0</h3></div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card-footer booking-card-footer">
+                    <div class="col-md-2"> <button type="submit" class="btn btn-success">Book it!</button></div>
+                    <div class="col-md-5">{{ form_row(form.is_confirmed) }}</div>
+                    <div class="clearfix"></div>
+
+
+                    {#<button class="btn btn-primary" id="insurance_block">Next <i class="fa fa-chevron-circle-right"></i></button>#}
+                </div>
+            </div>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    $(function(){
+
+        $('#fly_platformbundle_flyorder_insurance').change(function(){
+           var insId =  $('input[name="fly_platformbundle_flyorder[insurance]"]:checked').val();
+           insVal = $('#insurance_'+insId).val();
+           console.log(insVal);
+
+            Insurance = 0;
+            var priceStr = '{{ formData.price }}';
+            var priceArr = priceStr.split(' ');
+
+           if(insVal){
+
+               Insurance = priceArr[0]/100 * insVal;
+               Insurance = Math.round(Insurance * 100) / 100 ;
+           }
+
+           $('#insurace-price h3').html(Insurance + ' ' + priceArr[1]);
+
+        });
+
+    });
+
+    </script>
+{% endblock %}

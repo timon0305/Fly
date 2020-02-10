@@ -1,0 +1,73 @@
+
+fly_home:
+    defaults: { _controller: FlyPlatformBundle:Default:home }
+    path:     /
+
+fly_search:
+    defaults: { _controller: FlyPlatformBundle:Fly:search }
+    path:     /search
+
+fly_platform:
+    resource: "@FlyPlatformBundle/Resources/config/routing.yml"
+    prefix:   /platform
+
+#fly_twitter_api:
+#    resource: "@FlyTwitterApiBundle/Resources/config/routing.yml"
+#    prefix:   /twitter
+
+fly_user_additional:
+    resource: "@FlyUserBundle/Resources/config/routing.yml"
+    prefix:   /platform
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    options:
+      expose: true
+
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /group
+    options:
+      expose: true
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+fly_ajx_upload_tmp_file:
+  path: /ajx/upload/file/tmp
+  defaults: { _controller: FlyPlatformBundle:Ajx:uploadTmpFile}
+
+fly_platform_airport_search:
+  path: /ajx/airport/search
+  defaults: { _controller: FlyPlatformBundle:Ajx:airportSearch }
+  options:
+    expose: true
+
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
+hwi_oauth_login:
+    resource: "@HWIOAuthBundle/Resources/config/routing/login.xml"
+    prefix:   /login
+
+facebook_login:
+    path: /login/check-facebook
+
+google_login:
+    path: /login/check-google
+
+twitter_login:
+    defaults: { _controller: FlyUserBundle:Security:twitterLoginCheck}
+    path: /login/check-twitter
+
+fly_template_login:
+  path: /template/login
+  defaults: { _controller: FlyPlatformBundle:Default:loginTemplate}
+
+fly_private_policy:
+  path: /legal/privacy
+  defaults: { _controller: FlyPlatformBundle:Default:privacy}
+fly_private_terms:
+  path: /legal/terms
+  defaults: { _controller: FlyPlatformBundle:Default:terms}

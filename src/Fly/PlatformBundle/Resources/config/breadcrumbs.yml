@@ -1,0 +1,15 @@
+parameters:
+  breadcrumbs:
+    homepage:
+      name: Homepage
+      parent: null
+      url: fly_platform_home
+    groups:
+      name: Groups
+      parent: homepage
+      url: fos_user_group_list
+    groups_edit:
+      name: Edit
+      parent: groups
+      url: fos_user_group_edit
+

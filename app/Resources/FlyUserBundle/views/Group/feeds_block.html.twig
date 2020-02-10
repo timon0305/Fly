@@ -1,0 +1,121 @@
+            {% for feed in feeds %}
+
+                <div class="t-view animated fadeIn" data-tv-type="text">
+                    <div class="tv-header media">
+                        <a href="" class="tvh-user pull-left ">
+                            {% if feed.user.photo %}
+                                <img class="img-responsive"
+                                src="{{ web_image('uploads/'~feed.user.photo).zoomCrop(60,60,0,'center','top') }}"
+                                alt="">
+                            {% else %}
+                                {% if feed.user.facebookUserImage %}
+                                    <img class="img-responsive"
+                                         src="{{ feed.user.facebookUserImage }}"
+                                         alt="">
+                                {% endif %}
+                                {% if feed.user.twitterUserImage %}
+                                    <img class="img-responsive"
+                                         src="{{ feed.user.twitterUserImage }}"
+                                         alt="">
+                                {% endif %}
+                            {% endif %}
+
+                        </a>
+
+                        <div class="media-body p-t-5">
+                            <strong class="d-block">{{ feed.user.firstName }} {{ feed.user.lastName }}</strong>
+                            <small class="c-gray">{{ feed.created|date("M d, Y") }}
+                                at {{ feed.created|date("h:m") }}</small>
+                        </div>
+                    </div>
+                    <div class="tv-body">
+                        <p>{{ feed.description }}</p>
+
+                        <div class="clearfix"></div>
+                        {% if feed.resource|length %}
+                            {% include 'FlyUserBundle:FeedResource:item.html.twig' with {'resources':feed.resource} %}
+                        {% endif %}
+                        <ul class="tvb-stats">
+                            <li class="tvbs-comments">{{ feed.comment|length }} Comments</li>
+                            <li class="tvbs-likes " data-feed="{{ feed.id }}"><span id="feed-like-{{ feed.id }}">{{ feed.like|length }}</span> Likes{%  if isHaveLike(feed, app.user) %}<span class="feed-liked"> - You like it</span> {% endif %}</li>
+                            {#<li class="tvbs-views">23K Views</li>#}
+                        </ul>
+                        <a class="tvc-more" href="#" data-feed="{{ feed.id }}"><i class="md md-mode-comment"></i> <span class="more-comments">View all {{ feed.comment|length }} Comments</span><span class="less-comments">View less Comments</span></a>
+                    </div>
+                    <div class="tv-comments">
+                        <ul class="tvc-lists comment-block-{{ feed.id }} swcomment" >
+                            {% if feed.comment|length %}
+                                {% set totalComments = feed.comment|length %}
+                                {% for feedComment in feed.comment %}
+                                    {% if loop.index > (totalComments - 3 ) %}
+                                        {% set hideComment = 'style="display:block;"' %}
+                                    {% else %}
+                                        {% set hideComment = '' %}
+                                    {% endif %}
+                                    <li class="media" {{ hideComment|raw }} id="comment-{{ feedComment.id }}">
+                                        <a href="" class="tvh-user pull-left">
+                                            {% if feedComment.user.photo %}
+                                                <img class="img-responsive"
+                                                     src="{{ web_image('uploads/'~feedComment.user.photo).zoomCrop(60,60,0,'center','top') }}"
+                                                     alt="">
+                                            {% else %}
+                                                {% if feedComment.user.facebookUserImage %}
+                                                    <img class="img-responsive"
+                                                         src="{{ feedComment.user.facebookUserImage }}"
+                                                         alt="">
+                                                {% endif %}
+                                                {% if feedComment.user.twitterUserImage %}
+                                                    <img class="img-responsive"
+                                                         src="{{ feedComment.user.twitterUserImage }}"
+                                                         alt="">
+                                                {% endif %}
+                                            {% endif %}
+                                            {#<img class="img-responsive" src="{{ web_image('/uploads/'~feedComment.user.photo).zoomCrop(60,60,0,'center','top')  }}" alt="">#}
+                                        </a>
+                                        <div class="media-body">
+                                            {% if app.user == feedComment.user %}
+                                                <ul class="actions">
+                                                    <li>
+                                                        <div class="btn-group">
+                                                            <button class="btn btn-default btn-icon waves-effect waves-button waves-float" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                <i class="md md-more-vert"></i>
+                                                            </button>
+                                                            <ul class="dropdown-menu dropdown-menu-right">
+                                                                <li>
+                                                                    <a href="#" class="comment-remove-action" data-comment="{{ feedComment.id }}" ><i class="md md-close"></i> Delete</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            {% endif %}
+                                            <strong class="d-block comment-user">{{ feedComment.user.FirstName }} {{ feedComment.user.LastName }}</strong>
+                                            <small class="c-gray comment-date">{{ feedComment.created|date('F d, Y') }} at {{ feedComment.created|date('H:i') }}</small>
+
+                                            <div class="m-t-10 comment-text">{{ feedComment.content }}</div>
+
+                                            {% if app.user == feedComment.user %}
+                                                <div class="m-t-10 comment-edit" >
+                                                    <textarea data-comment="{{ feedComment.id }}" class="form-control auto-size comment-new-text" placeholder="Write a comment..." data-autosize-on="true" style="overflow: hidden; word-wrap: break-word; height: 43px;">{{ feedComment.content }}</textarea>
+                                                    <button data-comment="{{ feedComment.id }}" class="m-t-15 btn btn-sm btn-success btn-sm waves-effect comment-udate">Save</button>
+                                                </div>
+                                            {% endif %}
+
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                            {% endif %}
+
+                            <li class="p-20">
+                                <div class="fg-line feed-text">
+                                    <textarea data-feed="{{ feed.id }}" class="form-control auto-size comment-post-text" placeholder="Write a comment..." data-autosize-on="true" style="overflow: hidden; word-wrap: break-word; height: 43px;"></textarea>
+                                </div>
+                                <button data-feed="{{ feed.id }}" class="m-t-15 btn btn-primary btn-sm waves-effect submit-comment">Post</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            {% endfor %}
+<div class="clearfix"></div>
+

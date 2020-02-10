@@ -1,0 +1,25 @@
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Annonces - {{ parent() }}
+{% endblock %}
+
+{% block side %}
+
+            <h3>Advert list</h3>
+            <ul class="nav nav-pills nav-stacked">
+                <li><a href="{{ path('fly_platform_home') }}">Accueil</a></li>
+                <li><a href="{{ path('fly_platform_add') }}">Ajouter une annonce</a></li>
+            </ul>
+
+            <h4>Last posted advert</h4>
+            {{ render(controller("FlyPlatformBundle:Advert:menu", {'limit': 2})) }}
+
+            <h4>Group invitations</h4>
+            {{ render(controller("FlyUserBundle:Invitation:unconfirmed")) }}
+{% endblock %}
+
+{% block body %}
+
+
+{% endblock %}

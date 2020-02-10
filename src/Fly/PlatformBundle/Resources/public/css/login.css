@@ -1,0 +1,66 @@
+#l-register .list-unstyled{
+    float: left;
+}
+#l-register .list-unstyled span {
+    margin-right: 5px;
+}
+#l-register .form-group {
+    clear: both;
+}
+
+#l-register label{
+    /*display: none;*/
+}
+.addon-top{
+    padding-top: 27px !important;
+    vertical-align: top !important;
+}
+.passwords label {
+    float: left;
+    color: #5e5e5e !important;
+}
+.login-content .login-navigation > li:not(:hover) {
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: 10px;
+	padding: 5px 10px;
+}
+.login-content .login-navigation > li:hover {
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-size: 10px;
+	padding: 5px 10px;
+}
+.login-social {
+	margin-top:30px;
+	position:absolute;
+	bottom:-100px;
+	width:100%;
+	text-align:center;
+	left:0;
+}
+.login-social span, .login-social a {
+	display:inline-block;
+	margin:0 3px;
+}
+.login-social a {
+	width:25px;
+	height:25px;
+	position:relative;	
+}
+.login-social span {
+	color:#fff;
+	font-size:13px;
+	line-height:35px;
+}
+.login-social i {
+	color:#fff;
+	font-size:25px;
+	line-height:35px;
+	left:0;
+	top:3px;
+	position:absolute;
+}
+.login-social i:hover {
+	color:#f2f2f2;
+}

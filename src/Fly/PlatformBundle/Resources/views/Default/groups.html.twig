@@ -1,0 +1,125 @@
+{% if pagination.getTotalItemCount %}
+
+    {% for group in  pagination %}
+        <div class="col-sm-8">
+            <div class="card card-group">
+                <div class="bp-header p5 group-block-header"
+                     {% if group.picture %}
+                       style="background: url('{{  web_image(asset('uploads/'~group.picture)).zoomCrop(600,300,0,'center','center') }}')"
+                     {% else %}
+                       style="background: url('{{  web_image(asset('img/preview.jpg')).zoomCrop(600,300,0,'center','center') }}') no-repeat"
+                     {% endif %}
+                     >
+
+
+                    <div class="card-header-title-absolute p10">
+
+                        <div class="card-header-info">
+                            <a href="{{ path('fos_user_group_show',{'groupName':group.name}) }}"><h4>{{ group.viewName }}</h4></a>
+
+                            <p><i class="md md-location-on"></i> {{ group.geoAddress }}</p>
+
+                            <p><i class="md md-query-builder"></i> Delivery: {{ group.departureDate|date('d/m/Y') }}</p>
+
+                            <p><i class="md md-query-builder"></i> Way back: {{ group.waybackDate|date('d/m/Y') }}</p>
+                        </div>
+                        <div class="header-opacity"></div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+
+                    <ul class="tab-nav tn-justified tn-icon" role="tablist" tabindex="1"
+                        style="overflow: hidden; outline: none;">
+                        <li role="presentation" class="active">
+                            <a class="col-sx-4" href="#tab-1-{{ group.id }}" aria-controls="tab-1-{{ group.id }}"
+                               role="tab" data-toggle="tab">
+                                <i class="md md-home icon-tab"></i>
+                            </a>
+                        </li>
+                        <li role="presentation">
+                            <a class="col-xs-4" href="#tab-2-{{ group.id }}" aria-controls="tab-2-{{ group.id }}"
+                               role="tab" data-toggle="tab">
+                                <i class="md md-star icon-tab"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content p-20 ">
+                        <div role="tabpanel" class="tab-pane animated fadeIn in active group-block-info"
+                             id="tab-1-{{ group.id }}">
+                            {% if group.description %}<p>{{ group.description|truncate(150,'...') }}</p>{% endif %}
+
+                            {% if haveinvite(group, app.user) %}
+                                {#<div class="invitation-accept-block-{{ group.id }} animated">#}
+                                    <p class="text-center invitation-accept-block-{{ group.id }} animated" style="display: none">
+                                        <i class="md md-done  invite-done"></i>
+                                    </p>
+                                {#</div>#}
+                                <div class="invitation-btn-block-{{ group.id }} animated">
+                                <p class="text-center">
+                                    <a href="#" class="btn btn-info invite-action" data-group="{{ group.id }}" data-user="{{ app.user.id }}">Accept invite</a>
+                                </p>
+                                    </div>
+                            {% endif %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane animated fadeIn group-block-user "
+                             id="tab-2-{{ group.id }}">
+                            {% for user in group.users %}
+                                <div class="col-xs-2">
+                                    <a href="{{ path('fos_user_profile_show',{'username':user.username}) }}">
+                                        <img class="img-responsive img-circle"
+                                             src="{{ userPhoto(user, 40, 40) }}" width="40px"
+                                             alt="">
+                                    </a>
+                                </div>
+                            {% endfor %}
+                            <div class="clearfix"></div>
+
+                            <p class="mt15">Not responded yet:</p>
+
+                            {% for inv in group.invitation %}
+                                {% if not inv.sent and inv.user%}
+                                    <div class="col-xs-2">
+                                        <a href="#">
+                                            <img class="img-responsive img-circle"
+                                                 src="{{ userPhoto(inv.user, 40, 40) }}" width="40px"
+                                                 alt="">
+                                        </a>
+                                    </div>
+                                {% endif %}
+
+                            {% endfor %}
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div  style="margin-right:10%; background: white;height:1200px;min-height: 700px">
+
+            </div>
+        </div>
+
+    {% endfor %}
+    <div class="clearfix"></div>
+
+    {{ knp_pagination_render(pagination) }}
+    <div><b>Total</b>: {{ pagination.getTotalItemCount }}</div>
+{% else %}
+    <div class="alert  text-center" role="alert">
+        <h4>You dont have any groups yet. Please create one.</h4>
+
+        <p class="text-center">
+            <a href="#"
+               class="create-group-steps btn btn-info  waves-effect waves-button waves-float"><i class="md md-add"></i> Create group</a>
+        </p>
+    </div>
+{% endif %}
+
+
+
+

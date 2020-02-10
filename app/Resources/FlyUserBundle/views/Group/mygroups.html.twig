@@ -1,0 +1,91 @@
+<div class="card">
+    <div class="listview">
+        <div class="lv-header">
+            My Groups
+        </div>
+        <div class="lv-body">
+            {% if app.user.groups|length %}
+            {% for group in app.user.groups %}
+            <a class="lv-item" href="{{ path('fos_user_group_show',{'groupName':group.name}) }}">
+                <div class="media">
+                    <div class="pull-left">
+                        <img class="lv-img-sm" src="{{ image(asset('uploads/'~group.picture)).zoomCrop(70, 70, 0, 0, 0) }}" alt="">
+                    </div>
+                    <div class="media-body">
+                        <div class="lv-title">{{ group.name }}</div>
+                        <small class="lv-small">
+                            <i class="md md-person"></i> {{ group.users|length }}, {% if group.expiredTime %}closes in {{ group.expiredTime }} days{% else %}permanently opened{% endif %}
+                        </small>
+                    </div>
+                </div>
+            </a>
+
+            {% endfor %}
+        </div>
+        <a class="lv-footer" href="">View All</a>
+            {% else %}
+                {#<div class="alert alert-info" role="alert">#}
+                <p>No Groups created yet</p>
+                <a href="{{ path('fos_user_group_new') }}" class="btn btn-success waves-effect waves-button waves-float"><i class="md md-plus-one"></i> Create Group</a>
+                {#</div>#}
+            {% endif %}
+
+        </div>
+    </div>
+
+
+    {#<div class="card-body ">#}
+
+        {#{% if app.user.groups|length %}#}
+            {#{% for group in app.user.groups %}#}
+                {#<div class="card">#}
+                    {#<div class="card-body card-padding-sm">#}
+                        {#<div class="col-xs-6">#}
+                            {#<a href="{{ path('fos_user_group_show',{'groupName':group.name}) }}">{{ group.name }}</a>#}
+                        {#</div>#}
+                        {#<div class="col-xs-6">#}
+                            {#<img src="{{ web_image('uploads/'~group.picture).zoomCrop(70, 70, 0, 0, 0) }}" class="img-responsive"/>#}
+                        {#</div>#}
+                           {#<div class="col-xs-6">#}
+                               {#<i class="md md-person"></i> {{ group.users|length }}#}
+                           {#</div>#}
+                           {#<div class="col-xs-6">#}
+                               {#{% if group.expiredTime %}#}
+                                  {#closes in {{ group.expiredTime }} days#}
+                               {#{% else %}#}
+                                   {#permanently opened#}
+                               {#{% endif %}#}
+                           {#</div>#}
+                        {#<div class="clearfix"></div>#}
+
+                       {#</div>#}
+                   {#</div>#}
+                   {#&#123;&#35;<div class="panel panel-primary">&#35;&#125;#}
+                    {#&#123;&#35;<div class="panel-body">&#35;&#125;#}
+                        {#&#123;&#35;<div class="col-md-6"><a&#35;&#125;#}
+                                    {#&#123;&#35;href="{{ path('fos_user_group_show',{'groupName':group.name}) }}">{{ group.name }}</a>&#35;&#125;#}
+                        {#&#123;&#35;</div>&#35;&#125;#}
+                        {#&#123;&#35;<div class="col-md-6">&#35;&#125;#}
+                            {#&#123;&#35;<img src="{{ web_image('uploads/'~group.picture).zoomCrop(70, 70, 0, 0, 0) }}"&#35;&#125;#}
+                                 {#&#123;&#35;class="img-responsive"/>&#35;&#125;#}
+                        {#&#123;&#35;</div>&#35;&#125;#}
+                        {#&#123;&#35;<div class="clearfix"></div>&#35;&#125;#}
+
+                        {#&#123;&#35;<div class="col-md-6"><i class="fa fa-users"></i> <span&#35;&#125;#}
+                                    {#&#123;&#35;class="label label-info">{{ group.users|length }}</span></div>&#35;&#125;#}
+                        {#&#123;&#35;<div class="col-md-6">closes in {{ group.expiredTime }} days</div>&#35;&#125;#}
+                        {#&#123;&#35;<div class="clearfix"></div>&#35;&#125;#}
+                    {#&#123;&#35;</div>&#35;&#125;#}
+                {#&#123;&#35;</div>&#35;&#125;#}
+            {#{% endfor %}#}
+        {#{% else %}#}
+            {#&#123;&#35;<div class="alert alert-info" role="alert">&#35;&#125;#}
+                {#<p>No Groups created yet</p>#}
+                {#<a href="{{ path('fos_user_group_new') }}" class="btn btn-success waves-effect waves-button waves-float"><i class="md md-plus-one"></i> Create Group</a>#}
+            {#&#123;&#35;</div>&#35;&#125;#}
+        {#{% endif %}#}
+    {#</div>#}
+{#</div>#}
+{#<div class="block-header">#}
+    {#<h2>Group invitations</h2>#}
+{#</div>#}

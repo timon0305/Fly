@@ -1,0 +1,50 @@
+<div class="pmbb-view">
+    <dl class="dl-horizontal">
+        <dt>Mobile Phone</dt>
+        <dd>{{ app.user.mobilePhone }}</dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt>Email Address</dt>
+        <dd>{{ app.user.email }}</dd>
+    </dl>
+    {#<dl class="dl-horizontal">#}
+        {#<dt>Twitter</dt>#}
+        {#<dd>@malinda</dd>#}
+    {#</dl>#}
+    {#<dl class="dl-horizontal">#}
+        {#<dt>Skype</dt>#}
+        {#<dd>malinda.hollaway</dd>#}
+    {#</dl>#}
+</div>
+
+<div class="pmbb-edit">
+    {{ form_start(form,{'attr':{'id':'profile-contact-form'}}) }}
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.mobilePhone) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_errors(form.mobilePhone) }}
+                {{ form_widget(form.mobilePhone,{'attr':{'placeholder':"eg. 00971 12345678 9"}}) }}
+                {#<input type="text" class="form-control" placeholder="eg. 00971 12345678 9">#}
+            </div>
+        </dd>
+    </dl>
+    <dl class="dl-horizontal">
+        <dt class="p-t-10">{{ form_label(form.email) }}</dt>
+        <dd>
+            <div class="fg-line">
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email,{'attr':{'placeholder':"eg. john.doe@gmail.com"}}) }}
+                {#<input type="email" class="form-control" placeholder="eg. malinda.h@gmail.com">#}
+            </div>
+        </dd>
+    </dl>
+    {{ form_end(form) }}
+
+    <div class="m-t-30">
+        <button class="btn btn-primary btn-sm waves-effect waves-button waves-float" id="submit-contact">Save</button>
+        <button data-pmb-action="reset"
+                class="btn btn-link btn-sm waves-effect waves-button waves-float reset-profile-form">Cancel
+        </button>
+    </div>
+</div>

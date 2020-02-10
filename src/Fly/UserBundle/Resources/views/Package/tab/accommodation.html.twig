@@ -1,0 +1,41 @@
+<div role="tabpanel" class="tab-pane pkg-pane-acc" id="accommodation">
+    <div class="pkg-acc-form-block">
+        <a class="btn btn-success btn-action-modal" data-modal-id="#newAccModal" data-modal-action="show"><i class="fa fa-plus"></i> Add new Accomodation</a>
+    </div>
+    {{ include('FlyUserBundle:Package/form:accItemForm.html.twig') }}
+    {#{{ form_start(accItemForm,{'action':path('accitem_create'),'attr':{'id':'acc-item-form'}}) }}#}
+    {#<div class="pkg-acc-form-block mt10 ">#}
+        {#<div class="col-md-6 grey_block p-5">#}
+            {#<div class="form-group col-md-6 m-b-5">#}
+                {#<label><i class="fa fa-calendar"></i> Check In</label>#}
+                {#{{ form_widget(accItemForm.checkin, {'attr':{'class':'p-l-5'}}) }}#}
+            {#</div>#}
+            {#<div class="form-group col-md-6 m-b-5">#}
+                {#<label class="pull-left"><i class="fa fa-clock-o"></i> Duration</label>#}
+                {#{{ form_widget(accItemForm.duration,{'attr':{'class':'clr pull-left p-l-5 w-p-50'}}) }}#}
+                {#<div class="pull-left p-l-10">night</div>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="col-md-6">#}
+            {#<div class="acc-price-total text-center">#}
+                {#<span class="price-word">Price:</span><span class="price-amount" id="acc-price-amount">--</span>#}
+            {#</div>#}
+            {#<div class="accprice-btns text-center">#}
+                {#<button type="submit" class="btn btn-primary" id="acc-item-save">Save Package</button>#}
+                {#<button type="reset" data-form-id="acc-item-form" class="btn btn-default btn-action-modal" data-modal-id="#newPkgModal" id="acc-pkg-cancel"data-modal-action="close">Cancel</button>#}
+            {#</div>#}
+        {#</div>#}
+        {#<div class="clearfix"></div>#}
+    {#</div>#}
+    {#{{ form_end(accItemForm) }}#}
+
+    <div class="hotels-search-results">
+        <div class="acc-loader" id="acc-loader"><img src="{{ asset('img/ajxloader-red.svg') }}" width="32px"></div>
+        <div class="list-group" id="acc-list-block">
+
+        </div>
+    </div>
+    {#<div class="form-group pkg-save">#}
+        {#<a href="#" data-pkg-type="acc" id="pkg-acc-save" class="btn btn-primary btn-pkg-save">Save Package</a>#}
+    {#</div>#}
+</div>

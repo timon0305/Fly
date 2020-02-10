@@ -1,0 +1,379 @@
+{% extends '::blank.html.twig' %}
+{% form_theme form _self %}
+{% block checkbox_radio_label %}
+    {# Do no display the label if widget is not defined in order to prevent double label rendering #}
+    {% if widget is defined %}
+        {% if required %}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+        {% endif %}
+        {% if parent_label_class is defined %}
+            {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' ' ~ parent_label_class)|trim}) %}
+        {% endif %}
+        {% if label is not sameas(false) and label is empty %}
+            {% set label = name|humanize %}
+        {% endif %}
+        <label class="fstlabel">
+            {{- widget|raw -}}
+            <span class="family"></span>{{- label is not sameas(false) ? label|trans({}, translation_domain) -}}
+        </label>
+    {% endif %}
+{% endblock checkbox_radio_label %}
+{% block body %}
+
+    <div class="modal fade" id="modalGroupNew" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+         data-keyboard="false" style="display: none;">
+        {% include 'FlyUserBundle:Group/new:step_progress.html.twig' %}
+
+        {#<form id="formSteps" class="modal-dialog modal-lg" action="{{ path('fly_group_create_steps') }}" method="POST">#}
+        {#{{ form_start(form,{'action':path('fly_group_create_steps'), 'attr':{'id':'formSteps','class':'modal-dialog modal-lg','method':'POST'} }) }}#}
+        {{ form_start(form,{'action':path('fos_user_group_new'), 'attr':{'novalidate':'novalidate','id':'formSteps','class':'modal-dialog modal-lg','method':'POST'} }) }}
+
+            <!-- Group name -->
+            <div class="modal-content group-form-step animated form-first-step" id="form-step-1"
+                 data-step-type="groupName" >
+                <div class="modal-header"><h4 class="modal-title">Group Name & Description</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block" id="groupName">
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.name,'Group Name') }}
+                            {{ form_widget(form.name) }}
+                            <div class="text-danger hide" id="{{ form.name.vars.id }}_error">errrrrror</div>
+                        </div>
+                        <div class="form-group">
+                            {{ form_label(form.description,'Group Description ( 160 char max. )') }}
+                            {{ form_widget(form.description,{'attr':{'rows':'10'}}) }}
+                        </div>
+                            </div>
+                        <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_row(form.picture) }}
+                            <div id="group-image-wrap"></div>
+                        </div>
+                            </div>
+                        <div class="clearfix"></div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="1" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- travelingWith -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-2"
+                 data-step-type="choices" data-min-choice="1">
+                <div class="modal-header"><h4 class="modal-title">{{ form.travelingWith.vars.label }}</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block" id="travelingWith">
+                        {#{{ dump(form.travelingWith.vars) }}#}
+                        {% for choice in form.travelingWith.vars.choices %}
+                            <label class="fstlabel " data-form-block="1">
+                                {#<input type="radio" id="fly_user_group_step_travelingWith_2" name="fly_user_group_step[travelingWith]" value="2">#}
+                                <input class="fst form-step" type="radio"
+                                       id="{{ form.travelingWith.vars.id ~ '_'~ choice.value }}"
+                                       name="{{ form.travelingWith.vars.full_name }}[]" value="{{ choice.value }}"
+                                       data-form-step="next" data-form-block="2">
+                                <span class=" {{ choice.data.icon }}"></span> {{ choice.label }}
+                                {#{{ dump() }}#}
+                            </label>
+                        {% endfor %}
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="2" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="2" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- minds -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-3" data-max-choice="5"
+                 data-min-choice="1" data-step-type="choices">
+                <div class="modal-header"><h4 class="modal-title">{{ form.spirits.vars.label }}</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block" id="minds">
+                        <h5>Choose up to 5</h5>
+                        {% for choice in form.spirits.vars.choices %}
+                            <label class="fstlabel " data-form-block="3">
+                                <input class="fst " type="checkbox" id="{{ form.spirits.vars.id ~ '_'~ choice.value }}"
+                                       name="{{ form.spirits.vars.full_name }}[]" value="{{ choice.value }}"
+                                       data-form-step="next">
+                                <span class="{{ choice.data.icon }}"></span> {{ choice.label }}
+                                {#{{ dump() }}#}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="3" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="3" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- accomodation -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-4" data-max-choice="3"
+                 data-min-choice="1" data-step-type="choices">
+                <div class="modal-header"><h4 class="modal-title">{{ form.accomodations.vars.label }}</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block" id="accomodation">
+                        <h5>Choose up to 3</h5>
+                        {% for choice in form.accomodations.vars.choices %}
+                            <label class="fstlabel " data-form-block="4">
+                                <input class="fst " type="checkbox"
+                                       id="{{ form.accomodations.vars.id ~ '_'~ choice.value }}"
+                                       name="{{ form.accomodations.vars.full_name }}[]" value="{{ choice.value }}"
+                                       data-form-step="next">
+                                <span class="{{ choice.data.icon }}"></span> {{ choice.label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="4" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="4" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- transportation -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-5" data-max-choice="2"
+                 data-min-choice="1" data-step-type="choices">
+                <div class="modal-header"><h4 class="modal-title">{{ form.transportations.vars.label }}</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block" id="transportation">
+                        <h5>Choose up to 2</h5>
+                        {% for choice in form.transportations.vars.choices %}
+                            <label class="fstlabel " data-form-block="5">
+                                <input class="fst " type="checkbox"
+                                       id="{{ form.transportations.vars.id ~ '_'~ choice.value }}"
+                                       name="{{ form.transportations.vars.full_name }}[]" value="{{ choice.value }}"
+                                       data-form-step="next">
+                                <span class="{{ choice.data.icon }}"></span> {{ choice.label }}
+                            </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="5" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="5" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- whenToGo //-->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-6" data-step-type="whenToGo">
+                <div class="modal-header"><h4 class="modal-title">Do you know when you want to go?</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block">
+                        <label class="fstlabel " data-form-block="6">
+                            <input class="fst" type="checkbox" name="{{ form.is_whentogo.vars.full_name }}"
+                                   value="{{ form.is_whentogo.vars.value }}" id="{{ form.is_whentogo.vars.id }}">
+                            <i class="fa fa-2 fa-check"></i> {{ form.is_whentogo.vars.label }}
+                        </label>
+                        <div class="form-group ">
+                            <div class="row transition-all " id="whenToGo-row">
+                                <div class="col-md-6">
+                                    <div id="group-whenToGo-first">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div id="group-whenToGo-last">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="period-whenToGo-first" name="period-whenToGo-first">
+                        <input type="hidden" id="period-whenToGo-last" name="period-whenToGo-last"></div>
+                    {{ form_widget(form.departure_date) }}
+                    {{ form_widget(form.wayback_date) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="6" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="6" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- Where to go (Google map)-->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-7" data-step-type="geo">
+                <div class="modal-header"><h4 class="modal-title">Where do you want to go?</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block">
+                        <label class="fstlabel " data-form-block="7" for="{{ form.is_wheretogo.vars.id }}">
+                            <input class="fst" type="checkbox" name="{{ form.is_wheretogo.vars.full_name }}"
+                                   value="{{ form.is_wheretogo.vars.value }}" id="{{ form.is_wheretogo.vars.id }}">
+                            <i class="fa fa-2 fa-check"></i> {{ form.is_wheretogo.vars.label }}
+                        </label>
+                        {{ form_widget(form.geoAddress) }}
+                        {{ form_widget(form.geoLat) }}
+                        {{ form_widget(form.geoLng) }}
+                        <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+
+                        <div id="type-selector" class="controls">
+                            <input type="radio" name="type" id="changetype-all"  checked="checked">
+                            <label for="changetype-all">All</label>
+                            <input type="radio" name="type" id="changetype-establishment">
+                            <label for="changetype-establishment">Establishments</label>
+                            <input type="radio" name="type" for="changetype-address">Addresses</label>
+                            <input type="radio" name="type" id="changetype-geocode">
+                            <label for="changetype-geocode">Geocodes</label>
+                        </div>
+                        <div id="map"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="7" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="7" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- Expired time -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-8">
+                <div class="modal-header"><h4 class="modal-title">{{ form.expired_time.vars.label }}</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block">
+                        <div class="col-md-5 text-right">in</div>
+                        <div class="col-md-2 text-center">
+                            {{ form_widget(form.expired_time) }}
+                        </div>
+                        <div class="col-md-5 text-left">hours</div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="8" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="8" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+            <!-- Goals -->
+            <div class="modal-content group-form-step animated form-inner-step" id="form-step-9" data-step-type="collection">
+                <div class="modal-header"><h4 class="modal-title">Group goals</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block">
+                        <ul class="group_goals" data-prototype="{{ form_widget(form.goal.vars.prototype)|e }}">
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="9" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary  waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="9" data-form-step="next">Next <i class="md md-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <!-- Invite -->
+            <div class="modal-content group-form-step animated form-last-step" id="form-step-10" data-step-type="collection" >
+                <div class="modal-header"><h4 class="modal-title">Invite Friends</h4></div>
+                <div class="modal-body">
+                    <div class="form-step-data-block">
+                    <h5>Friends</h5>
+                    <select id="friends-list-invite" name="friends-list-invite[]" multiple="multiple">
+                        <option value="0">Choose friends</option>
+                    {% for friend in friends %}
+                        {% set userFriend  =  (friend.friendOne.id == app.user.id ) ? friend.friendTwo : friend.friendOne %}
+                        <option value="{{ userFriend.id }}" data-img="{{ userPhoto(userFriend) }}">{{ userFriend}}</option>
+                    {% endfor %}
+                        </select>
+                    <hr />
+                        </div>
+
+                    <div class="form-step-data-block">
+                        <h5>Invite by Email</h5>
+                        <ul class="invitations" data-prototype="{{ form_widget(form.invitation.vars.prototype)|e }}">
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-link waves-effect waves-button waves-float pull-left form-step-dismiss waves-effect waves-button waves-float"
+                            data-dismiss="modal">Close
+                    </button>
+                    <button type="button"
+                            class="btn btn-default waves-effect waves-button waves-float form-step waves-effect waves-button waves-float"
+                            data-form-block="10" data-form-step="prev"><i class="md md-chevron-left"></i> Previous
+                    </button>
+                    <button type="submit"
+                            class="btn btn-success  waves-effect waves-button waves-float form-submit"
+                            data-form-block="10" data-form-step="submit">
+                        <i class="md md-save"></i> Submit</button>
+                </div>
+            </div>
+            <div class="hidden">
+
+                {#{{ form_widget(form._token) }}#}
+            {#{{ form_rest(form) }}#}
+                </div>
+        {#{{ form_end(form) }}#}
+        </form>
+    </div>
+{% endblock body %}

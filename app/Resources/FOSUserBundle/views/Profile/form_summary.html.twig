@@ -1,0 +1,18 @@
+<div class="pmbb-view">
+    {{ app.user.summary }}
+</div>
+
+<div class="pmbb-edit">
+    {{ form_start(form,{'attr':{'id':'profile-summary-form'}}) }}
+    <div class="fg-line">
+        {{ form_widget(form.summary) }}
+        {#<textarea class="form-control" rows="5" placeholder="Summary...">Sed eu est vulputate, fringilla ligula ac, maximus arcu. Donec sed felis vel magna mattis ornare ut non turpis. Sed id arcu elit. Sed nec sagittis tortor. Mauris ante urna, ornare sit amet mollis eu, aliquet ac ligula. Nullam dolor metus, suscipit ac imperdiet nec, consectetur sed ex. Sed cursus porttitor leo.</textarea>#}
+    </div>
+    {{ form_end(form) }}
+    <div class="m-t-10">
+        <button class="btn btn-primary btn-sm waves-effect waves-button waves-float" id="submit-summary">Save</button>
+        <button data-pmb-action="reset"
+                class="btn btn-link btn-sm waves-effect waves-button waves-float reset-profile-form">Cancel
+        </button>
+    </div>
+</div>
